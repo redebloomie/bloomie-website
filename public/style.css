@@ -749,12 +749,12 @@ section {
 }
 
 .cadastro-container .form-cadastro {
-  height: 35vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 30vw;
+    height: 35vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
 }
 
 .cadEmpresa-container .form-cadastro .txt2 {
@@ -764,8 +764,8 @@ section {
 }
 
 .cadastro-container .form-cadastro form {
-  width: 32vw;
-  margin-top: 1vw;
+    width: 35vw;
+    margin-top: 1vw;
 }
 
 .cadastro-container .form-cadastro form span {
@@ -829,8 +829,8 @@ section {
   gap: 0.5vw;
 }
 
-.cadastro-container .form-cadastro img {
-  width: 10vw;
+.PEMEB-container .form-cadastro img {
+    width: 10vw;
 }
 
 /* ------- PARCERIAS --------- */
@@ -1167,13 +1167,12 @@ input[type="file"] {
 }
 
 .options-post {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-top: 20px;
-  color: #1185e3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #1185E3;
 }
 
 .rightside-op-post {
@@ -1198,11 +1197,16 @@ input[type="file"] {
 }
 
 .post-container-item {
-  border: 0.2vw solid #abd9ff;
-  border-radius: 10px;
-  margin: 0;
-  padding: 0;
-  background-color: #f2f9ff;
+    border: 0.2vw solid #ABD9FF;
+    border-radius: 10px;
+    margin: 0;
+    padding: 0;
+    background-color: #F2F9FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 0.8vw;
 }
 
 .post-container {
@@ -1210,7 +1214,7 @@ input[type="file"] {
 }
 
 .doc-post {
-  margin-top: 15px;
+    margin: 0;
 }
 
 .doc-post span {
@@ -1227,7 +1231,7 @@ input[type="file"] {
 }
 
 .img-post {
-  margin-top: 15px;
+    margin: 0;
 }
 
 .img-post img {
@@ -1288,56 +1292,57 @@ input[type="file"] {
 /* PERFIL */
 
 .perfil-pg h2 {
-  font-size: 22px;
-  color: #1185e3;
-  margin: 0;
-  font-weight: 600;
+    font-size: 20px;
+    color: #1185E3;
+    margin: 0;
+    font-weight: 600;
 }
 
 .perfil-container i {
-  font-size: 25px;
-  color: #1185e3;
+    font-size: 20px;
+    color: #1185E3;
 }
 
 .perfil-header i {
-  font-size: 25px;
-  color: #fff;
+    font-size: 20px;
+    color: #fff;
 }
 
 .perfil-container {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    margin-top: 3vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .perfil-header {
-  background-color: #1185e3;
-  border: solid 2px #f2c934;
-  border-radius: 1.5vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vw;
+    background-color: #1185E3;
+    border: solid 2px #F2C934;
+    border-radius: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 8vw;
 }
 
 .perfil-header .perfil-header-info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 70vw;
-  margin-top: 4vw;
-  position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70vw;
+    margin-top: 2.5vw;
+    position: absolute;
 }
 
 .perfil-header-info button {
-  border: none;
-  padding: 3px 20px;
-  border-radius: 10px;
-  background-color: #47a7f4;
-  color: #fff;
-  font-weight: 500;
+    border: none;
+    padding: 3px 20px;
+    border-radius: 10px;
+    background-color: #47A7F4;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 1vw;
 }
 
 .foto-nome-user {
@@ -1350,10 +1355,10 @@ input[type="file"] {
 }
 
 .foto-nome-user img {
-  width: 10vw;
-  border-radius: 100%;
-  height: 10vw;
-  object-fit: cover;
+    width: 8vw;
+    border-radius: 100%;
+    height: 8vw;
+    object-fit: cover;
 }
 
 .foto-nome-user p {
@@ -1361,16 +1366,18 @@ input[type="file"] {
 }
 
 .perfil-container p {
-  margin: 0;
-  color: #5ab5ff;
-  font-size: 18px;
+    margin: 0;
+    color: #5AB5FF;
+    font-size: 16px;
 }
 
 .perfil-left {
-  width: 35vw;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5vw;
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5vw;
+    height: max-content;
 }
 
 .bloomigos-container-perfil {
@@ -1393,18 +1400,44 @@ input[type="file"] {
   font-weight: 500;
 }
 
+.pers-container {
+    width: 15vw;
+    height: 15vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #B2DCFF;
+    border-radius: 2vw;
+}
+
+.pers-container img {
+    width: 15vw;
+    border-radius: 15px;
+    height: 15vw;
+    object-fit: cover;
+    background-position: center;
+}
+
+.d-info,
+.i-info,
+.s-info,
+.c-info {
+    display: none;
+}
+
 /* TAGS INSERT */
 
 .content {
-  border-radius: 25px;
-  max-height: 100px;
-  width: 100%;
-  background-color: #f2f9ff;
-  border: 2px solid #b2dcff;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  box-shadow: 0 1px 2px #0003;
+    border-radius: 25px;
+    max-height: 30px;
+    width: 100%;
+    background-color: #F2F9FF;
+    border: 2px solid #B2DCFF;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    box-shadow: 0 1px 2px #0003;
 }
 
 .content::-webkit-scrollbar {
@@ -1432,9 +1465,9 @@ input[type="file"] {
 }
 
 .content input {
-  height: 30px;
-  border-radius: 5px;
-  margin: 0px;
+    height: 10px;
+    border-radius: 5px;
+    margin: 0px;
 }
 
 .content button {
@@ -1507,6 +1540,10 @@ input[type="file"] {
 .box input:checked + div.menu {
   opacity: 1;
   z-index: 999;
+}
+
+.pers-none {
+    display: none;
 }
 
 /* OPORTUNIDADES */
@@ -1657,6 +1694,39 @@ input[type="file"] {
   font-weight: 600;
   font-size: 18px;
   text-align: left;
+}
+
+/* TESTE DISC - OPORTUNIDADE ENVIADA */
+.disc-container h1 {
+    font-size: 30px;
+    color: #0B528C;
+    font-weight: 700;
+}
+
+.disc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    width: 40vw;
+    text-align: center;
+}
+
+.disc-container p {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.disc-op-container {
+    margin-top: 5.5vw;
+    margin-left: 12vw;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0B528C;
 }
 
 /* ---------------- RESPONSIVIDADE ------------------ */

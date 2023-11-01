@@ -267,7 +267,7 @@
                 <h3>Ei, é ótimo ter você aqui!<br>Faça <span style="font-weight: 500;">login</span> e <span
                         style="font-weight: 500;">acesse sua conta</span>.</h3>
 
-                <form action="" method="post">
+                <form action="../src/PHP/login.php" method="post">
                     <input type="text" class="form-control" name="email" id="email" placeholder="Usuário ou Email"
                         style="color: #1185E3;">
                     <span>
@@ -275,11 +275,10 @@
                             style="color: #1185E3;">
                         <i class="ph-bold ph-eye-slash" id="togglePassword"></i>
                     </span>
-                    <a href="/src/pages/esqueceuSenha.html">Esqueceu a senha?</a>
-                    <a href="" style="text-decoration: none; color: white;"><button type="submit"
-                            class="btn btn-primary">Entrar</button></a>
+                    <a href="../src/pages/esqueceuSenha.html">Esqueceu a senha?</a>
+                    <input type="submit" class="btn btn-primary" value="Entrar" name="submit"></input>
                 </form>
-                <p>Não tem conta? <a href="/src/pages/cadastro.html" style="font-weight: 500; color: #5AB5FF;">Crie
+                <p>Não tem conta? <a href="../src/pages/cadastro.html" style="font-weight: 500; color: #5AB5FF;">Crie
                         agora</a></p>
             </div>
         </div>
