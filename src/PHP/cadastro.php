@@ -57,7 +57,7 @@ if ($stmt_usuario->execute()) {
 
         if ($stmt_estudante->execute()) {
             // Redirecione o usuário após o registro bem-sucedido
-            header('Location: ../pages/homepage-postagens.html');
+            header('Location: ../pages/cadConfirmacao.html');
         } else {
             echo "Erro ao inserir dados do estudante: " . $stmt_estudante->error;
         }

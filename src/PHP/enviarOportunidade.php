@@ -35,9 +35,7 @@ if (!$stmt) {
 $stmt->bind_param("ssssssssssss", $titulo, $estado, $cidade, $inicio, $tempo_expirar, $link, $tipo_personalidade, $descricao, $categoria, $escolaridade, $status, $data);
 
 if ($stmt->execute()) {
-    echo "Cadastro realizado com sucesso!";
-    // Redirecione para outra página, se necessário
-    // header('Location: outra_pagina.php');
+    header('Location: ../pages/oportunidadeEnviada.html');
 } else {
     echo "Erro ao cadastrar: " . $stmt->error;
 }
@@ -47,6 +45,6 @@ $stmt->close();
 $conexao->close();
 
     
-     }
+}
 ?>
 
