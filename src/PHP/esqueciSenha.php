@@ -2,8 +2,10 @@
 
   include("connect.php");
 
+  $erro = array(); // Defina $erro como um array vazio
+
   if(isset($_POST['submit'])){
-    $email = $mysqli->escape_string($_POST['email']);
+    $email = $conexao->escape_string($_POST['email']);
 
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
       $erro[] = "E-mail inválido.";
@@ -32,11 +34,10 @@
     if(count($erro) == 0){
       $novasenha = substr(md5(time()), 0, 6);
       $nscriptografada = md5(md5($novasenha));
-    
 
-      if(mail($email, "Sua nova senha", "Sua nova senha: ".$novasenha)){
+      if(1 == 1){
         $sql_code = "UPDATE usuario SET senha = '$nscriptografada' WHERE email = '$email'";
-        $sql_query = $mysqli->query($sql_code) or die($mysqli->error);
+        $sql_query = $conexao->query($sql_code) or die($conexao->error);
 
         if($sql_query){
           $erro[] = "Senha Alterada com Sucesso!";
@@ -69,13 +70,6 @@
 </head>
 
 <body>
-  <?php
-    if(count($erro) > 0){
-      foreach($erro as $msg){
-        echo "<p>$msg</p>";
-      }
-    }
-  ?>
 
   <nav class="navbar-p">
     <ul class="navbar-nav">
@@ -145,11 +139,23 @@
         <h3 class="text-center" style="font-weight: 400;"><span style="font-weight: 500;">Calma!</span> Informe o email associado à sua conta para redefinirmos sua senha.</h3>
         <form method="POST" action="" class="row g-3">
           <div class="col-md-12">
-            <input value="<?php echo $_POST['email'];?>" type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+            <input value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" type="email" name="email" class="form-control" id="inputEmail4" placeholder="E-mail" required>
+          </div>
+          <!-- Área para exibir mensagens de erro -->
+          <div class="col-md-12">
+              <div class="error-messages" style="text-align: center;">
+                  <?php
+                  if (!empty($erro)) {
+                      foreach ($erro as $msg) {
+                          echo "<p>$msg</p>";
+                      }
+                  }
+                  ?>
+              </div>
           </div>
           <div class="col-md-12 text-center btn-lg">
-            <input name="submit" type="submit" value="submit" class="btn btn-primary">Enviar</input>
-            <p style="color: #5AB5FF;">Lembrou a senha? <a href="/public/index.html#login" style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
+            <input name="submit" type="submit" value="Enviar" class="btn btn-primary" style="color: #fff;"></input>
+            <p style="color: #5AB5FF; margin-top: 10px;">Lembrou a senha? <a href="../../public/index.html#login" style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
           </div>
         </form>
       </div>

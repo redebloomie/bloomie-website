@@ -17,11 +17,11 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/public/Minimalist-jQuery-Plugin-For-Birthday-Selector-DOB-Picker/dobpicker.js"></script>
 
 </head>
 
 <body>
-
   <nav class="navbar-p">
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -84,59 +84,18 @@
   </div>
 
   <section id="cadastro">
-    <div class="cadastro-container">
+    <div class="cadastro-container cadEmpresa-container PEMEB-container">
       <div class="form-cadastro">
-        <h2 class="text-center" style="font-weight: 700;">Vamos começar?</h2>
-        <h3 class="text-center" style="font-weight: 400;"><span style="font-weight: 500;">Calma!</span> Informe o email
-          associado à sua conta para redefinirmos sua senha.</h3>
-        <form method="POST" action="../PHP/redefinirSenha.php" class="row g-3">
-          <div class="col-md-12">
-            <span>
-              <input type="password" class="form-control" name="novaSenha" id="senha" placeholder="Nova senha"
-                style="color: #1185E3;">
-              <i class="ph-bold ph-eye-slash" id="togglePassword"></i>
-            </span>
-          </div>
-          <div class="col-md-12">
-            <span>
-              <input type="password" class="form-control" name="confirmarSenha" id="senhaC"
-                placeholder="Confirme sua nova senha" style="color: #1185E3;">
-              <i class="ph-bold ph-eye-slash" id="togglePasswordC"></i>
-            </span>
-          </div>
-          <div class="col-md-12 text-center btn-lg">
-            <input type="submit" name="submit" value="Redefinir senha" class="btn btn-primary"></input>
-            <p style="color: #5AB5FF;">Lembrou a senha? <a href="/public/index.html#login"
-                style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
-          </div>
-        </form>
+        <img src="../assets/bluBloomie.png" alt="">
+        <h2 class="text-center" style="font-weight: 700;">Senha redefinida!</h2>
+        <h3 class="text-center" style="font-weight: 400;"><span style="color: #1185E3; font-weight: 600;">Senha alterada com sucesso!</span><br>
+          Você já pode aproveitar a Bloomie novamente.<br><span style="font-weight: 600;">Volte para a página de login e floresça.</span></h3>
+        <a href="../../public/index.html#login"><button class="btn btn-primary">Fazer login</button></a>
       </div>
     </div>
   </section>
 
   <!-- Bootstrap JavaScript Libraries -->
-  <script>
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#senha');
-    const togglePasswordC = document.querySelector('#togglePasswordC');
-    const passwordC = document.querySelector('#senhaC');
-
-    togglePassword.addEventListener('click', function () {
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-
-      this.classList.toggle('ph-eye-slash');
-      this.classList.toggle('ph-eye');
-    });
-
-    togglePasswordC.addEventListener('click', function () {
-      const type = passwordC.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordC.setAttribute('type', type);
-
-      this.classList.toggle('ph-eye-slash');
-      this.classList.toggle('ph-eye');
-    });
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
     crossorigin="anonymous"></script>
@@ -145,7 +104,7 @@
     crossorigin="anonymous"></script>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.js'></script>
-  <script src="../../public/script.js"></script>
+  <script src="/public/script.js"></script>
 </body>
 
 </html>

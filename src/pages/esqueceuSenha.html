@@ -88,13 +88,13 @@
       <div class="form-cadastro">
         <h2 class="text-center" style="font-weight: 700;">Vamos começar?</h2>
         <h3 class="text-center" style="font-weight: 400;"><span style="font-weight: 500;">Calma!</span> Informe o email associado à sua conta para redefinirmos sua senha.</h3>
-        <form class="row g-3">
+        <form method="POST" action="../PHP/enviarCodigo.php" class="row g-3">
           <div class="col-md-12">
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+            <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email" required>
           </div>
           <div class="col-md-12 text-center btn-lg">
-            <button type="submit" class="btn btn-primary">Enviar</button>
-            <p style="color: #5AB5FF;">Lembrou a senha? <a href="/public/index.html#login" style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
+            <input type="submit" name="submit" class="btn btn-primary" style="color: #fff;"></input>
+            <p style="color: #5AB5FF;">Lembrou a senha? <a href="../../public/index.html#login" style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
           </div>
         </form>
       </div>

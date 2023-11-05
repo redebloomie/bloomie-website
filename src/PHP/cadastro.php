@@ -56,6 +56,7 @@ if ($stmt_usuario->execute()) {
         $stmt_estudante->bind_param("ss", $ID_usuario, $dataNascimento);
 
         if ($stmt_estudante->execute()) {
+            $_SESSION['ID_usuario'] = $ID_usuario; // Defina user_id após o cadastro bem-sucedido
             // Redirecione o usuário após o registro bem-sucedido
             header('Location: ../pages/cadConfirmacao.html');
         } else {
