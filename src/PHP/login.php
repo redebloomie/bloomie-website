@@ -34,7 +34,7 @@ if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha']
         } elseif (empty($personalidade)) {
             header('Location: ../pages/homepage-oportunidades-nm.html');
         } else {
-            header('Location: ../pages/perfil.html');
+            header('Location: ../pages/homepage-postagens.html');
         }
     } else {
         // Credenciais inválidas
