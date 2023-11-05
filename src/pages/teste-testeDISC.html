@@ -9,8 +9,8 @@
 
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css'>
 
-    <link rel="stylesheet" href="/public/style.css">
-    <link rel="shortcut icon" href="/src/assets/bluBloomie.png" />
+    <link rel="stylesheet" href="../../public/style.css">
+    <link rel="shortcut icon" href="../assets/bluBloomie.png" />
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
@@ -19,127 +19,573 @@
         .personalidade {
             display: none;
         }
+
+        #progress-bar {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            width: 100%;
+            background-color: #0B528C;
+            border-radius: 10px;
+        }
+
+        .step {
+            width: 100%;
+            height: 40px;
+            background-color: #0B528C;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            cursor: default;
+        }
+
+        .step:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .step:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .step.done {
+            background-color: #1185E3;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Teste de Personalidade</h1>
-    <div id="pergunta-container">
-        <p id="pergunta"></p>
-        <input type="radio" name="resposta" id="resposta-a" value="a"> <label for="resposta-a">a) </label><br>
-        <input type="radio" name="resposta" id="resposta-b" value="b"> <label for="resposta-b">b) </label><br>
-        <input type="radio" name="resposta" id="resposta-c" value="c"> <label for="resposta-c">c) </label><br>
-        <input type="radio" name="resposta" id="resposta-d" value="d"> <label for="resposta-d">d) </label><br>
-    </div>
-    <button id="proxima-pergunta">Próxima Pergunta</button>
-    <p id="resultado" style="display: none;"></p>
 
-    <div class="personalidade" id="personalidade-d">
-        <h2>Dominância (D)</h2>
-        <p>Descrição da personalidade D.</p>
-        <img src="imagem-d.jpg" alt="Imagem da personalidade D">
-    </div>
+    <div class="row justify-content-start align-items-start g-0">
+        <div class="col-2 bg-primary sidebar-container">
+            <div class="container text-center sidebar">
+                <div class="row row-cols-1 justify-content-around align-items-center g-5">
+                    <div class="col">
+                        <span class="searchbar rounded-4">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="text" name="" id="" placeholder="Buscar...">
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-house"></i>
+                                <a href="../pages/homepage-postagens.html"
+                                    class="text-decoration-none text-white">Home</a>
+                            </div>
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-user"></i>
+                                <a href="../pages/perfil.html" class="text-decoration-none text-white">Perfil</a>
+                            </div>
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-bell-ringing"></i>
+                                <a href="" class="text-decoration-none text-white">Notificações</a>
+                            </div>
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-plant"></i>
+                                <a href="../pages/enviarOportunidade.html"
+                                    class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                            </div>
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-gear"></i>
+                                <a href="" class="text-decoration-none text-white">Configurações</a>
+                            </div>
+                            <div class="col text-white sidebar-op">
+                                <i class="ph ph-question"></i>
+                                <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <a href="" class="text-decoration-none text-white">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="personalidade" id="personalidade-i">
-        <h2>Influência (I)</h2>
-        <p>Descrição da personalidade I.</p>
-        <img src="imagem-in.jpg" alt="Imagem da personalidade I">
-    </div>
+        <div class="col-6 disc-op-container"
+            style="display: flex; flex-direction: column; align-items: start; margin-left: 30vw; justify-content: start; position: relative; ">
+            <!-- Progresso -->
+            <div id="progress-bar" style="margin-bottom: 2vw;">
+                <div class="step done">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+                <div class="step">4</div>
+                <div class="step">5</div>
+                <div class="step">6</div>
+                <div class="step">7</div>
+                <div class="step">8</div>
+                <div class="step">9</div>
+                <div class="step">10</div>
+                <div class="step"><i class="ph ph-user" style="font-size: 20px; font-weight: 600;"></i></div>
+            </div>
 
-    <div class="personalidade" id="personalidade-s">
-        <h2>Estabilidade (S)</h2>
-        <p>Descrição da personalidade S.</p>
-        <img src="imagem-s.jpg" alt="Imagem da personalidade S">
-    </div>
+            <div id="pergunta-container" style="font-weight: 600; margin-top: 5vw;">
+                <p id="pergunta" style="color: #1185E3; font-size: 20px;"></p>
+                <span style="display: flex; flex-direction: row;">
+                    <input type="radio" name="resposta" id="resposta-a" value="a"> <label for="resposta"
+                        id="l-resposta-a" style="font-size: 18px;"></label>
+                </span>
+                <span style="display: flex; flex-direction: row;">
+                    <input type="radio" name="resposta" id="resposta-b" value="b"> <label for="resposta"
+                        id="l-resposta-b" style="font-size: 18px;"></label>
+                </span>
+                <span style="display: flex; flex-direction: row;">
+                    <input type="radio" name="resposta" id="resposta-c" value="c"> <label for="resposta"
+                        id="l-resposta-c" style="font-size: 18px;"></label>
+                </span>
+                <span style="display: flex; flex-direction: row;">
+                    <input type="radio" name="resposta" id="resposta-d" value="d"> <label for="resposta"
+                        id="l-resposta-d" style="font-size: 18px;"></label>
+                </span>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: end;">
+                <button id="proxima-pergunta"
+                style="margin-right: 0; bottom: 15vw; margin-top: 3vw; background-color: #1185E3; color: #fff; border: none; padding: 3px 15px; border-radius: 10px; font-weight: 600;">Próximo</button>
+            </div>
 
-    <div class="personalidade" id="personalidade-c">
-        <h2>Conformidade (C)</h2>
-        <p>Descrição da personalidade C.</p>
-        <img src="imagem-c.jpg" alt="Imagem da personalidade C">
-    </div>
+            <div class="personalidade" id="personalidade-d" style="width: 100%;">
+                <div class="pers-nome-info"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div class="pers-nome"
+                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <img src="../assets/blu-personalidade1.png" alt="" style="">
+                        <h2 style="color: #00A939; font-weight: 700; margin-top: -20px; font-size: 25px;">Dominância (D)
+                        </h2>
+                    </div>
+                    <div class="pers-info" style="text-align: right; font-size: 20px; width: 25vw;">
+                        <p style="margin: 0;">“O poder da <span style="font-weight: 600;">influência</span> está em inspirar os outros a acreditarem em si mesmos.”</p><br>
+                        <p style="margin: 0; color: #1185E3; font-weight: 600;">• Oprah Winfrey</p>
+                    </div>
+                </div>
+                <div class="pers-sobre" style="margin-top: 50px; display: flex; flex-direction: column; gap: 20px;">
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Sobre</h3>
+                        <p style="margin: 0; font-size: 18px;">Você é uma pessoa que gosta de assumir a liderança e é
+                            movida pela determinação e coragem. Sua habilidade de tomar decisões rápidas e agir com
+                            ousadia faz de você um líder nato.</p><br>
+                        <p style="font-weight: 600; margin: 0; font-size: 18px;">Seu perfil aponta para uma
+                            personalidade focada em resultados e resolução de problemas.
+                        </p>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Características marcantes</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Determinado e corajoso.</li>
+                            <li>Líder natural.</li>
+                            <li>Ação rápida e decisiva.</li>
+                            <li>Focado em metas e resultados.</li>
+                        </ul>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Áreas relacionadas</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Gerente de Projetos.</li>
+                            <li>Cargos que exigem tomada de decisões</li>
+                            <li>Independência e iniciativa</li>
+                            <li>CEO ou Diretor Executivo.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pers-voltar"
+                    style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
+                    <a href="../pages/teste-testeDISC.html"
+                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                        resultado</a>
+                    <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
+                        teste.</a>
+                </div>
+                <!-- <h2>Dominância (D)</h2>
+                <p>Descrição da personalidade D.</p>
+                <img src="imagem-d.jpg" alt="Imagem da personalidade D"> -->
+            </div>
 
-    <script>
-        const perguntas = [
-            "Em situações de conflito, sou mais propenso a:",
-            "Ao lidar com mudanças, sou mais inclinado a:",
-            "Em um ambiente de trabalho, sou mais propenso a:",
-            "Ao enfrentar um problema complexo, sou mais propenso a:",
-            "No trabalho em equipe, sou mais propenso a:",
-            "Em termos de seguir regras e procedimentos, sou mais propenso a:",
-            "Ao comunicar minhas ideias, sou mais propenso a:",
-            "Em situações de estresse, sou mais propenso a:",
-            "Ao abordar tarefas ou projetos, sou mais propenso a:",
-            "No geral, sou mais propenso a:"
-        ];
+            <div class="personalidade" id="personalidade-i" style="width: 100%;">
+                <div class="pers-nome-info"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div class="pers-nome"
+                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <img src="../assets/blu-personalidade1.png" alt="" style="">
+                        <h2 style="color: #00A939; font-weight: 700; margin-top: -20px; font-size: 25px;">Influência (I)
+                        </h2>
+                    </div>
+                    <div class="pers-info" style="text-align: right; font-size: 20px; width: 25vw;">
+                        <p style="margin: 0;">“Meu trabalho não é facilitar para as pessoas. Meu trabalho é torná-las
+                            melhores.”</p><br>
+                        <p style="margin: 0; color: #1185E3; font-weight: 600;">• Steve Jobs</p>
+                    </div>
+                </div>
+                <div class="pers-sobre" style="margin-top: 50px; display: flex; flex-direction: column; gap: 20px;">
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Sobre</h3>
+                        <p style="margin: 0; font-size: 18px;">Você é um verdadeiro comunicador e influenciador. Sua
+                            sociabilidade e habilidades
+                            interpessoais o tornam uma pessoa carismática e cativante. Você adora interagir com os
+                            outros e está sempre cheio de ideias criativas.</p><br>
+                        <p style="font-weight: 600; margin: 0; font-size: 18px;">Seu perfil te indica como um forte
+                            agente de mudanças e inovação.
+                        </p>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Características marcantes</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Sociável, extrovertido e cheio de energia.</li>
+                            <li>Habilidades fortes de comunicação e persuasão.</li>
+                            <li>Criativo e cheio de ideias inovadoras.</li>
+                            <li>Capacidade de motivar e inspirar os outros.</li>
+                        </ul>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Áreas relacionadas</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Marketing, vendas e relações públicas.</li>
+                            <li>Carreiras que envolvem trabalho em equipe e colaboração.</li>
+                            <li>Áreas artísticas e criativas.</li>
+                            <li>Empreendedorismo e liderança inspiradora.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pers-voltar"
+                    style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
+                    <a href="../pages/teste-testeDISC.html"
+                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                        resultado</a>
+                    <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
+                        teste.</a>
+                </div>
+            </div>
 
-        const respostas = {
-            a: 0,
-            b: 0,
-            c: 0,
-            d: 0
-        };
+            <div class="personalidade" id="personalidade-s" style="width: 100%;">
+                <div class="pers-nome-info"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div class="pers-nome"
+                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <img src="../assets/blu-personalidade1.png" alt="" style="">
+                        <h2 style="color: #00A939; font-weight: 700; margin-top: -20px; font-size: 25px;">Estabilidade (S)
+                        </h2>
+                    </div>
+                    <div class="pers-info" style="text-align: right; font-size: 20px; width: 25vw;">
+                        <p style="margin: 0;">“Meu objetivo é simples. É a compreensão completa do universo, por que ele é assim e por que existe”</p><br>
+                        <p style="margin: 0; color: #1185E3; font-weight: 600;">• Stephen Hawking</p>
+                    </div>
+                </div>
+                <div class="pers-sobre" style="margin-top: 50px; display: flex; flex-direction: column; gap: 20px;">
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Sobre</h3>
+                        <p style="margin: 0; font-size: 18px;">Você é uma pessoa que valoriza a estabilidade e a harmonia. Sua empatia e capacidade de construir relacionamentos fortes fazem de você um colaborador eficaz e um solucionador de conflitos.</p><br>
+                        <p style="font-weight: 600; margin: 0; font-size: 18px;">Seu perfil indica uma personalidade centrada em relações e bem-estar.
+                        </p>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Características marcantes</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Calmo e centrado.</li>
+                            <li>Empático e compreensivo.</li>
+                            <li>Habilidade de construir relacionamentos fortes.</li>
+                            <li>Solucionador de conflitos.</li>
+                        </ul>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Áreas relacionadas</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Psicologia e aconselhamento.</li>
+                            <li>Trabalho social e serviços comunitários.</li>
+                            <li>Recursos humanos e gestão de equipes.</li>
+                            <li>Carreiras que envolvem cuidado e apoio.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pers-voltar"
+                    style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
+                    <a href="../pages/teste-testeDISC.html"
+                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                        resultado</a>
+                    <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
+                        teste.</a>
+                </div>
+            </div>
 
-        let perguntaAtual = 0;
+            <div class="personalidade" id="personalidade-c" style="width: 100%;">
+                <div class="pers-nome-info"
+                    style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <div class="pers-nome"
+                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <img src="../assets/blu-personalidade1.png" alt="" style="">
+                        <h2 style="color: #00A939; font-weight: 700; margin-top: -20px; font-size: 25px;">Conformidade (C)
+                        </h2>
+                    </div>
+                    <div class="pers-info" style="text-align: right; font-size: 20px; width: 25vw;">
+                        <p style="margin: 0;">“Meu objetivo é simples. É a compreensão completa do universo, por que ele é assim e por que existe”</p><br>
+                        <p style="margin: 0; color: #1185E3; font-weight: 600;">• Stephen Hawking</p>
+                    </div>
+                </div>
+                <div class="pers-sobre" style="margin-top: 50px; display: flex; flex-direction: column; gap: 20px;">
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Sobre</h3>
+                        <p style="margin: 0; font-size: 18px;">Você é uma pessoa que valoriza a conformidade e a precisão. Sua atenção aos detalhes e busca pela excelência fazem de você um profissional meticuloso e confiável.</p><br>
+                        <p style="font-weight: 600; margin: 0; font-size: 18px;">Seu perfil aponta para uma personalidade orientada para a precisão e a conformidade.
+                        </p>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Características marcantes</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Preciso e meticuloso.</li>
+                            <li>Segue regras e procedimentos com exatidão.</li>
+                            <li>Busca pela excelência e qualidade.</li>
+                            <li>Organizado e detalhista.</li>
+                        </ul>
+                    </div>
+                    <div class="pers-sobre-item">
+                        <h3 style="font-size: 22px; color: #1185E3;">Áreas relacionadas</h3>
+                        <ul style="font-size: 18px;">
+                            <li>Contabilidade e finanças.</li>
+                            <li>Pesquisa e análise de dados.</li>
+                            <li>Carreiras técnicas e científicas.</li>
+                            <li>Auditoria e conformidade regulatória.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pers-voltar"
+                    style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
+                    <a href="../pages/teste-testeDISC.html"
+                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                        resultado</a>
+                    <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
+                        teste.</a>
+                </div>
+            </div>
+        </div>
 
-        const perguntaElement = document.getElementById("pergunta");
-        const respostaAElement = document.getElementById("resposta-a");
-        const respostaBElement = document.getElementById("resposta-b");
-        const respostaCElement = document.getElementById("resposta-c");
-        const respostaDElement = document.getElementById("resposta-d");
-        const proximaPerguntaButton = document.getElementById("proxima-pergunta");
-        const resultadoElement = document.getElementById("resultado");
-        const personalidadeDElement = document.getElementById("personalidade-d");
-        const personalidadeIElement = document.getElementById("personalidade-i");
-        const personalidadeSElement = document.getElementById("personalidade-s");
-        const personalidadeCElement = document.getElementById("personalidade-c");
+        <script>
 
-        function exibirPergunta() {
-            if (perguntaAtual < perguntas.length) {
-                perguntaElement.textContent = perguntas[perguntaAtual];
-                respostaAElement.checked = false;
-                respostaBElement.checked = false;
-                respostaCElement.checked = false;
-                respostaDElement.checked = false;
-            } else {
-                calcularResultado();
+            const perguntas = [
+                {
+                    pergunta: "1. Em situações de conflito, sou mais propenso a:",
+                    alternativas: [
+                        "Afirmar minha posição e lutar por uma solução rápida.",
+                        "Buscar um compromisso e encontrar uma solução que atenda às necessidades de ambas as partes.",
+                        "Evitar o conflito e buscar um ambiente harmonioso.",
+                        "Analisar cuidadosamente as informações e considerar diferentes perspectivas antes de tomar uma decisão."
+                    ]
+                },
+                {
+                    pergunta: "2. Ao lidar com mudanças, sou mais inclinado a:",
+                    alternativas: [
+                        "Abraçar a mudança rapidamente e me adaptar conforme necessário.",
+                        "Influenciar e motivar os outros a aceitarem e se adaptarem às mudanças.",
+                        "Levar em consideração as preocupações das pessoas afetadas e trabalhar para minimizar os impactos negativos.",
+                        "Seguir os procedimentos estabelecidos e garantir que as mudanças sejam implementadas corretamente."
+                    ]
+                },
+                {
+                    pergunta: "3. Em um ambiente de trabalho, sou mais propenso a:",
+                    alternativas: [
+                        "Assumir a liderança e delegar tarefas para alcançar os objetivos rapidamente.",
+                        "Contribuir com ideias e motivar a equipe a alcançar os objetivos em conjunto.",
+                        "Construir relacionamentos fortes e garantir que todos tenham a oportunidade de se expressar.",
+                        "Contribuir com conhecimento especializado e garantir que o trabalho seja realizado com precisão."
+                    ]
+                },
+                {
+                    pergunta: "4. Ao enfrentar um problema complexo, sou mais propenso a:",
+                    alternativas: [
+                        "Encontrar uma solução rápida, mesmo que não seja perfeita.",
+                        "Discutir o problema com outras pessoas e buscar diferentes perspectivas.",
+                        "Considerar as preocupações e sentimentos das pessoas envolvidas antes de tomar uma decisão.",
+                        "Analisar cuidadosamente as informações disponíveis e considerar todas as opções antes de decidir."
+                    ]
+                },
+                {
+                    pergunta: "5. No trabalho em equipe, sou mais propenso a:",
+                    alternativas: [
+                        "Assumir a liderança e delegar tarefas para alcançar os objetivos rapidamente.",
+                        "Contribuir com ideias e motivar a equipe a alcançar os objetivos em conjunto.",
+                        "Construir relacionamentos fortes e garantir que todos tenham a oportunidade de se expressar.",
+                        "Contribuir com conhecimento especializado e garantir que o trabalho seja realizado com precisão."
+                    ]
+                },
+                {
+                    pergunta: "6. Em termos de seguir regras e procedimentos, sou mais propenso a:",
+                    alternativas: [
+                        "Agir de forma independente e assumir riscos para alcançar resultados.",
+                        "Trabalhar dentro dos limites das regras, mas buscando flexibilidade quando necessário.",
+                        "Seguir as regras e procedimentos estabelecidos, mantendo a estabilidade e a consistência.",
+                        "Seguir rigorosamente as regras e procedimentos, garantindo a conformidade e a precisão."
+                    ]
+                },
+                {
+                    pergunta: "7. Ao comunicar minhas ideias, sou mais propenso a:",
+                    alternativas: [
+                        "Ser direto e assertivo, enfatizando os resultados e ação.",
+                        "Ser persuasivo e envolvente, utilizando histórias e exemplos para transmitir minha mensagem.",
+                        "Ser diplomático e amigável, focando nas emoções e no impacto nas pessoas.",
+                        "Ser detalhado e preciso, fornecendo informações técnicas e embasadas."
+                    ]
+                },
+                {
+                    pergunta: "8. Em situações de estresse, sou mais propenso a:",
+                    alternativas: [
+                        "Agir rapidamente para resolver o problema e minimizar o estresse.",
+                        "Buscar apoio emocional e compartilhar o estresse com os outros.",
+                        "Evitar conflitos e buscar um ambiente tranquilo para aliviar o estresse.",
+                        "Analisar a situação cuidadosamente e tomar decisões informadas para reduzir o estresse."
+                    ]
+                },
+                {
+                    pergunta: "9. Ao abordar tarefas ou projetos, sou mais propenso a:",
+                    alternativas: [
+                        "Iniciar a ação imediatamente, mesmo que os detalhes não estejam totalmente claros.",
+                        "Iniciar a ação, mas também buscar a colaboração e o envolvimento dos outros.",
+                        "Considerar as necessidades e preferências dos outros antes de iniciar a ação.",
+                        "Analisar e planejar cuidadosamente antes de iniciar a ação."
+                    ]
+                },
+                {
+                    pergunta: "10. No geral, sou mais propenso a:",
+                    alternativas: [
+                        "Ser assertivo e focado em resultados.",
+                        "Ser expressivo e envolvente.",
+                        "Ser amigável e focado em relacionamentos.",
+                        "Ser detalhista e focado em precisão."
+                    ]
+                }
+            ];
+
+
+            const respostas = {
+                a: 0,
+                b: 0,
+                c: 0,
+                d: 0
+            };
+
+            let perguntaAtual = 0;
+
+            const perguntaElement = document.getElementById("pergunta");
+            const perguntaContainer = document.getElementById("pergunta-container")
+            const respostaAElement = document.getElementById("l-resposta-a");
+            const respostaBElement = document.getElementById("l-resposta-b");
+            const respostaCElement = document.getElementById("l-resposta-c");
+            const respostaDElement = document.getElementById("l-resposta-d");
+            const proximaPerguntaButton = document.getElementById("proxima-pergunta");
+            const resultadoElement = document.getElementById("resultado");
+            const personalidadeDElement = document.getElementById("personalidade-d");
+            const personalidadeIElement = document.getElementById("personalidade-i");
+            const personalidadeSElement = document.getElementById("personalidade-s");
+            const personalidadeCElement = document.getElementById("personalidade-c");
+
+            function exibirPergunta() {
+                if (perguntaAtual < perguntas.length) {
+                    // Remova a exibição das personalidades
+                    personalidadeDElement.style.display = "none";
+                    personalidadeIElement.style.display = "none";
+                    personalidadeSElement.style.display = "none";
+                    personalidadeCElement.style.display = "none";
+
+                    if (perguntaContainer.style.display === "none") {
+                        perguntaContainer.style.display = "block";
+                        proximaPerguntaButton.style.display = "block";
+                    }
+
+                    // Exibe a pergunta atual
+                    perguntaElement.textContent = perguntas[perguntaAtual].pergunta;
+                    respostaAElement.innerHTML = `${perguntas[perguntaAtual].alternativas[0]}`;
+                    respostaBElement.innerHTML = `${perguntas[perguntaAtual].alternativas[1]}`;
+                    respostaCElement.innerHTML = `${perguntas[perguntaAtual].alternativas[2]}`;
+                    respostaDElement.innerHTML = `${perguntas[perguntaAtual].alternativas[3]}`;
+                    proximaPerguntaButton.style.display = "block";
+                } else {
+                    calcularResultado();
+                    // Se for a última pergunta, oculte a pergunta
+                    perguntaContainer.style.display = "none";
+                    proximaPerguntaButton.style.display = "none";
+                }
             }
-        }
 
-        function calcularResultado() {
-            const maioria = Object.keys(respostas).reduce((a, b) => respostas[a] > respostas[b] ? a : b);
 
-            // Esconde todas as divs de personalidade
-            personalidadeDElement.style.display = "none";
-            personalidadeIElement.style.display = "none";
-            personalidadeSElement.style.display = "none";
-            personalidadeCElement.style.display = "none";
+            function calcularResultado() {
+                const respostasValores = Object.values(respostas);
+                const maxResposta = Math.max(...respostasValores);
+                const personalidadeDominante = Object.keys(respostas).find(key => respostas[key] === maxResposta);
 
-            // Exibe apenas a div da personalidade do usuário
-            if (maioria === 'a') {
-                personalidadeDElement.style.display = "block";
-            } else if (maioria === 'b') {
-                personalidadeIElement.style.display = "block";
-            } else if (maioria === 'c') {
-                personalidadeSElement.style.display = "block";
-            } else if (maioria === 'd') {
-                personalidadeCElement.style.display = "block";
+                // Verifique se há um empate
+                if (respostasValores.filter(valor => valor === maxResposta).length > 1) {
+                    // Em caso de empate, a última pergunta será decisiva
+                    const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+
+                    if (respostaSelecionada) {
+                        // Use a resposta da última pergunta para determinar a personalidade
+                        respostas[respostaSelecionada.value]++;
+                        personalidadeDominante = respostaSelecionada.value;
+                    } else {
+                        alert("Por favor, selecione uma resposta antes de avançar.");
+                        return;
+                    }
+                }
+
+                // Esconde todas as divs de personalidade
+                personalidadeDElement.style.display = "none";
+                personalidadeIElement.style.display = "none";
+                personalidadeSElement.style.display = "none";
+                personalidadeCElement.style.display = "none";
+
+                // Exibe apenas a div da personalidade do usuário
+                if (personalidadeDominante === 'a') {
+                    personalidadeDElement.style.display = "block";
+                } else if (personalidadeDominante === 'b') {
+                    personalidadeIElement.style.display = "block";
+                } else if (personalidadeDominante === 'c') {
+                    personalidadeSElement.style.display = "block";
+                } else if (personalidadeDominante === 'd') {
+                    personalidadeCElement.style.display = "block";
+                }
             }
-        }
 
-        exibirPergunta();
 
-        proximaPerguntaButton.addEventListener("click", function () {
-            const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+            exibirPergunta();
 
-            if (respostaSelecionada) {
-                respostas[respostaSelecionada.value]++;
-                perguntaAtual++;
-                exibirPergunta();
-            } else {
-                alert("Por favor, selecione uma resposta antes de avançar.");
-            }
-        });
-    </script>
+            proximaPerguntaButton.addEventListener("click", function () {
+                const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+
+                if (respostaSelecionada) {
+                    respostas[respostaSelecionada.value]++;
+                    perguntaAtual++;
+                    exibirPergunta();
+
+                    // Atualiza o indicador de progresso
+                    const progressSteps = document.querySelectorAll(".step");
+                    progressSteps[perguntaAtual - 0].classList.add("done");
+                } else {
+                    alert("Por favor, selecione uma resposta antes de avançar.");
+                }
+            });
+
+            // Adicione um evento de clique a cada etapa no indicador de progresso
+            const progressSteps = document.querySelectorAll(".step");
+            progressSteps.forEach((step, index) => {
+                step.addEventListener("click", () => {
+                    if (index < perguntaAtual) {
+                        perguntaAtual = index;
+                        exibirPergunta();
+
+                        // Remove a classe "done" das etapas seguintes
+                        for (let i = index + 1; i < progressSteps.length; i++) {
+                            progressSteps[i].classList.remove("done");
+                        }
+                    }
+                });
+            });
+        </script>
+
 </body>
 
 </html>
