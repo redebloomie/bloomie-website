@@ -87,7 +87,7 @@
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
           <div class="col-12 d-flex justify-content-center">
-            <form action="../PHP/homepage.php" method="post" class="col-10 form-post" enctype="multipart/form-data">
+            <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
                   <textarea class="col-12 post-section multiline-input" rows="3" name="texto" wrap="hard"
@@ -103,8 +103,8 @@
                       <i class="ph ph-file-text"></i>
                       <p style="font-weight: 500;">Documento</p>
                     </label>
-                    <input type="file" name="imagem" id="imagem" accept="image/*" size="5000000">
-                    <input type="file" name="documento" id="documento" accept="*/*" size="5000000">
+                    <input type="file" name="uploadImagem" id="uploadImagem" accept="image/*" size="5000000">
+                    <input type="file" name="uploadArquivo" id="uploadArquivo" accept="*/*" size="5000000">
                   </span>
                   <input type="submit" name="submit" value="Postar" class="btn btn-primary rounded-4" style="font-weight: 500;">
                 </div>
