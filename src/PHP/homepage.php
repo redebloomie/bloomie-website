@@ -5,7 +5,7 @@ include('connect.php');
 if(isset($_POST['submit'])){
     // $data_publicacao = $_POST['data_publicacao'];
     $documento = $_POST['documento'];
-    $imagem = $_POST['imagem'];
+    $imagem = $_FILES['imagem'];
     $texto = $_POST['texto'];
     $stmt = $conexao->prepare("INSERT INTO post(documento,imagem,texto) 
     VALUES ('$documento','$imagem','$texto')");
