@@ -8,9 +8,11 @@ require '../../vendor/autoload.php';
 // Inicie a sessão
 session_start();
 
-if (isset($_POST['email'])) {
+if (isset($_POST['submit'])) {
     $email = $_POST['email']; // Captura o e-mail do formulário
-    $_SESSION['email'];
+    // Armazene o email na sessão
+    $_SESSION['email_para_redefinicao'] = $email;
+    
 
     // Crie uma nova instância do PHPMailer
     $mail = new PHPMailer(true);
