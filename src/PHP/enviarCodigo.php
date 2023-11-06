@@ -10,6 +10,7 @@ session_start();
 
 if (isset($_POST['email'])) {
     $email = $_POST['email']; // Captura o e-mail do formulário
+    $_SESSION['email'];
 
     // Crie uma nova instância do PHPMailer
     $mail = new PHPMailer(true);
