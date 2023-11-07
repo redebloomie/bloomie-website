@@ -199,9 +199,9 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <a href="../pages/teste-testeDISC.html"
+                    <button
                         style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
-                        resultado</a>
+                        resultado</button>
                     <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
                 </div>
@@ -257,9 +257,9 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <a href="../pages/teste-testeDISC.html"
+                    <button
                         style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
-                        resultado</a>
+                        resultado</button>
                     <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
                 </div>
@@ -312,9 +312,9 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <a href="../pages/teste-testeDISC.html"
+                    <button id="salvar-resultado"
                         style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
-                        resultado</a>
+                        resultado</button>
                     <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
                 </div>
@@ -367,9 +367,9 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <a href="../pages/teste-testeDISC.html"
+                    <button
                         style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
-                        resultado</a>
+                        resultado</button>
                     <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
                 </div>
@@ -523,6 +523,44 @@
             }
 
 
+            // function calcularResultado() {
+            //     const respostasValores = Object.values(respostas);
+            //     const maxResposta = Math.max(...respostasValores);
+            //     const personalidadeDominante = Object.keys(respostas).find(key => respostas[key] === maxResposta);
+
+            //     // Verifique se há um empate
+            //     if (respostasValores.filter(valor => valor === maxResposta).length > 1) {
+            //         // Em caso de empate, a última pergunta será decisiva
+            //         const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+
+            //         if (respostaSelecionada) {
+            //             // Use a resposta da última pergunta para determinar a personalidade
+            //             respostas[respostaSelecionada.value]++;
+            //             personalidadeDominante = respostaSelecionada.value;
+            //         } else {
+            //             alert("Por favor, selecione uma resposta antes de avançar.");
+            //             return;
+            //         }
+            //     }
+
+            //     // Esconde todas as divs de personalidade
+            //     personalidadeDElement.style.display = "none";
+            //     personalidadeIElement.style.display = "none";
+            //     personalidadeSElement.style.display = "none";
+            //     personalidadeCElement.style.display = "none";
+
+            //     // Exibe apenas a div da personalidade do usuário
+            //     if (personalidadeDominante === 'a') {
+            //         personalidadeDElement.style.display = "block";
+            //     } else if (personalidadeDominante === 'b') {
+            //         personalidadeIElement.style.display = "block";
+            //     } else if (personalidadeDominante === 'c') {
+            //         personalidadeSElement.style.display = "block";
+            //     } else if (personalidadeDominante === 'd') {
+            //         personalidadeCElement.style.display = "block";
+            //     }
+            // }
+
             function calcularResultado() {
                 const respostasValores = Object.values(respostas);
                 const maxResposta = Math.max(...respostasValores);
@@ -543,6 +581,24 @@
                     }
                 }
 
+                // Enviar o resultado para o PHP
+                fetch('../PHP/salvarDISC.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ personalidade: personalidadeDominante }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Lidar com a resposta do PHP, se necessário
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        // Lidar com erros
+                        console.error('Erro:', error);
+                    });
+
                 // Esconde todas as divs de personalidade
                 personalidadeDElement.style.display = "none";
                 personalidadeIElement.style.display = "none";
@@ -561,6 +617,10 @@
                 }
             }
 
+            // Adicione um evento de clique ao botão "Salvar Resultado"
+            const salvarResultadoButton = document.getElementById("salvar-resultado");
+            salvarResultadoButton.addEventListener("click", calcularResultado);
+
 
             exibirPergunta();
 
@@ -572,11 +632,11 @@
                     perguntaAtual++;
 
                     // Limpar todas as opções de resposta (desmarcar os inputs de rádio)
-                    const inputsResposta = document.querySelectorAll('input[name="resposta"]');
-                    inputsResposta.forEach(input => {
-                        input.checked = false;
-                    });
-                    
+                    // const inputsResposta = document.querySelectorAll('input[name="resposta"]');
+                    // inputsResposta.forEach(input => {
+                    //     input.checked = false;
+                    // });
+
                     exibirPergunta();
 
                     // Atualiza o indicador de progresso
