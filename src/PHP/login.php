@@ -7,6 +7,7 @@ if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha']
     
     $email = $_POST['email'];
     $senha = $_POST['senha'];
+    $ID_usuario = "SELECT ID_usuario FROM usuario WHERE email = ?";
 
     $sql = "SELECT senha FROM usuario WHERE email = ?";
     $stmt = $conexao->prepare($sql);
@@ -19,30 +20,42 @@ if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha']
     if (password_verify($senha, $senhaHash)) {
         // A senha é válida, permita o acesso
         $_SESSION['email'] = $email;
-
-        // Verifique o campo 'personalidade' na tabela 'estudante'
-        $sqlEstudante = "SELECT personalidade FROM estudante WHERE ID_usuario = (SELECT ID_usuario FROM usuario WHERE email = ?)";
-        $stmtEstudante = $conexao->prepare($sqlEstudante);
-        $stmtEstudante->bind_param("s", $email);
-        $stmtEstudante->execute();
-        $stmtEstudante->bind_result($personalidade);
-        $stmtEstudante->fetch();
-        $stmtEstudante->close();
-
+    
+        // Recupere o ID do usuário com base no email
+        $sql = "SELECT ID_usuario FROM usuario WHERE email = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($ID_usuario);
+        $stmt->fetch();
+        $stmt->close();
+    
+        // Defina a variável de sessão para o ID do usuário
+        $_SESSION['ID_usuario'] = $ID_usuario;
+    
         if ($email == 'winnie@gmail.com' && $senha == 'winnie') {
             header('Location: ../pages/adm.html');
-        } elseif (empty($personalidade)) {
-            header('Location: ../pages/homepage-oportunidades-nm.html');
         } else {
-            header('Location: ../pages/homepage-postagens.html');
+            // Verifique o campo 'personalidade' na tabela 'estudante'
+            $sqlEstudante = "SELECT personalidade FROM estudante WHERE ID_usuario = ?";
+            $stmtEstudante = $conexao->prepare($sqlEstudante);
+            $stmtEstudante->bind_param("i", $ID_usuario); // Usamos o ID do usuário aqui
+            $stmtEstudante->execute();
+            $stmtEstudante->bind_result($personalidade);
+            $stmtEstudante->fetch();
+            $stmtEstudante->close();
+    
+            if (empty($personalidade)) {
+                header('Location: ../pages/homepage-oportunidades-nm.html');
+            } else {
+                header('Location: ../pages/homepage-postagens.html');
+            }
         }
     } else {
         // Credenciais inválidas
         unset($_SESSION['email']);
         header('Location: ../../public/index.html');
     }
-} else {
-    // Não acessa
-    header('Location: connect.php');
 }
 ?>
+    

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             // Redirecionar o usuário para uma página de confirmação
-            echo "Senha atualizada com sucesso!";
+            header('Location: ../pages/sucessoRedefinicao.html');
             exit();
         } else {
             echo "Erro ao redefinir a senha: " . $stmt->error;
