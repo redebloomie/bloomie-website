@@ -258,6 +258,38 @@
   <footer>
     <!-- place footer here -->
   </footer>
+
+  <script>
+    function carregarPostagens() {
+        // Faça uma solicitação AJAX para o seu script PHP que recupera as postagens
+        fetch('caminho-para-seu-script-php.php')
+        .then(response => response.json())
+        .then(data => {
+            const feedElement = document.getElementById('feed');
+            
+            // Limpe o conteúdo existente no feed
+            feedElement.innerHTML = '';
+
+            // Itere sobre os dados recebidos e crie elementos HTML para cada postagem
+            data.forEach(postagem => {
+                const postElement = document.createElement('div');
+                postElement.className = 'seu-classe-de-postagem';
+
+                // Crie os elementos para mostrar os dados da postagem
+                // Exemplo: postElement.innerHTML = `<p>${postagem.texto}</p>`;
+
+                // Anexe o elemento da postagem ao feed
+                feedElement.appendChild(postElement);
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar postagens:', error);
+        });
+    }
+
+    // Chame carregarPostagens para carregar as postagens quando a página for carregada
+    window.onload = carregarPostagens;
+</script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
