@@ -4,6 +4,7 @@
   
   if (isset($_SESSION['ID_usuario'])) {
       $ID_usuario = $_SESSION['ID_usuario'];
+      $usuario = $_SESSION['usuario'];
   
       // Consulta SQL para obter os dados do usuário
       $sql = "SELECT nome, usuario FROM usuario WHERE ID_usuario = ?";

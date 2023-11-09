@@ -28,11 +28,11 @@
       <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
           <a href="../pages/homepage-postagens.html"><button type="button" id="btnPostagens" class="btn"
-            style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Postagens</button></a>
+              style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Postagens</button></a>
         </li>
         <li class="nav-item">
           <a href="../pages/homepage-oportunidades.html"><button type="button" id="btnOportunidades" class="btn"
-            style="color: #5AB5FF; font-weight: 500;">Oportunidades</button></a>
+              style="color: #5AB5FF; font-weight: 500;">Oportunidades</button></a>
         </li>
       </ul>
     </div>
@@ -65,7 +65,8 @@
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-plant"></i>
-                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                  <a href="../pages/enviarOportunidade.html"
+                    class="text-decoration-none text-white">Enviar<br>oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
@@ -87,7 +88,7 @@
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
           <div class="col-12 d-flex justify-content-center">
-            <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data">
+            <form action="../PHP/post.php" id="postForm" method="POST" class="col-10 form-post" enctype="multipart/form-data">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
                   <textarea class="col-12 post-section multiline-input" rows="3" name="texto" wrap="hard"
@@ -104,9 +105,9 @@
                       <p style="font-weight: 500;">Documento</p>
                     </label>
                     <input type="file" name="uploadImagem" id="uploadImagem" accept="image/*" size="5000000">
-                    <input type="file" name="uploadArquivo" id="uploadArquivo" accept="*/*" size="5000000">
                   </span>
-                  <input type="submit" name="submit" value="Postar" class="btn btn-primary rounded-4" style="font-weight: 500;">
+                  <input type="submit" name="submit" value="Postar" class="btn btn-primary rounded-4"
+                    style="font-weight: 500;">
                 </div>
               </div>
             </form>
@@ -260,36 +261,96 @@
   </footer>
 
   <script>
-    function carregarPostagens() {
-        // Faça uma solicitação AJAX para o seu script PHP que recupera as postagens
-        fetch('caminho-para-seu-script-php.php')
-        .then(response => response.json())
+    document.getElementById('postForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      fetch('../PHP/post.php', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.text())
         .then(data => {
-            const feedElement = document.getElementById('feed');
-            
-            // Limpe o conteúdo existente no feed
-            feedElement.innerHTML = '';
-
-            // Itere sobre os dados recebidos e crie elementos HTML para cada postagem
-            data.forEach(postagem => {
-                const postElement = document.createElement('div');
-                postElement.className = 'seu-classe-de-postagem';
-
-                // Crie os elementos para mostrar os dados da postagem
-                // Exemplo: postElement.innerHTML = `<p>${postagem.texto}</p>`;
-
-                // Anexe o elemento da postagem ao feed
-                feedElement.appendChild(postElement);
-            });
+          console.log(data); // Exiba a resposta do servidor no console
+          // Atualize o feed ou dê feedback ao usuário, se necessário
         })
-        .catch(error => {
-            console.error('Erro ao carregar postagens:', error);
-        });
+        .catch(error => console.error('Erro:', error));
+    });
+
+    let paginaAtual = 1;
+    let carregando = false;
+
+    function carregarMaisPostagens() {
+      if (!carregando) {
+        carregando = true;
+
+        fetch(`../PHP/post.php?pagina=${++paginaAtual}`, {
+          method: 'GET',
+        })
+          .then(response => response.json())
+          .then(data => {
+            const feed = document.getElementById('feed');
+            data.forEach(post => {
+              const postElement = criarElementoPost(post);
+              feed.appendChild(postElement);
+            });
+
+            carregando = false;
+          })
+          .catch(error => console.error('Erro:', error));
+      }
     }
 
-    // Chame carregarPostagens para carregar as postagens quando a página for carregada
-    window.onload = carregarPostagens;
-</script>
+    function criarElementoPost(post) {
+      const postElement = document.createElement('div');
+      postElement.classList.add('post');
+
+      const mensagemElement = document.createElement('p');
+      mensagemElement.textContent = post.mensagem;
+      postElement.appendChild(mensagemElement);
+
+      if (post.imagem) {
+        const imagemElement = document.createElement('img');
+        imagemElement.src = post.imagem;
+        postElement.appendChild(imagemElement);
+      }
+
+      const acoesElement = document.createElement('div');
+      acoesElement.classList.add('post-actions');
+
+      const curtirButton = document.createElement('button');
+      curtirButton.textContent = 'Curtir';
+      curtirButton.addEventListener('click', function () {
+        // Implemente a lógica de curtir aqui
+        console.log('Curtiu post ID:', post.id);
+      });
+      acoesElement.appendChild(curtirButton);
+
+      const comentarButton = document.createElement('button');
+      comentarButton.textContent = 'Comentar';
+      comentarButton.addEventListener('click', function () {
+        // Implemente a lógica de comentar aqui
+        console.log('Comentou no post ID:', post.id);
+      });
+      acoesElement.appendChild(comentarButton);
+
+      postElement.appendChild(acoesElement);
+
+      return postElement;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        carregarMaisPostagens();
+      }
+    });
+
+    // Carregue algumas postagens iniciais
+    carregarMaisPostagens();
+  </script>
+
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

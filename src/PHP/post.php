@@ -1,31 +1,41 @@
 <?php
-include('connect.php');
+session_start();
+include ('connect.php');
 
-// Verifique se um arquivo de imagem foi enviado
-if (isset($_FILES["imagem"]) && $_FILES["imagem"]["error"] === 0) {
-    $nomeArquivo = $_FILES["imagem"]["name"];
-    $imagem = "../img/" . $nomeArquivo;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usuario = $_SESSION['usuario']; // Você pode obter isso de uma sessão de login
+    $texto = $_POST['texto'];
+    $idUsuario = $_SESSION['ID_usuario'];
 
-    // Move o arquivo para o destino
-    if (move_uploaded_file($_FILES["imagem"]["tmp_name"], $imagem)) {
+    // Salvar a imagem no servidor (adapte conforme necessário)
+    $caminhoImagem = '../img/' . $_FILES['uploadImagem']['name'];
+    move_uploaded_file($_FILES['uploadImagem']['tmp_name'], $caminhoImagem);
 
-        // Agora você pode inserir as informações no banco de dados
-        if (isset($_POST['submit'])) {
-            $data_publicacao = date("Y-m-d"); // Altere isso para o formato de data desejado
-            $texto = $_POST['texto'];
+    $sql = "INSERT INTO post (ID_usuario, usuario, texto, imagem, data_publicacao) 
+            VALUES ('$idUsuario', '$usuario', '$texto', '$caminhoImagem', '$data')";
 
-            // Use declarações preparadas para evitar injeções de SQL
-            $stmt = $conexao->prepare("INSERT INTO post (imagem, texto, data_publicacao) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $imagem, $texto, $data_publicacao);
-
-            if ($stmt->execute()) {
-                echo "Post feito!";
-            } else {
-                echo "Erro ao inserir no banco de dados: " . $stmt->error;
-            }
-        }
+    if ($conexao->query($sql) === TRUE) {
+        echo "Postagem realizada com sucesso!";
     } else {
-        echo "Erro ao mover o arquivo para o destino.";
+        echo "Erro ao postar: " . $conexao->error;
     }
+} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Processar curtida, comentário, compartilhamento, relatório, etc.
+    // ...
+    // Retorne os resultados em formato JSON para o feed dinâmico
+    $pagina = $_GET['pagina'];
+    $postsPorPagina = 5;
+    $indiceInicio = ($pagina - 1) * $postsPorPagina;
+
+    $result = $conexao->query("SELECT * FROM post ORDER BY data_publicacao DESC LIMIT $indiceInicio, $postsPorPagina");
+    $posts = array();
+
+    while ($row = $result->fetch_assoc()) {
+        $posts[] = $row;
+    }
+
+    echo json_encode($posts);
 }
+
+$conexao->close();
 ?>

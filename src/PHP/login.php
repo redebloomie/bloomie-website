@@ -8,6 +8,7 @@ if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha']
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $ID_usuario = "SELECT ID_usuario FROM usuario WHERE email = ?";
+    $usuario = "SELECT usuario FROM usuario WHERE email = ?";
 
     $sql = "SELECT senha FROM usuario WHERE email = ?";
     $stmt = $conexao->prepare($sql);
@@ -32,6 +33,9 @@ if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha']
     
         // Defina a variável de sessão para o ID do usuário
         $_SESSION['ID_usuario'] = $ID_usuario;
+
+        // Defina a variável de sessão para o usuário
+        $_SESSION['usuario'] = $usuario;
     
         if ($email == 'winnie@gmail.com' && $senha == 'winnie') {
             header('Location: ../pages/adm.html');
