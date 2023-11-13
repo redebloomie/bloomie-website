@@ -132,19 +132,19 @@
             <div id="pergunta-container" style="font-weight: 600; margin-top: 5vw;">
                 <p id="pergunta" style="color: #1185E3; font-size: 20px;"></p>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-a" value="a"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-a" value="Dominância"> <label for="resposta"
                         id="l-resposta-a" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-b" value="b"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-b" value="Influência"> <label for="resposta"
                         id="l-resposta-b" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-c" value="c"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-c" value="Estabilidade"> <label for="resposta"
                         id="l-resposta-c" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-d" value="d"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-d" value="Conformidade"> <label for="resposta"
                         id="l-resposta-d" style="font-size: 18px;"></label>
                 </span>
             </div>
@@ -367,7 +367,7 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <button
+                    <button id="salvar-resultado"
                         style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
                         resultado</button>
                     <a href="../pages/testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
@@ -473,10 +473,10 @@
 
 
             const respostas = {
-                a: 0,
-                b: 0,
-                c: 0,
-                d: 0
+                Dominância: 0,
+                Influência: 0,
+                Estabilidade: 0,
+                Conformidade: 0
             };
 
             let perguntaAtual = 0;
@@ -606,13 +606,13 @@
                 personalidadeCElement.style.display = "none";
 
                 // Exibe apenas a div da personalidade do usuário
-                if (personalidadeDominante === 'a') {
+                if (personalidadeDominante === 'Dominância') {
                     personalidadeDElement.style.display = "block";
-                } else if (personalidadeDominante === 'b') {
+                } else if (personalidadeDominante === 'Influência') {
                     personalidadeIElement.style.display = "block";
-                } else if (personalidadeDominante === 'c') {
+                } else if (personalidadeDominante === 'Estabilidade') {
                     personalidadeSElement.style.display = "block";
-                } else if (personalidadeDominante === 'd') {
+                } else if (personalidadeDominante === 'Conformidade') {
                     personalidadeCElement.style.display = "block";
                 }
             }

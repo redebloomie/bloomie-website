@@ -3,6 +3,8 @@
     date_default_timezone_set("America/Sao_Paulo");
     $data = date('Y-m-d H:i:s');
 
+    // Configurando o conjunto de caracteres para UTF-8
+    mysqli_set_charset($conexao, 'utf8');
 
     // if($conexao->connect_errno)
     // {

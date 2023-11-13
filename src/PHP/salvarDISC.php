@@ -12,7 +12,7 @@ if (isset($_SESSION['ID_usuario'])) {
     $data = json_decode(file_get_contents("php://input"));
 
     // Execute a atualização na tabela de estudantes
-    $sql = "UPDATE estudante SET personalidade = ? WHERE ID_usuario = ?";
+    $sql = "UPDATE usuario SET personalidade = ? WHERE ID_usuario = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("ss", $data->personalidade, $idUsuario);
 

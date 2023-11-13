@@ -88,11 +88,20 @@
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
           <div class="col-12 d-flex justify-content-center">
-            <form action="../PHP/post.php" id="postForm" method="POST" class="col-10 form-post" enctype="multipart/form-data">
+            <form action="../PHP/post.php" id="postForm" method="POST" class="col-8 form-post"
+              enctype="multipart/form-data">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
                   <textarea class="col-12 post-section multiline-input" rows="3" name="texto" wrap="hard"
                     placeholder="Algo para compartilhar? Deixe florescer!"></textarea>
+                </div>
+                <div class="col" style="position: relative;">
+                  <!-- Novo elemento para mostrar a pré-visualização da imagem -->
+                  <img id="previewImage" src="#" alt="Pré-visualização da imagem"
+                    style="width: 200px; height: 200px; object-fit: cover; position: relative;">
+                  <button id="removeImageButton"
+                    style="display: flex; border: none; background-color: #cfcfcf; position: absolute; top: 10px; left: 175px; border-radius: 100%; width: 20px; height: 20px; justify-content: center; align-items: center; text-align: center;"
+                    type="button"><i class="ph ph-x" style="color: #fff; font-weight: 600; font-size: 12px; margin: 0; margin-top: -10px;"></i></button>
                 </div>
                 <div class="col op-form" style="background-color: #E6F4FF;">
                   <span>
@@ -104,7 +113,11 @@
                       <i class="ph ph-file-text"></i>
                       <p style="font-weight: 500;">Documento</p>
                     </label>
-                    <input type="file" name="uploadImagem" id="uploadImagem" accept="image/*" size="5000000">
+
+
+                    <!-- Seu campo de input para upload de imagem -->
+                    <input type="file" name="uploadImagem" accept="image/*" id="uploadImagem"
+                      onchange="previewImage(this);">
                   </span>
                   <input type="submit" name="submit" value="Postar" class="btn btn-primary rounded-4"
                     style="font-weight: 500;">
@@ -112,52 +125,8 @@
               </div>
             </form>
           </div>
-          <div class="col-12 d-flex justify-content-center post-container" id="feed">
-            <div class="row-cols-1 justify-content-center align-items-center col-10 p-3 post-container-item">
-              <div class="col">
-                <div class="postagem-user">
-                  <img src="https://source.unsplash.com/random/" alt="">
-                  <span>
-                    <p style="font-weight: 700; font-size: 18px;">Nome do Usuário</p>
-                    <p style="color: #45abff;">22/06/2023</p>
-                  </span>
-                </div>
-              </div>
-              <div class="col">
-                <p style="font-size: 18px;">Descubra a essência que impulsiona a Bloomie e transforma
-                  vidas. Conheça nossa visão de conectar
-                  estudantes a oportunidades de crescimento pess... <span style="font-weight: 500;">Ler mais.</span></p>
-              </div>
-              <div class="col doc-post">
-                <span>
-                  <i class="ph ph-file-text"></i>
-                  <a href="">bloomie.pdf</a>
-                </span>
-              </div>
-              <div class="col img-post">
-                <img src="https://source.unsplash.com/random/" alt="">
-              </div>
-              <div class="col-12 interacoes-post">
-                <div class="options-post">
-                  <div class="rightside-op-post">
-                    <span>
-                      <i class="ph ph-heart"></i>
-                      <p>19</p>
-                    </span>
-                    <span>
-                      <i class="ph ph-chat-circle"></i>
-                      <p>19</p>
-                    </span>
-                    <span>
-                      <i class="ph ph-link-simple-horizontal"></i>
-                    </span>
-                  </div>
-                  <div class="leftside-op-post">
-                    <i class="ph ph-warning"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-12 d-flex justify-content-center post-container" id="feed"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vw;">
           </div>
         </div>
       </div>
@@ -184,7 +153,7 @@
                       <p style="background-color: #F2C934;">#educação</p>
                       <p style="background-color: #5AB5FF;">#redesocial</p>
                     </span>
-                    <img src="/src/assets/sobre_foto.png" alt="">
+                    <img src="../assets/sobre_foto.png" alt="">
                   </div>
                 </div>
                 <div class="col dots"
@@ -261,95 +230,190 @@
   </footer>
 
   <script>
-    document.getElementById('postForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+    const uploadImagem = document.getElementById('uploadImagem');
+    const previewImage = document.getElementById('previewImage');
+    const removeImageButton = document.getElementById('removeImageButton');
+    previewImage.style.display = 'none';
+    removeImageButton.style.display = 'none';
 
-      const form = event.target;
-      const formData = new FormData(form);
+    uploadImagem.onchange = evt => {
+      const [file] = uploadImagem.files;
+
+      if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        removeImageButton.style.display = 'block';
+        previewImage.style.display = 'block';
+      } else {
+        previewImage.src = ''; // Define o src como vazio
+        previewImage.style.display = 'none';
+        removeImageButton.style.display = 'none';
+      }
+    };
+
+    // Adicione a lógica para remover a imagem e redefinir o campo de arquivo
+    removeImageButton.addEventListener('click', () => {
+      previewImage.src = ''; // Define o src como vazio
+      previewImage.style.display = 'none';
+      uploadImagem.value = ''; // Limpa o valor do campo de arquivo
+      removeImageButton.style.display = 'none';
+    });
+
+// Antes do carregarFeed ou em algum lugar no início do script
+let carregando = false;
+let paginaAtual = 1;
+
+function carregarFeed() {
+    if (carregando) {
+        return;
+    }
+
+    carregando = true;
+
+    fetch(`../PHP/post.php?pagina=${paginaAtual}`, {
+        method: 'GET',
+    })
+        .then(response => response.json())
+        .then(data => {
+            const feed = document.getElementById('feed');
+
+            if (data.length > 0) {
+                data.forEach(post => {
+                    const postElement = criarElementoPost(post);
+                    feed.appendChild(postElement);
+                });
+
+                carregando = false;
+                paginaAtual++;
+            } else {
+                // Se não houver mais postagens, exiba a mensagem de final do feed
+                const finalDoFeed = document.createElement('p');
+                finalDoFeed.textContent = 'Você chegou ao final no feed! Clique aqui para voltar ao início.';
+                finalDoFeed.addEventListener('click', () => {
+                    window.scrollTo(0, 0); // Rolando para o início da página
+                });
+
+                feed.appendChild(finalDoFeed);
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+}
+
+window.addEventListener('scroll', () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        carregarFeed();
+    }
+});
+
+// Carregue alguns posts iniciais
+carregarFeed();
+
+
+
+// Função para carregar os últimos posts
+function carregarUltimosPosts() {
+  fetch('../PHP/post.php', {
+    method: 'GET',
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);  // Adicione esta linha para verificar a resposta JSON
+      const feed = document.getElementById('feed');
+      if (data.length > 0) {
+        data.forEach(post => {
+          const postElement = criarElementoPost(post);
+          feed.appendChild(postElement);
+        });
+      } else {
+        console.log('Não há postagens disponíveis.');
+      }
+    })
+    .catch(error => console.error('Erro:', error));
+}
+
+// Restante do código...
+
+
+// Restante do código...
+
+
+    function criarElementoPost(post) {
+      console.log('Caminho da Imagem:', post.caminhoImagem);
+      const postElement = document.createElement('div');
+      postElement.className = 'row-cols-1 justify-content-center align-items-center col-8 p-3 post-container-item';
+
+      console.log('Caminho da Imagem após a criação do elemento:', post.caminhoImagem);
+      postElement.innerHTML = `
+    <div class="col">
+        <div class="postagem-user">
+            <img src="${post.imagemUsuario}" alt="">
+            <span>
+                <p style="font-weight: 700; font-size: 18px;">${post.usuario}</p>
+                <p style="color: #45abff;">${post.data_publicacao}</p>
+            </span>
+        </div>
+    </div>
+    <div class="col">
+        <p style="font-size: 18px;">${post.texto} ${post.texto.length > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : ''}</p>
+    </div>
+    ${post.caminhoImagem ? `<div class="col img-post"><img src="${post.caminhoImagem}" alt=""></div>` : ''}
+    <div class="col-12 interacoes-post">
+        <div class="options-post">
+            <div class="rightside-op-post">
+                <span>
+                    <i class="ph ph-heart"></i>
+                    <p>${post.curtidas}</p>
+                </span>
+                <span>
+                    <i class="ph ph-chat-circle"></i>
+                    <p>${post.comentarios}</p>
+                </span>
+                <span>
+                    <i class="ph ph-link-simple-horizontal"></i>
+                </span>
+            </div>
+            <div class="leftside-op-post">
+                <i class="ph ph-warning"></i>
+            </div>
+        </div>
+    </div>
+`;
+
+      return postElement;
+
+    }
+
+
+    // Adicione esta função para lidar com o envio do formulário
+    document.getElementById('postForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
 
       fetch('../PHP/post.php', {
         method: 'POST',
         body: formData,
       })
-        .then(response => response.text())
-        .then(data => {
-          console.log(data); // Exiba a resposta do servidor no console
-          // Atualize o feed ou dê feedback ao usuário, se necessário
+        .then(response => response.json())
+        .then(novoPost => {
+          // Adicione o novo post ao início do feed
+          const feed = document.getElementById('feed');
+          const novoPostElement = criarElementoPost(novoPost);
+          feed.insertBefore(novoPostElement, feed.firstChild);
         })
-        .catch(error => console.error('Erro:', error));
+        .catch(error => console.error('Erro ao enviar o formulário:', error));
     });
-
-    let paginaAtual = 1;
-    let carregando = false;
-
-    function carregarMaisPostagens() {
-      if (!carregando) {
-        carregando = true;
-
-        fetch(`../PHP/post.php?pagina=${++paginaAtual}`, {
-          method: 'GET',
-        })
-          .then(response => response.json())
-          .then(data => {
-            const feed = document.getElementById('feed');
-            data.forEach(post => {
-              const postElement = criarElementoPost(post);
-              feed.appendChild(postElement);
-            });
-
-            carregando = false;
-          })
-          .catch(error => console.error('Erro:', error));
-      }
-    }
-
-    function criarElementoPost(post) {
-      const postElement = document.createElement('div');
-      postElement.classList.add('post');
-
-      const mensagemElement = document.createElement('p');
-      mensagemElement.textContent = post.mensagem;
-      postElement.appendChild(mensagemElement);
-
-      if (post.imagem) {
-        const imagemElement = document.createElement('img');
-        imagemElement.src = post.imagem;
-        postElement.appendChild(imagemElement);
-      }
-
-      const acoesElement = document.createElement('div');
-      acoesElement.classList.add('post-actions');
-
-      const curtirButton = document.createElement('button');
-      curtirButton.textContent = 'Curtir';
-      curtirButton.addEventListener('click', function () {
-        // Implemente a lógica de curtir aqui
-        console.log('Curtiu post ID:', post.id);
-      });
-      acoesElement.appendChild(curtirButton);
-
-      const comentarButton = document.createElement('button');
-      comentarButton.textContent = 'Comentar';
-      comentarButton.addEventListener('click', function () {
-        // Implemente a lógica de comentar aqui
-        console.log('Comentou no post ID:', post.id);
-      });
-      acoesElement.appendChild(comentarButton);
-
-      postElement.appendChild(acoesElement);
-
-      return postElement;
-    }
 
     window.addEventListener('scroll', () => {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        carregarMaisPostagens();
+        carregarFeed();
       }
     });
 
     // Carregue algumas postagens iniciais
-    carregarMaisPostagens();
+    carregarFeed();
   </script>
+
+
 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -360,7 +424,7 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
 
-  <script src="/public/script.js"></script>
+  <script src="../../public/script.js"></script>
 
 </body>
 
