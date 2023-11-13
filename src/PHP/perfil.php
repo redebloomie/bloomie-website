@@ -7,7 +7,7 @@
       $usuario = $_SESSION['usuario'];
   
       // Consulta SQL para obter os dados do usuário
-      $sql = "SELECT nome, usuario FROM usuario WHERE ID_usuario = ?";
+      $sql = "SELECT nome, sobrenome, usuario FROM usuario WHERE ID_usuario = ?";
       $stmt = $conexao->prepare($sql);
       $stmt->bind_param("i", $ID_usuario);
       $stmt->execute();
@@ -17,6 +17,7 @@
           $row = $result->fetch_assoc();
           $nome = $row['nome'];
           $usuario = $row['usuario'];
+          $sobrenome = $row['sobrenome'];
       }
   
       $stmt->close();
@@ -157,15 +158,16 @@
             <span class="foto-nome-user">
               <img src="https://source.unsplash.com/random/" alt="">
               <span style="display: flex; flex-direction: row; justify-content: center; align-items: start;">
-                <div class="user-info">
+              <div class="user-info">
                 <?php if (isset($nome) && isset($usuario)) : ?>
-                  <p style="font-size: 20px; font-weight: 500;"><?php echo $nome; ?></p>
-                  <p>@<?php echo $usuario; ?></p>
-                  <?php else : ?>
+                    <p id="nome" class="editavel" contenteditable="false"><?php echo $nome.' '.$sobrenome; ?></p>
+                    <p id="usuario" class="editavel" contenteditable="false">@<?php echo $usuario; ?></p>
+                <?php else : ?>
                     <p>Dados do usuário não encontrados.</p>
                 <?php endif; ?>
-                </div>
-                <i class="ph ph-pencil-simple"></i>
+            </div>
+            <input type="file" id="fotoPerfil" style="display: none;">
+                <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
             </span>
             <button>Editar perfil</button>
@@ -177,7 +179,7 @@
             <div class="perfil-left-item">
               <span style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 10px;">
                 <h2>Sobre</h2>
-                <i class="ph ph-pencil-simple"></i>
+                <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
               <p style="margin-top: 10px;">Quer deixar seu perfil ainda mais incrível? A área 'Sobre' é perfeita pra
                 você compartilhar suas
@@ -221,7 +223,7 @@
             <div class="perfil-left-item">
               <span style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 10px;">
                 <h2>Interesses</h2>
-                <i class="ph ph-pencil-simple"></i>
+                <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
               <p style="margin-top: 10px;">Ainda não há nada por aqui. Para preencher, escreva 1 interesse e clique em +
                 para adicionar ao perfil.</p>
