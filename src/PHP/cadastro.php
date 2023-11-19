@@ -40,7 +40,7 @@ if(isset($_POST['submit']))
     // Insira os dados do usuário na tabela usuario
     $stmt_usuario = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, senha, email, usuario, estado, cidade, data_nasc, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt_usuario->bind_param("sssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data);
+    $stmt_usuario->bind_param("sssssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data);
 
     if ($stmt_usuario->execute()) {
         // Recupere o ID_usuario após a inserção
