@@ -1,29 +1,26 @@
 <?php
-  session_start();
-  include('connect.php'); // Conexão com o banco de dados
-  
-  if (isset($_SESSION['ID_usuario'])) {
-      $ID_usuario = $_SESSION['ID_usuario'];
-      $usuario = $_SESSION['usuario'];
-  
-      // Consulta SQL para obter os dados do usuário, incluindo o caminho da imagem
-      $sql = "SELECT nome, sobrenome, usuario, foto_perfil, sobre FROM usuario WHERE ID_usuario = ?";
-      $stmt = $conexao->prepare($sql);
-      $stmt->bind_param("i", $ID_usuario);
-      $stmt->execute();
-      $result = $stmt->get_result();
+session_start();
+include('connect.php');
 
-      if ($result->num_rows > 0) {
-          $row = $result->fetch_assoc();
-          $nome = $row['nome'];
-          $usuario = $row['usuario'];
-          $sobrenome = $row['sobrenome'];
-          $fotoPerfil = $row['foto_perfil'];
-          $sobre = $row['sobre'];
-      }
+// Obtém o ID do usuário do parâmetro na URL
+$idUsuario = $_GET['idUsuario'];
 
-      $stmt->close();
-  }  
+// Consulta para obter informações do usuário
+$consultaUsuario = $conexao->query("SELECT * FROM usuario WHERE ID_usuario = $idUsuario");
+
+// Verifica se o usuário existe
+if ($consultaUsuario->num_rows > 0) {
+    $dadosUsuario = $consultaUsuario->fetch_assoc();
+
+    // Consulta para obter postagens do usuário
+    $consultaPostagens = $conexao->query("SELECT * FROM post WHERE ID_usuario = $idUsuario");
+
+    // Resto do código para exibir informações do perfil
+} else {
+    // Usuário não encontrado, redireciona para uma página de erro ou homepage
+    header("Location: index.php"); // Altere para a página desejada
+    exit();
+}
 ?>
 
 <!doctype html>
@@ -86,14 +83,9 @@
       height: 30px;
       margin-left: 5px;
       background-color: #efefef;
-      max-width: 100px;
       padding: 5px;
       border-radius: 5px;
       margin: 3px;
-    }
-
-    .editavel:focus{
-      outline: 1px solid #fff;
     }
 
     button {
@@ -165,23 +157,19 @@
     <span class="perfil-header-info">
       <span class="foto-nome-user">
         <div class="fotoPerfil-div" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-        <img src="<?php echo $fotoPerfil; ?>" alt="Foto de Perfil do Usuário">
+        <img src="<?php echo $dadosUsuario['foto_perfil']; ?>" alt="Foto de Perfil do Usuário">
           <label for="novaFotoPerfil" style="position: absolute; display:none;" id="novaFotoPerfil-label"><i class="ph ph-pencil"></i></label>
           <input type="file" id="novaFotoPerfil" name="novaFotoPerfil" style="display: none;">
         </div>
         
         <span style="display: flex; flex-direction: row; justify-content: center; align-items: start;">
           <div class="user-info" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
-            <?php if (isset($nome) && isset($usuario)) : ?>
               <!-- Adicione o atributo contenteditable para tornar os campos editáveis -->
-              <span style="display: flex; flex-direction: row; justify-content:center; align-items:center;">
-                <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $nome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
-                <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $sobrenome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
+              <span style="display: flex; flex-direction: row; justify-content:center; align-items:center; gap:-2px">
+                <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['nome'] . ' ' . $dadosUsuario['sobrenome']; ?>" readonly style="background:none;margin:0;color:#fff; width:fit-content; max-width:auto">
+                <!-- <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['sobrenome']; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;"> -->
               </span>
-              <input type="text" name="usuario" id="usuario" class="editavel" contenteditable="false" value="<?php echo $usuario; ?>" readonly style="background:none;margin:-5px 0 0 0;color:#fff;">
-            <?php else : ?>
-              <p>Dados do usuário não encontrados.</p>
-            <?php endif; ?>
+              <input type="text" name="usuario" id="usuario" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['usuario']; ?>" readonly style="background:none;margin:-5px 0 0 0;color:#fff;">
           </div>
           <input type="file" id="fotoPerfil" name="fotoPerfil" style="display: none;">
           
@@ -190,9 +178,6 @@
         
       </span>
       <span>
-      <button id="btnEditarPerfil" type="button">Editar perfil</button>
-        <input type="submit" id="btnSalvarPerfil" name="submit" value="Salvar" style="display: none;">
-          <button id="btnCancelarEdicao" type="button" style="display: none;">Cancelar</button>
       </span>
     </span>
   </div>
@@ -205,12 +190,11 @@
                 <h2>Sobre</h2>
                 <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
-              
+              <p style="margin-top: 10px;"><?php echo $dadosUsuario['sobre'];?></p>
             </div>
             <div class="perfil-left-item">
               <span>
-                <h2>Meu Perfil DISC é... <span style="font-size: 18px; color: #0B528C; display: inline;">Realize o teste
-                    agora.</span></h2>
+                <h2>Meu Perfil DISC é... <span style="font-size: 18px; color: #0B528C; display: inline;"><?php echo $dadosUsuario['personalidade'];?></span></h2>
               </span>
             </div>
             <div class="perfil-left-item">
@@ -260,51 +244,51 @@
               <span style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 10px;">
                 <h2>Posts</h2>
               </span>
-              <div class="row-cols-1 justify-content-center align-items-center col-10 post-container-item perfil-post-container" style="margin-top: 15px; width: 100%; padding: 1vw;">
-                <div class="col">
-                  <div class="postagem-user">
-                    <img src="https://source.unsplash.com/random/" alt="">
-                    <span>
-                      <p style="font-weight: 600; font-size: 15px;">Nome do Usuário</p>
-                      <p style="color: #45abff; font-size: 12px;">22/06/2023</p>
-                    </span>
+              <?php
+        
+        while ($post = $consultaPostagens->fetch_assoc()) {
+          echo '
+              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
+                  <div class="col">
+                      <div class="postagem-user">
+                          <img src="' . $dadosUsuario['foto_perfil'] . '" alt="Imagem do usuário">
+                          <span>
+                          <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                          </span>
+                      </div>
                   </div>
-                </div>
-                <div class="col">
-                  <p style="font-size: 15px;">Descubra a essência que impulsiona a Bloomie e transforma
-                    vidas. Conheça nossa visão de conectar
-                    estudantes a oportunidades de crescimento pess... <span style="font-weight: 500;">Ler mais.</span></p>
-                </div>
-                <div class="col doc-post">
-                  <span style="display: flex; gap: 5px; width: max-content; justify-content: center; align-items: center;">
-                    <i class="ph ph-file-text" style="font-size: 20px;"></i>
-                    <a href="" style="font-size: 15px;">bloomie.pdf</a>
-                  </span>
-                </div>
-                <div class="col img-post">
-                  <img src="https://source.unsplash.com/random/" alt="" style="height: 8vw;">
-                </div>
-                <div class="col-12 interacoes-post">
-                  <div class="options-post">
-                    <div class="rightside-op-post">
-                      <span>
-                        <i class="ph ph-heart"></i>
-                        <p>19</p>
-                      </span>
-                      <span>
-                        <i class="ph ph-chat-circle"></i>
-                        <p>19</p>
-                      </span>
-                      <span>
-                        <i class="ph ph-link-simple-horizontal"></i>
-                      </span>
-                    </div>
-                    <div class="leftside-op-post">
-                      <i class="ph ph-warning"></i>
-                    </div>
+                  <div class="col">
+                      <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
                   </div>
-                </div>
-              </div>
+                  ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt="" style="height: 10vw"></div>' : '') . '
+                  <div class="col-12 interacoes-post">
+                      <div class="options-post">
+                          <div class="rightside-op-post">
+                              <span>
+                                  <i class="ph ph-heart"></i>
+                                  <p></p>
+                              </span>
+                              <span>
+                                  <i class="ph ph-chat-circle"></i>
+                                  <p></p>
+                              </span>
+                              <span>
+                                  <i class="ph ph-link-simple-horizontal"></i>
+                              </span>
+                          </div>
+                          <div class="leftside-op-post">
+                              <i class="ph ph-warning"></i>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+          ';
+      }
+      
+        
+        $conexao->close();
+        
+      ?>
               <div class="perfil-next-post">
                 
               </div>

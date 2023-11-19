@@ -14,10 +14,11 @@ if(isset($_POST['submit']))
     $diaNasc = $_POST['dia'];
     $estado = $_POST['estado'];
     $cidade = $_POST['cidade'];
+    $fotoPerfil = "../assets/bluBloomie";
     date_default_timezone_set("America/Sao_Paulo");
     $dataNascimento = date("Y-m-d", strtotime("$anoNasc-$mesNasc-$diaNasc"));
 
-    $stmt = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, email, usuario, senha, estado, cidade, data_nasc, data_criacao) VALUES ('$nome','$sobrenome','$email','$usuario','$senha','$estado','$cidade', '$dataNascimento', '$data')");
+    $stmt = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, email, usuario, senha, estado, cidade, data_nasc, data_criacao, foto_perdil) VALUES ('$nome','$sobrenome','$email','$usuario','$senha','$estado','$cidade', '$dataNascimento', '$data', '$fotoPerfil')");
 
     // Validação da senha
     if (strlen($senha) < 8 || !preg_match("/[a-z]/", $senha) || !preg_match("/[A-Z]/", $senha) || !preg_match("/[!@#$%^&*()_+]/", $senha)) {
@@ -38,9 +39,9 @@ if(isset($_POST['submit']))
 
     // Insira os dados do usuário na tabela usuario
     // Insira os dados do usuário na tabela usuario
-    $stmt_usuario = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, senha, email, usuario, estado, cidade, data_nasc, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt_usuario = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, senha, email, usuario, estado, cidade, data_nasc, data_criacao, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt_usuario->bind_param("sssssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data);
+    $stmt_usuario->bind_param("ssssssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data, $fotoPerfil);
 
     if ($stmt_usuario->execute()) {
         // Recupere o ID_usuario após a inserção
