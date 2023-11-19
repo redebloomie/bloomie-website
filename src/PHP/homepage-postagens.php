@@ -1,48 +1,32 @@
 <?php
 session_start();
-include("connect.php");
+include('connect.php');
 
-  $pubs = mysqli_query("SELECT * FROM posts ORDER BY ID_post desc");
+// Lógica para buscar a foto do perfil ou definir o valor padrão
+$fotoPerfil = ''; // Defina um valor padrão inicial
 
-  if (isset($_POST['publicar'])) {
-    if ($_FILES["file"]["error"] > 0) {
-      $texto = $_POST["texto"];
-      $hoje = date("Y-m-d");
-      $ID_usuario  = $_SESSION['ID_usuario'];
+// Exemplo: Se você estiver buscando a foto do perfil do banco de dados
+if (isset($_SESSION['ID_usuario'])) {
+    $idUsuario = $_SESSION['ID_usuario'];
+    $query = "SELECT foto_perfil FROM usuario WHERE ID_usuario = $idUsuario";
+    $result = $conexao->query($query);
 
-      if ($texto == "") {
-        echo "<h3>Você precisa publicar alguma coisa!</h3>";
-      }else{
-        $query = "INSERT INTO posts (ID_usuario, texto, imagem, data_publicacao) VALUES ('$ID_usuario', '$texto', '$imagem', '$hoje')";
-        $data = mysqli_query($query) or die();
-        if ($data) {
-          header("Location: ./");
-        }else{
-          echo "Erro";
-        }
-      }
-    }else{
-      $n = rand(0, 1000000);
-      $img = $n.$_FILES["file"]["name"];
-
-      move_uploaded_file($_FILES["file"]["tmp_name"], "upload/".$img);
-
-      $texto = $_POST['texto'];
-      $hoje = date("Y-m-d");
-
-      if ($texto == "") {
-        echo "<h3>Você precisa publicar alguma coisa!</h3>";
-      }else{
-        $query = "INSERT INTO posts (ID_usuario, texto, imagem, data_publicacao) VALUES ('$ID_usuario', '$texto', '$imagem', '$hoje')";
-        $data = mysqli_query($query) or die();
-        if ($data) {
-          header("Location: ./");
-        }else{
-          echo "Erro";
-        }
-      }
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $fotoPerfil = $row['foto_perfil'];
     }
-  }
+}
+
+// Agora, atribua a variável à sessão
+$_SESSION['foto_perfil'] = $fotoPerfil;
+
+$pubs = $conexao->query("SELECT ID_post, ID_usuario, usuario, texto, imagem, data_publicacao FROM post ORDER BY data_publicacao DESC");
+
+if (!$pubs) {
+  die('Consulta inválida: ' . $conexao->error);
+}
+
+
 ?>
 
 <!doctype html>
@@ -104,7 +88,7 @@ include("connect.php");
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../pages/perfil.html" class="text-decoration-none text-white">Perfil</a>
+                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
@@ -137,8 +121,16 @@ include("connect.php");
             <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
-                  <textarea class="col-12 post-section multiline-input" rows="3" name="texto" wrap="hard"
+                  <textarea class="col-12 post-section multiline-input" id="textArea" rows="3" name="texto" wrap="hard"
                     placeholder="Algo para compartilhar? Deixe florescer!"></textarea>
+                </div>
+                <div class="col" style="position: relative;">
+                  <!-- Novo elemento para mostrar a pré-visualização da imagem -->
+                  <img id="previewImage" src="#" alt="Pré-visualização da imagem"
+                    style="width: 200px; height: 200px; object-fit: cover; position: relative;">
+                  <button id="removeImageButton"
+                    style="display: flex; border: none; background-color: #cfcfcf; position: absolute; top: 10px; left: 175px; border-radius: 100%; width: 20px; height: 20px; justify-content: center; align-items: center; text-align: center;"
+                    type="button"><i class="ph ph-x" style="color: #fff; font-weight: 600; font-size: 12px; margin: 0; margin-top: -10px;"></i></button>
                 </div>
                 <div class="col op-form" style="background-color: #E6F4FF;">
                   <span>
@@ -150,78 +142,72 @@ include("connect.php");
                       <i class="ph ph-file-text"></i>
                       <p style="font-weight: 500;">Documento</p>
                     </label>
-                    <input type="file" name="uploadImagem" id="uploadImagem" accept="image/*" size="5000000">
-                    <input type="file" name="uploadArquivo" id="uploadArquivo" accept="*/*" size="5000000">
+                  <!-- Seu campo de input para upload de imagem -->
+                  <input type="file" name="uploadImagem" accept="image/*" id="uploadImagem"
+                      onchange="previewImage(this);">
                   </span>
-                  <input type="submit" name="publicar" value="Postar" class="btn btn-primary rounded-4" style="font-weight: 500;">
+                  <input type="submit" id="submit" name="submit" value="Postar" class="btn btn-primary rounded-4"
+                    style="font-weight: 500;">
                 </div>
               </div>
             </form>
           </div>
-          <div class="col-12 d-flex justify-content-center post-container" id="feed">
-            <div class="row-cols-1 justify-content-center align-items-center col-10 p-3 post-container-item">
-              <div class="col">
-                <div class="postagem-user">
-                  <img src="https://source.unsplash.com/random/" alt="">
-                  <span>
-                    <p style="font-weight: 700; font-size: 18px;">Nome do Usuário</p>
-                    <p style="color: #45abff;">22/06/2023</p>
-                  </span>
-                </div>
-              </div>
-              <div class="col">
-                <p style="font-size: 18px;">Descubra a essência que impulsiona a Bloomie e transforma
-                  vidas. Conheça nossa visão de conectar
-                  estudantes a oportunidades de crescimento pess... <span style="font-weight: 500;">Ler mais.</span></p>
-              </div>
-              <div class="col doc-post">
-                <span>
-                  <i class="ph ph-file-text"></i>
-                  <a href="">bloomie.pdf</a>
-                </span>
-              </div>
-              <div class="col img-post">
-                <img src="https://source.unsplash.com/random/" alt="">
-              </div>
-              <div class="col-12 interacoes-post">
-                <div class="options-post">
-                  <div class="rightside-op-post">
-                    <span>
-                      <i class="ph ph-heart"></i>
-                      <p>19</p>
-                    </span>
-                    <span>
-                      <i class="ph ph-chat-circle"></i>
-                      <p>19</p>
-                    </span>
-                    <span>
-                      <i class="ph ph-link-simple-horizontal"></i>
-                    </span>
+          
+            <?php
+        
+        while ($post = $pubs->fetch_assoc()) {
+          echo '
+          <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vw;">
+              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
+                  <div class="col">
+                      <div class="postagem-user">
+                          <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
+                          <span>
+                              <p style="font-weight: 700; font-size: 18px;">' . $post['usuario'] . '</p>
+                              <p style="color: #45abff;">' . $post['data_publicacao'] . '</p>
+                          </span>
+                      </div>
                   </div>
-                  <div class="leftside-op-post">
-                    <i class="ph ph-warning"></i>
+                  <div class="col">
+                      <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
                   </div>
-                </div>
+                  ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt=""></div>' : '') . '
+                  <div class="col-12 interacoes-post">
+                      <div class="options-post">
+                          <div class="rightside-op-post">
+                              <span>
+                                  <i class="ph ph-heart"></i>
+                                  <p></p>
+                              </span>
+                              <span>
+                                  <i class="ph ph-chat-circle"></i>
+                                  <p></p>
+                              </span>
+                              <span>
+                                  <i class="ph ph-link-simple-horizontal"></i>
+                              </span>
+                          </div>
+                          <div class="leftside-op-post">
+                              <i class="ph ph-warning"></i>
+                          </div>
+                      </div>
+                  </div>
               </div>
+          </div>
+          ';
+      }
+      
+        
+        $conexao->close();
+        
+      ?>
+
             </div>
           </div>
         </div>
       </div>
 
-      <?php
-        while ($pub=mysqli_fetch_assoc($pubs)) {
-          $email = $pub['user'];
-          $saberr = mysqli_query("SELECT * FROM usuario WHERE email='$email'");
-          $saber = mysqli_fetch_assoc($saberr);
-          $nome = $saber['nome']." ".$saber['usuario'];
-          $id = $pub['ID_post'];
-
-          if ($pub['img']=="") {
-            echo `<div class="pub" id=""></div>`;
-          }
-        }
-      ?>
-
+      
       <div class="col-2 rightsidebar p-0 pg-postagens-leftSidebar ">
         <div id="sidebar-postagens" class="row-cols-1 justify-content-center align-items-center rightsidebar-group">
           <div class="col rounded text-center">
@@ -322,35 +308,138 @@ include("connect.php");
   </footer>
 
   <script>
-    function carregarPostagens() {
-        // Faça uma solicitação AJAX para o seu script PHP que recupera as postagens
-        fetch('caminho-para-seu-script-php.php')
-        .then(response => response.json())
-        .then(data => {
-            const feedElement = document.getElementById('feed');
-            
-            // Limpe o conteúdo existente no feed
-            feedElement.innerHTML = '';
+    const uploadImagem = document.getElementById('uploadImagem');
+    const previewImage = document.getElementById('previewImage');
+    const removeImageButton = document.getElementById('removeImageButton');
+    const textArea = document.getElementById('textArea');
+    previewImage.style.display = 'none';
+    removeImageButton.style.display = 'none';
 
-            // Itere sobre os dados recebidos e crie elementos HTML para cada postagem
-            data.forEach(postagem => {
-                const postElement = document.createElement('div');
-                postElement.className = 'seu-classe-de-postagem';
+    uploadImagem.onchange = evt => {
+      const [file] = uploadImagem.files;
 
-                // Crie os elementos para mostrar os dados da postagem
-                // Exemplo: postElement.innerHTML = `<p>${postagem.texto}</p>`;
+      if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        removeImageButton.style.display = 'block';
+        previewImage.style.display = 'block';
+      } else {
+        previewImage.src = ''; // Define o src como vazio
+        previewImage.style.display = 'none';
+        removeImageButton.style.display = 'none';
+      }
+    };
 
-                // Anexe o elemento da postagem ao feed
-                feedElement.appendChild(postElement);
+    // Adicione a lógica para remover a imagem e redefinir o campo de arquivo
+    removeImageButton.addEventListener('click', () => {
+      previewImage.src = ''; // Define o src como vazio
+      previewImage.style.display = 'none';
+      uploadImagem.value = ''; // Limpa o valor do campo de arquivo
+      removeImageButton.style.display = 'none';
+    });
+
+  
+    textArea.addEventListener('click', () => {
+    // Limpa o conteúdo do campo de texto
+    textArea.value = '';
+
+    // Limpa o conteúdo do campo de upload de imagem
+    uploadImagem.value = '';
+
+    // Esconde a pré-visualização da imagem e o botão de remoção
+    previewImage.src = '';
+    previewImage.style.display = 'none';
+    removeImageButton.style.display = 'none';
+});
+
+
+    $(document).ready(function () {
+        // Manipulador de envio do formulário
+        $('form').submit(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '../PHP/post.php',
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if (data.success) {
+                        // Postagem bem-sucedida, adicione a nova postagem ao feed
+                        adicionarPostAoFeed(data.post);
+
+                        // Limpa o conteúdo do campo de texto após o envio
+                    textArea.value = '';
+
+                    // Limpa o conteúdo do campo de upload de imagem
+                    uploadImagem.value = '';
+
+                    // Esconde a pré-visualização da imagem e o botão de remoção
+                    previewImage.src = '';
+                    previewImage.style.display = 'none';
+                    removeImageButton.style.display = 'none';
+                    } else {
+                        // Exiba mensagem de erro
+                        console.error(data.error);
+                    }
+                },
+                error: function (error) {
+                    console.error('Erro ao enviar a solicitação Ajax:', error);
+                }
             });
-        })
-        .catch(error => {
-            console.error('Erro ao carregar postagens:', error);
         });
-    }
 
-    // Chame carregarPostagens para carregar as postagens quando a página for carregada
-    window.onload = carregarPostagens;
+        // Função para adicionar uma nova postagem ao feed
+        function adicionarPostAoFeed(post) {
+            // Lógica para adicionar o HTML da nova postagem ao feed
+            // ...
+
+            // Exemplo: Adicionando a postagem ao início do feed
+            var feedElement = $('#feed');
+            var novoPostHTML = `
+            
+            <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
+    <div class="col">
+        <div class="postagem-user">
+        <img src="<?php echo $fotoPerfil; ?>" alt="Imagem do usuário">
+            <span>
+                <p style="font-weight: 700; font-size: 18px;">${post.usuario}</p>
+                <p style="color: #45abff;">${post.data_publicacao}</p>
+            </span>
+        </div>
+    </div>
+    <div class="col">
+        <p style="font-size: 18px;">${post.texto} ${post.texto.length > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : ''}</p>
+    </div>
+    ${post.caminhoImagem ? `<div class="col img-post"><img src="${post.caminhoImagem}" alt=""></div>` : ''}
+    <div class="col-12 interacoes-post">
+        <div class="options-post">
+            <div class="rightside-op-post">
+                <span>
+                    <i class="ph ph-heart"></i>
+                    <p></p>
+                </span>
+                <span>
+                    <i class="ph ph-chat-circle"></i>
+                    <p></p>
+                </span>
+                <span>
+                    <i class="ph ph-link-simple-horizontal"></i>
+                </span>
+            </div>
+            <div class="leftside-op-post">
+                <i class="ph ph-warning"></i>
+            </div>
+        </div>
+    </div>
+
+    </div>
+`; // Substitua pelo HTML real
+            feedElement.prepend(novoPostHTML);
+        }
+    });
 </script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

@@ -12,36 +12,40 @@ if (isset($_POST['submit']) && !empty($_POST['login']) && !empty($_POST['senha']
     $campoLogin = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'usuario';
 
     // Consulta SQL para obter o ID do usuário e a senha com base no e-mail ou nome de usuário
-    $sql = "SELECT ID_usuario, senha FROM usuario WHERE $campoLogin = ?";
+    $sql = "SELECT ID_usuario, usuario, foto_perfil, senha FROM usuario WHERE $campoLogin = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("s", $login);
     $stmt->execute();
-    $stmt->bind_result($ID_usuario, $senhaHash);
+    $stmt->bind_result($ID_usuario, $usuario, $fotoPerfil, $senhaHash);
     $stmt->fetch();
     $stmt->close();
 
+    $_SESSION['ID_usuario'] = $ID_usuario;
+    $_SESSION['foto_perfil'] = $fotoPerfil;
+
     if (password_verify($senha, $senhaHash)) {
         // A senha é válida, permita o acesso
-        $_SESSION['usuario'] = $login;
+        $_SESSION['usuario'] = $usuario;
 
-        // Verifique o campo 'personalidade' na tabela 'estudante'
-        $sqlEstudante = "SELECT personalidade FROM usuario WHERE ID_usuario = ?";
-        $stmtEstudante = $conexao->prepare($sqlEstudante);
-        $stmtEstudante->bind_param("i", $ID_usuario);
-        $stmtEstudante->execute();
-        $stmtEstudante->bind_result($personalidade);
-        $stmtEstudante->fetch();
-        $stmtEstudante->close();
-
-        if (empty($personalidade)) {
-            header('Location: ../pages/homepage-oportunidades-nm.html');
-        } else {
-            header('Location: ../pages/homepage-postagens.html');
-        }
+         // Verifique o campo 'personalidade' na tabela 'estudante'
+         $sqlEstudante = "SELECT personalidade FROM usuario WHERE ID_usuario = ?";
+         $stmtEstudante = $conexao->prepare($sqlEstudante);
+         $stmtEstudante->bind_param("i", $ID_usuario);
+         $stmtEstudante->execute();
+         $stmtEstudante->bind_result($personalidade);
+         $stmtEstudante->fetch();
+         $stmtEstudante->close();
+ 
+         if (empty($personalidade)) {
+             header('Location: ../pages/homepage-oportunidades-nm.html');
+         } else {
+             header('Location: ../PHP/homepage-postagens.php');
+         }
     } else {
         // Credenciais inválidas
         unset($_SESSION['usuario']);
         header('Location: ../../public/index.html');
     }
 }
+
 ?>

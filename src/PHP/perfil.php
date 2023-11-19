@@ -6,20 +6,21 @@
       $ID_usuario = $_SESSION['ID_usuario'];
       $usuario = $_SESSION['usuario'];
   
-      // Consulta SQL para obter os dados do usuário
-      $sql = "SELECT nome, sobrenome, usuario FROM usuario WHERE ID_usuario = ?";
+      // Consulta SQL para obter os dados do usuário, incluindo o caminho da imagem
+      $sql = "SELECT nome, sobrenome, usuario, foto_perfil FROM usuario WHERE ID_usuario = ?";
       $stmt = $conexao->prepare($sql);
       $stmt->bind_param("i", $ID_usuario);
       $stmt->execute();
       $result = $stmt->get_result();
-  
+
       if ($result->num_rows > 0) {
           $row = $result->fetch_assoc();
           $nome = $row['nome'];
           $usuario = $row['usuario'];
           $sobrenome = $row['sobrenome'];
+          $fotoPerfil = $row['foto_perfil'];
       }
-  
+
       $stmt->close();
   }  
 ?>
@@ -90,6 +91,10 @@
       margin: 3px;
     }
 
+    .editavel:focus{
+      outline: 1px solid #fff;
+    }
+
     button {
       border-radius: 50%;
       padding: 0 3px;
@@ -120,7 +125,7 @@
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Home</a>
+                  <a href="../PHP/homepage-postagens.php" class="text-decoration-none text-white">Home</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
@@ -153,26 +158,44 @@
 
       <div class="col-10 d-flex justify-content-center d-flex flex-column perfil-pg"
         style="margin-top: 5.5vw; margin-left: 20vw; width: 75vw;">
-        <div class="perfil-header">
-          <span class="perfil-header-info">
-            <span class="foto-nome-user">
-              <img src="https://source.unsplash.com/random/" alt="">
-              <span style="display: flex; flex-direction: row; justify-content: center; align-items: start;">
-              <div class="user-info">
-                <?php if (isset($nome) && isset($usuario)) : ?>
-                    <p id="nome" class="editavel" contenteditable="false"><?php echo $nome.' '.$sobrenome; ?></p>
-                    <p id="usuario" class="editavel" contenteditable="false">@<?php echo $usuario; ?></p>
-                <?php else : ?>
-                    <p>Dados do usuário não encontrados.</p>
-                <?php endif; ?>
-            </div>
-            <input type="file" id="fotoPerfil" style="display: none;">
-                <!-- <i class="ph ph-pencil-simple"></i> -->
-              </span>
-            </span>
-            <button>Editar perfil</button>
-          </span>
+        <!-- Adicione o formulário ao redor dos campos de nome, usuário e foto -->
+<form id="perfilForm" method="post" action="salvar_perfil.php" enctype="multipart/form-data">
+  <div class="perfil-header">
+    <span class="perfil-header-info">
+      <span class="foto-nome-user">
+        <div class="fotoPerfil-div" style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+        <img src="<?php echo $fotoPerfil; ?>" alt="Foto de Perfil do Usuário">
+          <label for="novaFotoPerfil" style="position: absolute; display:none;" id="novaFotoPerfil-label"><i class="ph ph-pencil"></i></label>
+          <input type="file" id="novaFotoPerfil" name="novaFotoPerfil" style="display: none;">
         </div>
+        
+        <span style="display: flex; flex-direction: row; justify-content: center; align-items: start;">
+          <div class="user-info" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
+            <?php if (isset($nome) && isset($usuario)) : ?>
+              <!-- Adicione o atributo contenteditable para tornar os campos editáveis -->
+              <span style="display: flex; flex-direction: row; justify-content:center; align-items:center;">
+                <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $nome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
+                <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $sobrenome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
+              </span>
+              <input type="text" name="usuario" id="usuario" class="editavel" contenteditable="false" value="<?php echo $usuario; ?>" readonly style="background:none;margin:-5px 0 0 0;color:#fff;">
+            <?php else : ?>
+              <p>Dados do usuário não encontrados.</p>
+            <?php endif; ?>
+          </div>
+          <input type="file" id="fotoPerfil" name="fotoPerfil" style="display: none;">
+          
+          
+        </span>
+        
+      </span>
+      <span>
+      <button id="btnEditarPerfil" type="button">Editar perfil</button>
+        <input type="submit" id="btnSalvarPerfil" name="submit" value="Salvar" style="display: none;">
+          <button id="btnCancelarEdicao" type="button" style="display: none;">Cancelar</button>
+      </span>
+    </span>
+  </div>
+</form>
 
         <div class="perfil-container">
           <div class="perfil-left">
@@ -296,6 +319,39 @@
   <footer>
     <!-- place footer here -->
   </footer>
+
+  <script>
+
+  // Adicione um evento de clique ao botão "Cancelar"
+  document.getElementById('btnCancelarEdicao').addEventListener('click', function () {
+    // Tornar os campos não editáveis
+    document.getElementById('nome').contentEditable = false;
+    document.getElementById('sobrenome').contentEditable = false;
+    document.getElementById('usuario').contentEditable = false;
+    // Ocultar os botões de salvar e cancelar
+    document.getElementById('btnSalvarPerfil').style.display = 'none';
+    this.style.display = 'none';
+    // Exibir o botão de editar
+    document.getElementById('btnEditarPerfil').style.display = 'inline-block';
+  });
+
+  // Adicione um evento de clique ao botão "Editar perfil"
+  document.getElementById('btnEditarPerfil').addEventListener('click', function () {
+    // Tornar os campos editáveis
+    document.getElementById('nome').contentEditable = true;
+    document.getElementById('sobrenome').contentEditable = true;
+    document.getElementById('usuario').contentEditable = true;
+    document.getElementById('nome').removeAttribute('readonly');
+    document.getElementById('sobrenome').removeAttribute('readonly');
+    document.getElementById('usuario').removeAttribute('readonly');
+    // Exibir os botões de salvar e cancelar
+    document.getElementById('btnSalvarPerfil').style.display = 'inline-block';
+    document.getElementById('btnCancelarEdicao').style.display = 'inline-block';
+    document.getElementById('novaFotoPerfil-label').style.display = 'inline-block'; // Exibir o input de file
+    // Ocultar o botão de editar
+    this.style.display = 'none';
+  });
+</script>
 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
