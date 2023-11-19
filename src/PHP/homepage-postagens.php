@@ -163,7 +163,8 @@ if (!$pubs) {
                       <div class="postagem-user">
                           <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
                           <span>
-                          <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>;
+                          <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                          <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
                           </span>
                       </div>
                   </div>
