@@ -85,29 +85,25 @@
 
   <section id="cadastro">
     <div class="cadastro-container">
-      <div class="form-cadastro">
-        <h2 class="text-center" style="font-weight: 700;">Vamos começar?</h2>
-        <h3 class="text-center" style="font-weight: 400;"><span style="font-weight: 500;">Calma!</span> Informe o email
-          associado à sua conta para redefinirmos sua senha.</h3>
-        <form method="POST" action="../PHP/redefinirSenha.php" class="row g-3">
+      <div class="form-cadastro" style="width: 40vw;">
+        <h2 class="text-center" style="font-weight: 700;">Para apagar sua conta, confirme suas informações.</h2>
+        <form method="POST" action="../PHP/excluirConta.php" class="row g-3" style="width: 30vw;">
           <div class="col-md-12">
             <span>
-              <input type="password" class="form-control" name="novaSenha" id="senha" placeholder="Nova senha"
+              <input type="email" class="form-control" name="email" id="email" placeholder="Email"
                 style="color: #1185E3;">
+            </span>
+          </div>
+          <div class="col-md-12">
+            <span>
+              <input type="password" class="form-control" name="senha" id="senha"
+                placeholder="Senha" style="color: #1185E3;">
               <i class="ph-bold ph-eye-slash" id="togglePassword"></i>
             </span>
           </div>
-          <div class="col-md-12">
-            <span>
-              <input type="password" class="form-control" name="confirmarSenha" id="senhaC"
-                placeholder="Confirme sua nova senha" style="color: #1185E3;">
-              <i class="ph-bold ph-eye-slash" id="togglePasswordC"></i>
-            </span>
-          </div>
-          <div class="col-md-12 text-center btn-lg">
-            <input type="submit" name="submit" value="Redefinir senha" class="btn btn-primary">
-            <p style="color: #5AB5FF;">Lembrou a senha? <a href="/public/index.html#login"
-                style="font-weight: 500; color: #4fb0ff;">Faça login</a></p>
+          <div class="col-md-12 text-center btn-lg" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1vw;">
+            <input type="submit" name="submit" value="Excluir conta" class="btn btn-primary" style="background-color: #FF0E0E; width: 10vw; color: #fff; border: none;">
+            <a href="" class="btn btn-primary rounded-4" style="width: 10vw;">Cancelar</a>
           </div>
         </form>
       </div>
@@ -118,20 +114,10 @@
   <script>
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#senha');
-    const togglePasswordC = document.querySelector('#togglePasswordC');
-    const passwordC = document.querySelector('#senhaC');
 
     togglePassword.addEventListener('click', function () {
       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
       password.setAttribute('type', type);
-
-      this.classList.toggle('ph-eye-slash');
-      this.classList.toggle('ph-eye');
-    });
-
-    togglePasswordC.addEventListener('click', function () {
-      const type = passwordC.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordC.setAttribute('type', type);
 
       this.classList.toggle('ph-eye-slash');
       this.classList.toggle('ph-eye');

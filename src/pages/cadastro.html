@@ -178,6 +178,8 @@
   </section>
 
   <script>
+
+  document.addEventListener('DOMContentLoaded', function() {
     const yearSelect = document.getElementById("year");
     const monthSelect = document.getElementById("month");
     const daySelect = document.getElementById("day");
@@ -207,7 +209,7 @@
       //Holds the number of days in the month
       let dayNum;
       //Get the current year
-      let year = yearSelect.value;
+      let year = parseInt(yearSelect.value);
 
       if (month === 'Janeiro' || month === 'Março' ||
         month === 'Maio' || month === 'Julho' || month === 'Agosto'
@@ -261,12 +263,16 @@
     yearSelect.onchange = function () {
       populateDays(monthSelect.value);
     }
+
     monthSelect.onchange = function () {
       populateDays(monthSelect.value);
     }
+
     daySelect.onchange = function () {
       previousDay = daySelect.value;
     }
+});
+
 
     // VALIDAÇÃO DE SENHAS
 

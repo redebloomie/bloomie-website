@@ -30,33 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $novoPost['caminhoImagem'] = $novoPost['imagem'];
         $novoPost['data_publicacao'] = date('d/m/Y', strtotime($novoPost['data_publicacao']));
 
-        echo json_encode($novoPost); // Envie o novo post como resposta JSON
+        echo json_encode(['success' => true, 'post' => $novoPost]);
     } else {
-        echo json_encode(['error' => "Erro ao postar: " . $conexao->error]);
+        echo json_encode(['success' => false, 'error' => "Erro ao postar: " . $conexao->error]);
     }
-} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-    $postsPorPagina = 5;
-    $indiceInicio = ($pagina - 1) * $postsPorPagina;
-
-    // Substitua a consulta SQL atual pelo seguinte:
-    $result = $conexao->query("SELECT ID_post, ID_usuario, usuario, texto, imagem, data_publicacao FROM post ORDER BY data_publicacao DESC LIMIT $indiceInicio, $postsPorPagina");
-    $posts = array();
-
-    while ($row = $result->fetch_assoc()) {
-        // Adicione o caminho da imagem ao array
-        $row['caminhoImagem'] = $row['imagem'];
-
-        // Se não houver imagem, remova a chave 'imagem' do array
-        if (empty($row['imagem'])) {
-            unset($row['imagem']);
-        }
-
-        $posts[] = $row;
-    }
-
-    echo json_encode($posts);
 }
-
 $conexao->close();
 ?>

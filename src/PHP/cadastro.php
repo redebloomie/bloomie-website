@@ -1,9 +1,8 @@
 <?php
-
+session_start();
 include('connect.php');
 
-if(isset($_POST['submit']))
-{
+if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
     $sobrenome = $_POST['sobrenome'];
     $email = $_POST['email'];
@@ -14,10 +13,11 @@ if(isset($_POST['submit']))
     $diaNasc = $_POST['dia'];
     $estado = $_POST['estado'];
     $cidade = $_POST['cidade'];
+    $fotoPerfil = "../assets/bluBloomie.png";
     date_default_timezone_set("America/Sao_Paulo");
-    $dataNascimento = date("Y-m-d", strtotime("$anoNasc-$mesNasc-$diaNasc"));
-
-    $stmt = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, email, usuario, senha, estado, cidade, data_nasc, data_criacao) VALUES ('$nome','$sobrenome','$email','$usuario','$senha','$estado','$cidade', '$dataNascimento', '$data')");
+    $format = "$anoNasc-$mesNasc-$diaNasc";
+    $dataNascimento = date("Y-m-d", strtotime($format));
+    $data = date("Y-m-d H:i:s");
 
     // Validação da senha
     if (strlen($senha) < 8 || !preg_match("/[a-z]/", $senha) || !preg_match("/[A-Z]/", $senha) || !preg_match("/[!@#$%^&*()_+]/", $senha)) {
@@ -28,7 +28,7 @@ if(isset($_POST['submit']))
     // Validação da data de nascimento
     $dataLimite = strtotime('-14 years');
 
-    if ($dataNascimento > $dataLimite) {
+    if (strtotime($dataNascimento) > $dataLimite) {
         echo "Você deve ter mais de 14 anos para se cadastrar.";
         exit;
     }
@@ -37,20 +37,20 @@ if(isset($_POST['submit']))
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
     // Insira os dados do usuário na tabela usuario
-    // Insira os dados do usuário na tabela usuario
-    $stmt_usuario = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, senha, email, usuario, estado, cidade, data_nasc, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt_usuario = $conexao->prepare("INSERT INTO usuario(nome, sobrenome, senha, email, usuario, estado, cidade, data_nasc, data_criacao, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt_usuario->bind_param("sssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data);
+    $stmt_usuario->bind_param("ssssssssss", $nome, $sobrenome, $senha_hash, $email, $usuario, $estado, $cidade, $dataNascimento, $data, $fotoPerfil);
 
     if ($stmt_usuario->execute()) {
         // Recupere o ID_usuario após a inserção
-        $ID_usuario = mysqli_insert_id($conexao);
+        $ID_usuario = $stmt_usuario->insert_id;
 
         // Verifique se a inserção na tabela usuario foi bem-sucedida
         if ($ID_usuario > 0) {
             $_SESSION['ID_usuario'] = $ID_usuario; // Defina user_id após o cadastro bem-sucedido
             // Redirecione o usuário após o registro bem-sucedido
             header('Location: ../pages/cadConfirmacao.html');
+            exit;
         } else {
             echo "Erro ao inserir dados do usuário.";
         }
@@ -59,11 +59,7 @@ if(isset($_POST['submit']))
     }
 
     // Feche as declarações preparadas
-    if (isset($stmt_usuario)) {
-        $stmt_usuario->close();
-    }
-
+    $stmt_usuario->close();
     $conexao->close();
-
-    }
+}
 ?>
