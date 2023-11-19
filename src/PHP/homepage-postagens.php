@@ -109,7 +109,7 @@ if (!$pubs) {
               </div>
             </div>
             <div class="col">
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>

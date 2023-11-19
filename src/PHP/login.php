@@ -22,6 +22,7 @@ if (isset($_POST['submit']) && !empty($_POST['login']) && !empty($_POST['senha']
 
     $_SESSION['ID_usuario'] = $ID_usuario;
     $_SESSION['foto_perfil'] = $fotoPerfil;
+    $_SESSION['email'] = $email;
 
     if (password_verify($senha, $senhaHash)) {
         // A senha é válida, permita o acesso

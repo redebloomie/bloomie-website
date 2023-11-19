@@ -86,7 +86,6 @@
       height: 30px;
       margin-left: 5px;
       background-color: #efefef;
-      max-width: 100px;
       padding: 5px;
       border-radius: 5px;
       margin: 3px;
@@ -175,8 +174,8 @@
             <?php if (isset($nome) && isset($usuario)) : ?>
               <!-- Adicione o atributo contenteditable para tornar os campos editáveis -->
               <span style="display: flex; flex-direction: row; justify-content:center; align-items:center;">
-                <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $nome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
-                <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $sobrenome; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;">
+                <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $nome; ?>" readonly style="background:none;margin:0;color:#fff; width:70px;">
+                <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $sobrenome; ?>" readonly style="background:none;margin:0;color:#fff;width:70px;">
               </span>
               <input type="text" name="usuario" id="usuario" class="editavel" contenteditable="false" value="<?php echo $usuario; ?>" readonly style="background:none;margin:-5px 0 0 0;color:#fff;">
             <?php else : ?>
