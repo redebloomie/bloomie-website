@@ -165,26 +165,26 @@ mysqli_close($conexao);
       <div class="col-10 d-flex justify-content-center d-flex flex-column perfil-pg"
         style="margin-top: 5.5vw; margin-left: 20vw; width: 75vw;">
         
-          <h2 class="mb-3 txtj ">Oportunidade</h2>
+          <h2 class="mb-3 txtj text-primary">Oportunidade</h2>
           <div class="col-md-12 d-flex justify-content-between ">
             <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
               <p class="txtj">Pendentes</p>
               <span class="h1 txtT"><?php echo $totalPendentes; ?></span>
             </div>
             <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj">Expiradas</p>
+              <p class="txtj text-secondary">Expiradas</p>
               <span class="h1 txtT"><?php echo $totalExpiradas; ?></span>
             </div>
             <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj">Aceitas</p>
+              <p class="txtj text-success">Aceitas</p>
               <span class="h1 txtT"><?php echo $totalAceitas; ?></span>
             </div>
             <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj">Negadas</p>
+              <p class="txtj text-danger">Negadas</p>
               <span class="h1 txtT"><?php echo $totalNegadas; ?></span>
             </div>
             <div class="mb-4 border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj">Desativadas</p>
+              <p class="txtj text-black">Desativadas</p>
               <span class="h1 txtT"><?php echo $totalInativas; ?></span>
             </div>
       </div>
@@ -308,8 +308,8 @@ if (mysqli_num_rows($resultExpiradas) > 0) {
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</div>';
         echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'aceita\')">Aceitar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'negada\')">Negar</button>';
+        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'revalidar\')">Reativar</button>';
+        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'desativar\')">Desativar</button>';
         echo '</div>';
         echo '</div>';
         // Adicione a linha separadora, exceto para a última oportunidade
@@ -375,8 +375,7 @@ if (mysqli_num_rows($resultAceitas) > 0) {
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</div>';
         echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'aceita\')">Aceitar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'negada\')">Negar</button>';
+        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'desativar\')">Desativar</button>';
         echo '</div>';
         echo '</div>';
         // Adicione a linha separadora, exceto para a última oportunidade
@@ -443,8 +442,8 @@ if (mysqli_num_rows($resultNegadas) > 0) {
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</div>';
         echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'aceita\')">Aceitar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'negada\')">Negar</button>';
+        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'revalidar\')">Revalidar</button>';
+        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'desativar\')">Desativar</button>';
         echo '</div>';
         echo '</div>';
         // Adicione a linha separadora, exceto para a última oportunidade
@@ -510,8 +509,7 @@ if (mysqli_num_rows($resultInativas) > 0) {
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</div>';
         echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidades_inativas'] . ', \'aceita\')">Aceitar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidades_inativas'] . ', \'negada\')">Negar</button>';
+        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidades_inativas'] . ', \'reativar\')">Reativar</button>';
         echo '</div>';
         echo '</div>';
         // Adicione a linha separadora, exceto para a última oportunidade
@@ -535,30 +533,34 @@ if (mysqli_num_rows($resultInativas) > 0) {
 
   <script>
     function atualizarStatus(ID_oportunidade, acao) {
-        // Crie um objeto XMLHttpRequest
-        var xhr = new XMLHttpRequest();
+    // Crie um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
 
-        // Configurar a solicitação AJAX
-        xhr.open('POST', 'atualizar_status.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // Configurar a solicitação AJAX
+    xhr.open('POST', 'atualizar_status.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-        // Configurar a função de retorno de chamada
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // A resposta do servidor está disponível aqui
-                console.log(xhr.responseText);
+    // Configurar a função de retorno de chamada
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do servidor está disponível aqui
+            console.log(xhr.responseText);
 
-                // Atualizar a interface do usuário conforme necessário
-                // (por exemplo, esconder o item, atualizar o status, etc.)
-            }
-        };
+            // Atualizar a interface do usuário conforme necessário
+            // (por exemplo, esconder o item, atualizar o status, etc.)
 
-        // Preparar os dados a serem enviados
-        var dados = 'ID_oportunidade=' + ID_oportunidade + '&acao=' + acao;
+            // Recarregar a página para refletir as alterações
+            location.reload();
+        }
+    };
 
-        // Enviar a solicitação AJAX com os dados
-        xhr.send(dados);
-    }
+    // Preparar os dados a serem enviados
+    var dados = 'ID_oportunidade=' + ID_oportunidade + '&acao=' + acao;
+
+    // Enviar a solicitação AJAX com os dados
+    xhr.send(dados);
+}
+
 
   </script>
 
