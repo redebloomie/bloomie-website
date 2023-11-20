@@ -2973,3 +2973,8 @@ input[type="file"] {
 .form-control::placeholder {
   color: #1185e3; /* Cor desejada para o placeholder (vermelho, por exemplo) */
 }
+
+/*adm_oportunidade*/
+.Semborda{
+  border: none;
+}
