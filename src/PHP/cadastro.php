@@ -19,6 +19,8 @@ if (isset($_POST['submit'])) {
     $dataNascimento = date("Y-m-d", strtotime($format));
     $data = date("Y-m-d H:i:s");
 
+    
+
     // Validação da senha
     if (strlen($senha) < 8 || !preg_match("/[a-z]/", $senha) || !preg_match("/[A-Z]/", $senha) || !preg_match("/[!@#$%^&*()_+]/", $senha)) {
         echo "Senha inválida. A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um caractere especial.";

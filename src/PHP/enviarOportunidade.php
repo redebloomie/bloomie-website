@@ -30,9 +30,9 @@ if (isset($_POST['submit'])) {
 
     // Definir o status com base na diferença de datas
     if ($diferenca < 0) {
-        $status = "inativa";
+        $status = "expirada";
     } else {
-        $status = "ativa";
+        $status = "pendente";
     }
 
     $stmt = $conexao->prepare("INSERT INTO oportunidade(ID_usuario, titulo, estado, cidade, inicio, tempo_expirar, link, tipo_personalidade, descricao, categoria, escolaridade, status_opor, data_publicacao, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

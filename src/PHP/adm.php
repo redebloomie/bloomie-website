@@ -1,3 +1,25 @@
+<?php
+include('connect.php');
+
+// Consultar quantidade de usuários
+$consultaUsuarios = "SELECT COUNT(*) AS totalUsuarios FROM usuario";
+$resultadoUsuarios = $conexao->query($consultaUsuarios);
+$totalUsuarios = $resultadoUsuarios->fetch_assoc()['totalUsuarios'];
+
+// Consultar quantidade de oportunidades
+$consultaOportunidades = "SELECT COUNT(*) AS totalOportunidades FROM oportunidade";
+$resultadoOportunidades = $conexao->query($consultaOportunidades);
+$totalOportunidades = $resultadoOportunidades->fetch_assoc()['totalOportunidades'];
+
+// Consultar quantidade de posts
+$consultaPosts = "SELECT COUNT(*) AS totalPosts FROM post";
+$resultadoPosts = $conexao->query($consultaPosts);
+$totalPosts = $resultadoPosts->fetch_assoc()['totalPosts'];
+
+// Fechar a conexão com o banco de dados
+$conexao->close();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -65,29 +87,32 @@
         
           <h2 class="mb-3">Visão Geral</h2>
           <div class="row justify-content-between">
-            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center" style="height: 18vh;" >
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;"  alt=""></div>
+            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
+              style="height: 18vh;">
+              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
               <div>
-                <p class="m-0">Usuários</p> 
-                <span class="h1">100</span>
+                <p class="m-0">Usuários</p>
+                <span class="h1"><?php echo $totalUsuarios; ?></span>
               </div>
-              
+          
             </div>
-            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center" style="height: 18vh;" >
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;"  alt=""></div>
+            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
+              style="height: 18vh;">
+              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
               <div>
-                <p class="m-0">Usuários</p> 
-                <span class="h1">100</span>
+                <p class="m-0">Oportunidades</p>
+                <span class="h1"><?php echo $totalOportunidades; ?></span>
               </div>
-              
+          
             </div>
-            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center" style="height: 18vh;" >
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;"  alt=""></div>
+            <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
+              style="height: 18vh;">
+              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
               <div>
-                <p class="m-0">Usuários</p> 
-                <span class="h1">100</span>
+                <p class="m-0">Postagens</p>
+                <span class="h1"><?php echo $totalPosts; ?></span>
               </div>
-              
+          
             </div>
           </div>   
           <h2 class="mt-5 mb-3">Usuários</h2> 
