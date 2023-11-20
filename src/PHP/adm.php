@@ -1,6 +1,65 @@
 <?php
 include('connect.php');
 
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['start_date']) && isset($_GET['end_date'])) {
+  $start_date = date('Y-m-d', strtotime($_GET['start_date']));
+  $end_date = date('Y-m-d', strtotime($_GET['end_date']));
+
+  $sql = "SELECT DATE(data_criacao) AS datac, COUNT(*) AS quantidade FROM usuario WHERE data_criacao BETWEEN '$start_date' AND '$end_date' GROUP BY DATE(data_criacao)";
+  $result = $conexao->query($sql);
+
+  if ($result) {
+      while ($row = $result->fetch_assoc()) {
+          $dateArray[] = $row['datac'];
+          $userArray[] = $row['quantidade'];
+      }
+
+      unset($result);
+  } else {
+      echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sql;
+  }
+}
+
+// Gráfico de postagens
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['start_dateP']) && isset($_GET['end_dateP'])) {
+  $start_dateP = date('Y-m-d', strtotime($_GET['start_dateP']));
+  $end_dateP = date('Y-m-d', strtotime($_GET['end_dateP']));
+
+  $sqlP = "SELECT DATE(data_publicacao) AS datac, COUNT(*) AS quantidade FROM post WHERE data_publicacao BETWEEN '$start_dateP' AND '$end_dateP' GROUP BY DATE(data_publicacao)";
+  $resultP = $conexao->query($sqlP);
+
+  if ($resultP) {
+      while ($row = $resultP->fetch_assoc()) {
+          $postDateArray[] = $row['datac'];
+          $postArray[] = $row['quantidade'];
+      }
+
+      unset($resultP);
+  } else {
+      echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sqlP;
+  }
+}
+
+// Gráfico de postagens
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['start_dateO']) && isset($_GET['end_dateO'])) {
+  $start_dateO = date('Y-m-d', strtotime($_GET['start_dateO']));
+  $end_dateO = date('Y-m-d', strtotime($_GET['end_dateO']));
+
+  $sqlO = "SELECT DATE(data_publicacao) AS datac, COUNT(*) AS quantidade FROM oportunidade WHERE data_publicacao BETWEEN '$start_dateO' AND '$end_dateO' GROUP BY DATE(data_publicacao)";
+  $resultO = $conexao->query($sqlO);
+
+  if ($resultO) {
+      while ($row = $resultO->fetch_assoc()) {
+          $oporDateArray[] = $row['datac'];
+          $oporArray[] = $row['quantidade'];
+      }
+
+      unset($resultO);
+  } else {
+      echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sqlO;
+  }
+}
+
 // Consultar quantidade de usuários
 $consultaUsuarios = "SELECT COUNT(*) AS totalUsuarios FROM usuario";
 $resultadoUsuarios = $conexao->query($consultaUsuarios);
@@ -24,7 +83,7 @@ $conexao->close();
 <html lang="en">
 
 <head>
-  <title>Title</title>
+<title>Title</title>
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -36,12 +95,20 @@ $conexao->close();
 
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Inclua a biblioteca Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<style>
+
+</style>
 </head>
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
   </nav>
 
   <main>
@@ -59,11 +126,11 @@ $conexao->close();
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Dasboard</a>
+                  <a href="../PHP/adm.php" class="text-decoration-none text-white">Dasboard</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../pages/perfil.html" class="text-decoration-none text-white">Oportunidades</a>
+                  <a href="../PHP/adm_oportunidade.php" class="text-decoration-none text-white">Oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
@@ -117,26 +184,47 @@ $conexao->close();
           </div>   
           <h2 class="mt-5 mb-3">Usuários</h2> 
           <div class="d-flex justify-content-between">
-            <div class="p-3 border border-primary rounded-4 col-md-8 "style="height: 20rem;">
+          <div class="p-3 border border-primary rounded-4 col-md-8 d-flex justify-content-between  "style="height: 25rem;display:flex;flex-direction:column;">
+          <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
               <p class="h4 txtj">Taxa de crescimento</p>
-  
+              <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                  <input type="date" id="start_date" name="start_date" required style="width:100px;">
+                  <p style="margin: 0;">-</p>
+                  <input type="date" id="end_date" name="end_date" required style="width:100px;">
+
+                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+              </form>
+          </span>
+
+          <canvas id="myChart"></canvas>
+
             </div>
             <div class="p-3 border border-primary rounded-4 col-md-3 d-flex flex-column" style="height: 20rem;">
               <p class="h4 txtj">Base Filtrada</p>
               <!-- Seu conteúdo aqui -->
               <div class="mt-auto text-center"> 
                   <input type="date" class="rounded-4 " style="height: 2rem;">
+                  
               </div>
           </div>
           
           
           </div>
           <h2 class="mt-5 mb-3">Postagens</h2> 
-          <div class="d-flex  justify-content-between" >
-            <div class="p-3 border border-primary rounded-4 col-md-8 d-flex justify-content-between  "style="height: 20rem;">
+          <div class="d-flex justify-content-between">
+          <div class="p-3 border border-primary rounded-4 col-md-8 d-flex justify-content-between  "style="height: 25rem;display:flex;flex-direction:column;">
+          <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
               <p class="h4 txtj">Taxa de crescimento</p>
-              <input type="date" class="rounded-4" style="height: 2rem;" >
-  
+              <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                  <input type="date" id="start_dateP" name="start_dateP" required style="width:100px;">
+                  <p style="margin: 0;">-</p>
+                  <input type="date" id="end_dateP" name="end_dateP" required style="width:100px;">
+
+                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+              </form>
+          </span>
+
+          <canvas id="ChartP"></canvas>
             </div>
             <div class="col-md-3">
               <div class="bg-primary col-md-12 rounded-4 text-white text-center d-flex justify-content-center align-items-center mb-5" style="height: 8rem;" >
@@ -160,9 +248,19 @@ $conexao->close();
               
           </div>
           <h2 class="mt-5 mb-3">Oportunidades</h2> 
-            <div class="p-3 border border-primary rounded-4 col-md-12 mb-5 d-flex justify-content-between "style="height: 20rem;">
-              <p class="h4 txtj">Taxa de Envio</p>
-              <input type="date" class="rounded-4" style="height: 2rem;"  >
+            <div class="p-3 border border-primary rounded-4 col-md-12 mb-5 d-flex justify-content-between " style="height: 35rem;display:flex;flex-direction:column;">
+            <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
+              <p class="h4 txtj">Taxa de crescimento</p>
+              <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
+                  <input type="date" id="start_dateO" name="start_dateO" required style="width:100px;">
+                  <p style="margin: 0;">-</p>
+                  <input type="date" id="end_dateO" name="end_dateO" required style="width:100px;">
+
+                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+              </form>
+          </span>
+
+          <canvas id="ChartO"></canvas>
   
             </div>
             
@@ -196,6 +294,73 @@ $conexao->close();
   <footer>
     <!-- place footer here -->
   </footer>
+
+  <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode(isset($dateArray) ? $dateArray : []); ?>,
+                datasets: [{
+                    label: '# of Users',
+                    data: <?php echo json_encode(isset($userArray) ? $userArray : []); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctxPost = document.getElementById('ChartP');
+
+        new Chart(ctxPost, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode(isset($postDateArray) ? $postDateArray : []); ?>,
+                datasets: [{
+                    label: '# of Posts',
+                    data: <?php echo json_encode(isset($postArray) ? $postArray : []); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctxOpor = document.getElementById('ChartO');
+
+        new Chart(ctxOpor, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode(isset($oporDateArray) ? $oporDateArray : []); ?>,
+                datasets: [{
+                    label: '# of Posts',
+                    data: <?php echo json_encode(isset($oporArray) ? $oporArray : []); ?>,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+
 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

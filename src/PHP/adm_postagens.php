@@ -3,16 +3,16 @@
 include('connect.php');
 
 // Configurações de paginação para oportunidades pendentes
-$porPagina = 4;
+$porPagina = 8;
 $paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendentes'] : 1;
 $offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
 
 // Consulta para obter oportunidades pendentes com paginação
-$queryPendentes = "SELECT * FROM oportunidade WHERE status_opor = 'pendente' LIMIT $offsetPendentes, $porPagina";
+$queryPendentes = "SELECT * FROM usuario LIMIT $offsetPendentes, $porPagina";
 $resultPendentes = mysqli_query($conexao, $queryPendentes);
 
 // Consulta para obter o número total de oportunidades pendentes
-$totalQueryPendentes = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'pendente'";
+$totalQueryPendentes = "SELECT COUNT(*) as total FROM usuario";
 $totalResultPendentes = mysqli_query($conexao, $totalQueryPendentes);
 $totalPendentes = mysqli_fetch_assoc($totalResultPendentes)['total'];
 
@@ -165,33 +165,19 @@ mysqli_close($conexao);
       <div class="col-10 d-flex justify-content-center d-flex flex-column perfil-pg"
         style="margin-top: 5.5vw; margin-left: 20vw; width: 75vw;">
         
-          <h2 class="mb-3 txtj text-primary">Oportunidade</h2>
+          <h2 class="mb-3 txtj text-primary">Usuários</h2>
+          <div class="input-group rounded" style="width:20vw;">
+            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <span class="input-group-text border-0" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
           <div class="col-md-12 d-flex justify-content-between ">
-            <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj">Pendentes</p>
-              <span class="h1 txtT"><?php echo $totalPendentes; ?></span>
-            </div>
-            <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-secondary">Expiradas</p>
-              <span class="h1 txtT"><?php echo $totalExpiradas; ?></span>
-            </div>
-            <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-success">Aceitas</p>
-              <span class="h1 txtT"><?php echo $totalAceitas; ?></span>
-            </div>
-            <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-danger">Negadas</p>
-              <span class="h1 txtT"><?php echo $totalNegadas; ?></span>
-            </div>
-            <div class="mb-4 border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-black">Desativadas</p>
-              <span class="h1 txtT"><?php echo $totalInativas; ?></span>
-            </div>
+          
       </div>
-      <h5 class="mb-3 txtj ">Pendentes</h5>
 
     <!-- Navegação de página no topo do conteúdo -->
-    <nav aria-label="Page navigation example mb-3">
+    <nav aria-label="Page navigation example mb-3" style="margin-top:30px">
         <ul class="pagination">
         <?php
         // Lógica para exibir os números da página para oportunidades pendentes
@@ -235,14 +221,14 @@ if (mysqli_num_rows($resultPendentes) > 0) {
         // Exiba as informações da oportunidade pendente
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
-        echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
-        echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
+        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_usuario'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+        echo '<img src="' . $row['foto_perfil'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
+        echo '<p class="mb-0 h5 text mg">' . $row['nome'] . $row['sobrenome'] . '</p>';
+        echo '<p class="mb-0 h5 text mg">@' . $row['usuario'] .'</p>';
         echo '</a>';
         echo '</div>';
         echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'aceita\')">Aceitar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'negada\')">Negar</button>';
+        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'negada\')">Banir</button>';
         echo '</div>';
         echo '</div>';
         // Adicione a linha separadora, exceto para a última oportunidade

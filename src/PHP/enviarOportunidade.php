@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
     $estado = $_POST['estado'];
     $cidade = $_POST['cidade'];
     $inicio = $_POST['inicio'];
+    $faixaEtaria = $_POST['faixa_etaria'];
     $tempo_expirar = $_POST['tempo_expirar'];
     $descricao = $_POST['descricao'];
     $escolaridade = $_POST['escolaridade'];
@@ -35,13 +36,13 @@ if (isset($_POST['submit'])) {
         $status = "pendente";
     }
 
-    $stmt = $conexao->prepare("INSERT INTO oportunidade(ID_usuario, titulo, estado, cidade, inicio, tempo_expirar, link, tipo_personalidade, descricao, categoria, escolaridade, status_opor, data_publicacao, imagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conexao->prepare("INSERT INTO oportunidade(ID_usuario, titulo, estado, cidade, inicio, tempo_expirar, link, tipo_personalidade, descricao, categoria, escolaridade, status_opor, data_publicacao, imagem, faixa_etaria) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     if (!$stmt) {
         die("Erro na preparação da consulta: " . $conexao->error);
     }
 
-    $stmt->bind_param("isssssssssssss", $idUsuario, $titulo, $estado, $cidade, $inicio, $tempo_expirar, $link, $tipo_personalidade, $descricao, $categoria, $escolaridade, $status, $data, $caminhoImagem);
+    $stmt->bind_param("issssssssssssss", $idUsuario, $titulo, $estado, $cidade, $inicio, $tempo_expirar, $link, $tipo_personalidade, $descricao, $categoria, $escolaridade, $status, $data, $caminhoImagem, $faixaEtaria);
 
     if ($stmt->execute()) {
         header('Location: ../pages/oportunidadeEnviada.html');

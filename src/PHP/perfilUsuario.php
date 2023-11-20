@@ -167,7 +167,7 @@ if ($consultaUsuario->num_rows > 0) {
               <!-- Adicione o atributo contenteditable para tornar os campos editáveis -->
               <span style="display: flex; flex-direction: row; justify-content:center; align-items:center; gap:-2px">
                 <input type="text" name="nome" id="nome" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['nome'] . ' ' . $dadosUsuario['sobrenome']; ?>" readonly style="background:none;margin:0;color:#fff; width:fit-content; max-width:auto">
-                <!-- <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['sobrenome']; ?>" readonly style="background:none;margin:0;color:#fff; width:5vw;"> -->
+                <!-- <input type="text" name="sobrenome" id="sobrenome" class="editavel" contenteditable="false" value="" readonly style="background:none;margin:0;color:#fff; width:5vw;"> --> 
               </span>
               <input type="text" name="usuario" id="usuario" class="editavel" contenteditable="false" value="<?php echo $dadosUsuario['usuario']; ?>" readonly style="background:none;margin:-5px 0 0 0;color:#fff;">
           </div>
