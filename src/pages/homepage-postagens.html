@@ -399,8 +399,7 @@ function carregarUltimosPosts() {
           const feed = document.getElementById('feed');
           const novoPostElement = criarElementoPost(novoPost);
           feed.insertBefore(novoPostElement, feed.firstChild);
-        })
-        .catch(error => console.error('Erro ao enviar o formulário:', error));
+        });
     });
 
     window.addEventListener('scroll', () => {

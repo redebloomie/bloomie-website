@@ -1,33 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Title</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-      crossorigin="anonymous"
-    />
 
 <head>
   <title>Title</title>
+  <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-  <head>
-    <title>Title</title>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../public/style.css" />
+  <link rel="shortcut icon" href="/src/assets/bluBloomie.png" />
 
-    <link rel="stylesheet" href="../../public/style.css" />
-    <link rel="shortcut icon" href="/src/assets/bluBloomie.png" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <style>
+  <!-- <style>
       .container-tag {
         .input-tag {
           border: none;
@@ -78,8 +65,8 @@
           }
         }
       }
-    </style>
-  </head>
+    </style> -->
+</head>
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white" style="position: fixed; top: 0; width: 100%">
@@ -131,286 +118,324 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-10 justify-content-center d-flex g-0" style="margin-left: 10vw; margin-top: 5vw;">
+        <section id="cadastro" style="height: 220vh; display: flex; justify-content: start; align-items: start;">
+          <div class="cadastro-container" style="display: flex; justify-content: flex-start; align-items: start;">
+            <div class="form-cadastro" style="height: 220vh;">
+              <h2 class="text-center" style="font-weight: 700;">É hora de plantar o futuro!</h2>
+              <h3 class="text-center" style="font-weight: 400;">Acesse oportunidades incríveis!<br><span
+                  style="font-weight: 500;">Crie sua conta</span> e <span style="font-weight: 500;">junte-se à
+                  Bloomie.</span></h3>
+              <form class="row g-3" method="post" enctype="multipart/form-data" action="../PHP/enviarOportunidade.php" class="form-cadastro-usuario">
+                <div class="col-md-12">
+                  <P>Título da oportunidade</P>
+                  <input type="text" name="titulo" class="form-control" name="titulo" id="titulo">
+                </div>
 
-        <div class="col-10 justify-content-center d-flex g-0" style="margin-left: 10vw; margin-top: 5.5VW;">
-          <section id="cadastro" style="height: 220vh; display: flex; justify-content: start; align-items: start;">
-            <div class="cadastro-container" style="display: flex; justify-content: flex-start; align-items: start;">
-              <div class="form-cadastro" style="height: 220vh;">
-                <h2 class="text-center" style="font-weight: 700;">É hora de plantar o futuro!</h2>
-                <h3 class="text-center" style="font-weight: 400;">Acesse oportunidades incríveis!<br><span
-                    style="font-weight: 500;">Crie sua conta</span> e <span style="font-weight: 500;">junte-se à
-                    Bloomie.</span></h3>
-                <form class="row g-3" method="post" action="../PHP/enviarOportunidade.php"
-                  class="form-cadastro-usuario">
-                  <div class="col-md-12">
-                    <P>Título da oportunidade</P>
-                    <input type="text" name="titulo" class="form-control" name="titulo" id="titulo">
-                  </div>
+                <div class="col-md-12">
+                  <p>Categoria</p>
+                  <select name="categoria" class="col-md-12">
+                    <option value="Estágios">Estágios</option>
+                    <option value="Aprendizados">Aprendizado</option>
+                    <option value="Bolsas de estudo">Bolsas de estudo</option>
+                    <option value="Concursos e competições">Concursos e competições</option>
+                    <option value="Voluntariado">Voluntariado</option>
+                  </select>
+                </div>
 
-                  <div class="col-md-12">
-                    <p>Categoria</p>
-                    <select name="categoria" class="col-md-12">
-                      <option value="Estágios">Estágios</option>
-                      <option value="Aprendizados">Aprendizado</option>
-                      <option value="Bolsas de estudo">Bolsas de estudo</option>
-                      <option value="Concursos e competições">Concursos e competições</option>
-                      <option value="Voluntariado">Voluntariado</option>
-                    </select>
-                  </div>
+                <div class="col-md-6 col-sm-6 estado_cidade">
+                  <p>Estado</p>
+                  <select id="uf" name="estado">
+                    <option>Estado</option>
+                  </select>
+                </div>
+                <div class="col-md-6 col-sm-6 estado_cidade">
+                  <p>Cidade</p>
+                  <select id="cidade" name="cidade">
+                    <option>Cidade</option>
+                  </select>
+                </div>
 
-                  <div class="col-md-6 col-sm-6 estado_cidade">
-                    <p>Estado</p>
-                    <select id="uf" name="estado">
-                      <option>Estado</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 col-sm-6 estado_cidade">
-                    <p>Cidade</p>
-                    <select id="cidade" name="cidade">
-                      <option>Cidade</option>
-                    </select>
-                  </div>
+                <div class="col-md-6 col-sm-4">
+                  <p>Início</p>
+                  <input class="col-md-12" type="date" name="inicio" id="inicio" style="padding: 1vw; color: #5AB5FF;">
+                </div>
+                <div class="col-md-6 col-sm-4">
+                  <p>Prazo de vencimento</p>
+                  <input class="col-md-12" type="date" name="tempo_expirar" id="vencimento"
+                    style="padding: 1vw; color: #5AB5FF;">
+                </div>
 
-                  <div class="col-md-6 col-sm-4">
-                    <p>Início</p>
-                    <input class="col-md-12" type="date" name="inicio" id="inicio"
-                      style="padding: 1vw; color: #5AB5FF;">
-                  </div>
-                  <div class="col-md-6 col-sm-4">
-                    <p>Prazo de vencimento</p>
-                    <input class="col-md-12" type="date" name="tempo_expirar" id="vencimento"
-                      style="padding: 1vw; color: #5AB5FF;">
-                  </div>
+                <div class="col-md-12">
+                  <p>Faixa etária</p>
+                  <select class="col-md-12" id="faixa_etaria" name="faixa_etaria">
+                    <option value="13 a 15 anos">13 a 15 anos</option>
+                    <option value="15 a 18 anos">15 a 18 anos</option>
+                    <option value="18+">18+ anos</option>
+                    <option value="Livre">Livre</option>
+                  </select>
+                </div>
 
-                  <div class="col-md-12">
-                    <p>Faixa etária</p>
-                    <select class="col-md-12" id="faixa_etaria" name="faixa_etaria">
-                      <option>13 a 15 anos</option>
-                      <option>15 a 18 anos</option>
-                      <option>18+ anos</option>
-                    </select>
-                  </div>
+                <div class="col-md-12">
+                  <p>Escolaridade</p>
+                  <select class="col-md-12" id="escolaridade" name="escolaridade">
+                    <option>Ensino fundamental incompleto</option>
+                    <option>Ensino fundamental completo</option>
+                    <option>Ensino médio incompleto</option>
+                    <option>Ensino médio completo</option>
+                    <option>Ensino superior incompleto</option>
+                    <option>Ensino superior completo</option>
+                    <option>Livre</option>
+                  </select>
+                </div>
 
-                  <div class="col-md-12">
-                    <p>Escolaridade</p>
-                    <select class="col-md-12" id="escolaridade" name="escolaridade">
-                      <option>Ensino fundamental incompleto</option>
-                      <option>Ensino fundamental completo</option>
-                      <option>Ensino médio incompleto</option>
-                      <option>Ensino médio completo</option>
-                      <option>Ensino superior incompleto</option>
-                      <option>Ensino superior completo</option>
-                      <option>Livre</option>
-                    </select>
-                  </div>
+                <div class="col-md-12">
+                  <P>Descrição</P>
+                  <input type="text" name="descricao" class="form-control" id="descricao">
+                </div>
 
-                  <div class="col-md-12">
-                    <P>Descrição</P>
-                    <input type="text" name="descricao" class="form-control" id="descricao">
-                  </div>
+                <div class="col-md-12">
+                  <p>Link de acesso à oportunidade</p>
+                  <input type="text" class="form-control" name="link" id="link">
+                </div>
 
-                  <div class="col-md-12">
-                    <p>Link de acesso à oportunidade</p>
-                    <input type="text" class="form-control" name="link" id="link">
-                  </div>
+                <div class="col-md-12">
+                  <p>Tipo de personalidade</p>
+                  <select class="col-md-12" id="tipo_personalidade" name="tipo_personalidade">
+                    <option value="" class="optPers"></option>
+                    <option value="dominante" class="optPers">Dominante</option>
+                    <option value="influente" class="optPers">Influente</option>
+                    <option value="estavel" class="optPers">Estável</option>
+                    <option value="conforme" class="optPers">Conforme</option>
+                  </select>
+                </div>
 
-                  <div class="col-md-12">
-                    <p>Tipo de personalidade</p>
-                    <select class="col-md-12" id="tipo_personalidade" name="tipo_personalidade">
-                      <option value="" class="optPers"></option>
-                      <option value="dominante" class="optPers">Dominante</option>
-                      <option value="influente" class="optPers">Influente</option>
-                      <option value="estavel" class="optPers">Estável</option>
-                      <option value="conforme" class="optPers">Conforme</option>
-                    </select>
-                  </div>
-
-                  <div class="d-info">
-                    <div class="col-md-12"
-                      style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                      <div class="pers"
-                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div class="pers-container">
-                          <img src="../assets/blu-personalidade1.png" alt="">
-                        </div>
-                        <p>Dominante (D)</p>
+                <div class="d-info">
+                  <div class="col-md-12"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div class="pers"
+                      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div class="pers-container">
+                        <img src="../assets/blu-personalidade1.png" alt="">
                       </div>
-                      <div class="pers-desc">
-                        <ul id="infoPers-ul">
-                          <li>Sociável, extrovertido e cheio de energia.</li>
-                          <li>Habilidades fortes de comunicação e persuasão.</li>
-                          <li>Criativo e cheio de ideias inovadoras.</li>
-                          <li>Capacidade de motivar e inspirar os outros.</li>
-                        </ul>
-                      </div>
+                      <p>Dominante (D)</p>
+                    </div>
+                    <div class="pers-desc">
+                      <ul id="infoPers-ul">
+                        <li>Sociável, extrovertido e cheio de energia.</li>
+                        <li>Habilidades fortes de comunicação e persuasão.</li>
+                        <li>Criativo e cheio de ideias inovadoras.</li>
+                        <li>Capacidade de motivar e inspirar os outros.</li>
+                      </ul>
                     </div>
                   </div>
+                </div>
 
-                  <div class="i-info">
-                    <div class="col-md-12"
-                      style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                      <div class="pers"
-                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div class="pers-container">
-                          <img src="../assets/blu-personalidade1.png" alt="">
-                        </div>
-                        <p>Influência (I)</p>
+                <div class="i-info">
+                  <div class="col-md-12"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div class="pers"
+                      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div class="pers-container">
+                        <img src="../assets/blu-personalidade1.png" alt="">
                       </div>
-                      <div class="pers-desc">
-                        <ul id="infoPers-ul">
-                          <li>Sociável, extrovertido e cheio de energia.</li>
-                          <li>Habilidades fortes de comunicação e persuasão.</li>
-                          <li>Criativo e cheio de ideias inovadoras.</li>
-                          <li>Capacidade de motivar e inspirar os outros.</li>
-                        </ul>
-                      </div>
+                      <p>Influência (I)</p>
+                    </div>
+                    <div class="pers-desc">
+                      <ul id="infoPers-ul">
+                        <li>Sociável, extrovertido e cheio de energia.</li>
+                        <li>Habilidades fortes de comunicação e persuasão.</li>
+                        <li>Criativo e cheio de ideias inovadoras.</li>
+                        <li>Capacidade de motivar e inspirar os outros.</li>
+                      </ul>
                     </div>
                   </div>
+                </div>
 
-                  <div class="s-info">
-                    <div class="col-md-12"
-                      style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                      <div class="pers"
-                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div class="pers-container">
-                          <img src="../assets/blu-personalidade1.png" alt="">
-                        </div>
-                        <p>Estável (S)</p>
+                <div class="s-info">
+                  <div class="col-md-12"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div class="pers"
+                      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div class="pers-container">
+                        <img src="../assets/blu-personalidade1.png" alt="">
                       </div>
-                      <div class="pers-desc">
-                        <ul id="infoPers-ul">
-                          <li>Sociável, extrovertido e cheio de energia.</li>
-                          <li>Habilidades fortes de comunicação e persuasão.</li>
-                          <li>Criativo e cheio de ideias inovadoras.</li>
-                          <li>Capacidade de motivar e inspirar os outros.</li>
-                        </ul>
-                      </div>
+                      <p>Estável (S)</p>
+                    </div>
+                    <div class="pers-desc">
+                      <ul id="infoPers-ul">
+                        <li>Sociável, extrovertido e cheio de energia.</li>
+                        <li>Habilidades fortes de comunicação e persuasão.</li>
+                        <li>Criativo e cheio de ideias inovadoras.</li>
+                        <li>Capacidade de motivar e inspirar os outros.</li>
+                      </ul>
                     </div>
                   </div>
+                </div>
 
-                  <div class="c-info">
-                    <div class="col-md-12"
-                      style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                      <div class="pers"
-                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div class="pers-container">
-                          <img src="../assets/blu-personalidade1.png" alt="">
-                        </div>
-                        <p>Conformidade (C)</p>
+                <div class="c-info">
+                  <div class="col-md-12"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div class="pers"
+                      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div class="pers-container">
+                        <img src="../assets/blu-personalidade1.png" alt="">
                       </div>
-                      <div class="pers-desc">
-                        <ul id="infoPers-ul">
-                          <li>Sociável, extrovertido e cheio de energia.</li>
-                          <li>Habilidades fortes de comunicação e persuasão.</li>
-                          <li>Criativo e cheio de ideias inovadoras.</li>
-                          <li>Capacidade de motivar e inspirar os outros.</li>
-                        </ul>
-                      </div>
+                      <p>Conformidade (C)</p>
+                    </div>
+                    <div class="pers-desc">
+                      <ul id="infoPers-ul">
+                        <li>Sociável, extrovertido e cheio de energia.</li>
+                        <li>Habilidades fortes de comunicação e persuasão.</li>
+                        <li>Criativo e cheio de ideias inovadoras.</li>
+                        <li>Capacidade de motivar e inspirar os outros.</li>
+                      </ul>
                     </div>
                   </div>
+                </div>
 
 
-                  <div class="col-md-12">
-                    <p>Tags</p>
-                    <div class="container-tag col-md-12">
-                      <input type="text" class="input-tag col-md-12" placeholder="Insira um ; após cada tag" />
-                    </div>
+                <div class="col-md-12">
+                  <p>Tags</p>
+                  <div class="container-tag col-md-12">
+                    <input type="text" class="input-tag col-md-12" placeholder="Insira um ; após cada tag" />
                   </div>
+                </div>
 
-                  <div class="pers-foto">
-                    <p>Foto relacionada à oportunidade</p>
-                    <div class="col-md-12"
-                      style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-                      <div class="pers"
-                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                        <div class="pers-container">
-                          <label for="image"
-                            style="background-color: #D2D2D2; color: #000; font-weight: 500; padding: 2px 15px; border-radius: 10px;">Enviar
-                            Imagem</label>
-                          <input type="file" name="imagem" id="uploadImagem" accept="image/*" size="5000000">
-                        </div>
-                      </div>
-                      <div class="pers-desc">
-                        <ol>
-                          <li>Escolha fotos de boa qualidade e relevantes para a oportunidade.</li>
-                          <li>Evite fotos ofensivas, inadequadas ou que violem direitos autorais.</li>
-                          <li>Siga as diretrizes e termos da Bloomie ao adicionar fotos nas oportunidades.</li>
-                        </ol>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <p>Tags</p>
-                    <div class="container-tag col-md-12">
-                      <input type="text" class="input-tag col-md-12" placeholder="Insira um ; após cada tag" />
-                    </div>
-                  </div>
-
-                  <div class="pers-foto col-md-12" style="
-                      display: flex;
-                      flex-direction: row;
-                      justify-content: center;
-                      align-items: center;
-                    ">
-                    <div class="pers" style="
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                      ">
-                      <div class="pers-container border">
-                        <label for="uploadImagem">Enviar arquivo</label>
-                        <input type="file" name="imagem" id="uploadImagem" accept="image/*" size="5000000" />
+                <div class="pers-foto">
+                  <p>Foto relacionada à oportunidade</p>
+                  <div class="col-md-12"
+                    style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                    <div class="pers"
+                      style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                      <div class="pers-container" style="position: relative;">
+                        <label for="uploadImagem" id="uploadImagem-label"
+                          style="background-color: #D2D2D2; color: #000; font-weight: 500; padding: 2px 15px; border-radius: 10px;">Enviar
+                          Imagem</label>
+                        <input type="file" name="uploadImagem" id="uploadImagem" accept="image/*" size="5000000">
+                        <!-- Novo elemento para mostrar a pré-visualização da imagem -->
+                        <img id="previewImage" src="#" alt="Pré-visualização da imagem"
+                          style="width: 200px; height: 200px; object-fit: cover; position: relative;">
+                        <p id="removeImageButton"
+                          style="display: flex; border: none; color: #000000; background-color: #cfcfcf; position: absolute; top: 5px; right: 5px; border-radius: 100%; width: 20px; height: 20px; justify-content: center; align-items: center; text-align: center;"
+                          type="button"><i class="ph ph-x" style="font-weight: 700;"></i></p>
                       </div>
                     </div>
                     <div class="pers-desc">
                       <ol>
-                        <li>
-                          Escolha fotos de boa qualidade e relevantes para a
-                          oportunidade.
-                        </li>
-                        <li>
-                          Evite fotos ofensivas, inadequadas ou que violem
-                          direitos autorais.
-                        </li>
-                        <li>
-                          Siga as diretrizes e termos da Bloomie ao adicionar
-                          fotos nas oportunidades.
-                        </li>
+                        <li>Escolha fotos de boa qualidade e relevantes para a oportunidade.</li>
+                        <li>Evite fotos ofensivas, inadequadas ou que violem direitos autorais.</li>
+                        <li>Siga as diretrizes e termos da Bloomie ao adicionar fotos nas oportunidades.</li>
                       </ol>
                     </div>
                   </div>
+                </div>
 
-                  <div class="col-md-12 text-center btn-lg">
-                    <input type="submit" name="submit" class="btn btn-primary" value="Enviar oportunidade" style="
-                        border-radius: 20px;
-                        width: 30vw;
-                        height: 5vh;
-                        font-size: 18px;
-                        font-weight: 500;
-                        margin-bottom: 1vw;
-                        text-align: center;
-                        margin-top: 1vw;
-                        background-color: #1185e3;
-                        border: #1185e3;
-                        color: #fff;
-                      " />
-                    <p>
-                      <a href="/public/index.html#login" style="font-weight: 500; color: #5ab5ff">Voltar</a>
-                    </p>
-                  </div>
-                </form>
-              </div>
+                <div class="col-md-12 text-center btn-lg">
+                  <input type="submit" name="submit" class="btn btn-primary" value="Enviar oportunidade" style="
+                      border-radius: 20px;
+                      width: 30vw;
+                      height: 5vh;
+                      font-size: 18px;
+                      font-weight: 500;
+                      margin-bottom: 1vw;
+                      text-align: center;
+                      margin-top: 1vw;
+                      background-color: #1185e3;
+                      border: #1185e3;
+                      color: #fff;
+                    " />
+                  <p>
+                    <a href="/public/index.html#login" style="font-weight: 500; color: #5ab5ff">Voltar</a>
+                  </p>
+                </div>
+              </form>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
+    </div>
   </main>
 
   <footer>
     <!-- place footer here -->
   </footer>
+
+  <script>
+    // PERSONALIDADE INFO
+
+
+
+    document.getElementById('tipo_personalidade').addEventListener('change', function () {
+      // Ocultar todas as divs relacionadas às personalidades
+      document.querySelector('.d-info').style.display = 'none';
+      document.querySelector('.i-info').style.display = 'none';
+      document.querySelector('.s-info').style.display = 'none';
+      document.querySelector('.c-info').style.display = 'none';
+
+      // Exibir a div correspondente à opção selecionada
+      var selectedOption = this.value;
+      if (selectedOption == 'dominante') {
+        document.querySelector('.d-info').style.display = 'block';
+      } else if (selectedOption == 'influente') {
+        document.querySelector('.i-info').style.display = 'block';
+      } else if (selectedOption == 'estavel') {
+        document.querySelector('.s-info').style.display = 'block';
+      } else if (selectedOption == 'conforme') {
+        document.querySelector('.c-info').style.display = 'block';
+      }
+    });
+
+    const uploadImagem = document.getElementById('uploadImagem');
+    const uploadImagemL = document.getElementById('uploadImagem-label');
+    const previewImage = document.getElementById('previewImage');
+    const removeImageButton = document.getElementById('removeImageButton');
+    const textArea = document.getElementById('textArea');
+    previewImage.style.display = 'none';
+    removeImageButton.style.display = 'none';
+
+    uploadImagem.onchange = evt => {
+      const [file] = uploadImagem.files;
+
+      if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        removeImageButton.style.display = 'block';
+        previewImage.style.display = 'block';
+        uploadImagemL.style.display = 'none';
+      } else {
+        previewImage.src = ''; // Define o src como vazio
+        previewImage.style.display = 'none';
+        removeImageButton.style.display = 'none';
+      }
+    };
+
+    // Adicione a lógica para remover a imagem e redefinir o campo de arquivo
+    removeImageButton.addEventListener('click', () => {
+      previewImage.src = ''; // Define o src como vazio
+      previewImage.style.display = 'none';
+      uploadImagem.value = ''; // Limpa o valor do campo de arquivo
+      removeImageButton.style.display = 'none';
+      uploadImagemL.style.display = 'block';
+    });
+
+
+    textArea.addEventListener('click', () => {
+      // Limpa o conteúdo do campo de texto
+      textArea.value = '';
+
+      // Limpa o conteúdo do campo de upload de imagem
+      uploadImagem.value = '';
+
+      // Esconde a pré-visualização da imagem e o botão de remoção
+      previewImage.src = '';
+      previewImage.style.display = 'none';
+      removeImageButton.style.display = 'none';
+      uploadImagemL.style.display = 'block';
+    });
+
+    window.onload = exibirImagem;
+  </script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
@@ -474,17 +499,17 @@
       uf.append(options);
     });
 
-      window.addEventListener("load", async () => {
-        const request = await fetch(ulrUF);
-        const response = await request.json();
+    window.addEventListener("load", async () => {
+      const request = await fetch(ulrUF);
+      const response = await request.json();
 
-    const container = document.querySelector(".container-tag");
-    const input = container.querySelector("input");
+      const container = document.querySelector(".container-tag");
+      const input = container.querySelector("input");
 
-          response.forEach(function (uf) {
-            console.log(uf.sigla);
-          });
-        });
+      response.forEach(function (uf) {
+        console.log(uf.sigla);
+      });
+    });
 
     const initialDom = () => {
       container.insertAdjacentHTML(
@@ -493,9 +518,9 @@
             <div class="error"></div>
             <div class="tags"></div>
         `
-        );
-      };
-      initialDom();
+      );
+    };
+    initialDom();
 
     const createDomTags = () => {
       const tags = document.querySelector(".tags");
@@ -522,6 +547,7 @@
 
     input.addEventListener("keypress", (e) => {
       document.querySelector(".error").innerHTML = "";
+
       if (e.key === "Control" || e.key === ";") {
         showError();
 
@@ -537,49 +563,22 @@
             id: Date.now(),
           });
         }
-      };
 
-      input.addEventListener("keypress", (e) => {
-        document.querySelector(".error").innerHTML = "";
-        if (e.key === "Control" || e.key === ";") {
-          showError();
-
-        input.value = "";
+        input.value = "";  // Limpar o valor do input após o processamento
       }
     });
 
-    // PERSONALIDADE INFO
 
 
 
-    document.getElementById('tipo_personalidade').addEventListener('change', function () {
-      // Ocultar todas as divs relacionadas às personalidades
-      document.querySelector('.d-info').style.display = 'none';
-      document.querySelector('.i-info').style.display = 'none';
-      document.querySelector('.s-info').style.display = 'none';
-      document.querySelector('.c-info').style.display = 'none';
-
-      // Exibir a div correspondente à opção selecionada
-      var selectedOption = this.value;
-      if (selectedOption === 'dominante') {
-        document.querySelector('.d-info').style.display = 'block';
-      } else if (selectedOption === 'influente') {
-        document.querySelector('.i-info').style.display = 'block';
-      } else if (selectedOption === 'estavel') {
-        document.querySelector('.s-info').style.display = 'block';
-      } else if (selectedOption === 'conforme') {
-        document.querySelector('.c-info').style.display = 'block';
-      }
-    });
-
-      const showError = () => {
-        for (let item of data) {
-          if (item.text.includes(input.value.trim())) {
-            document.querySelector(".error").innerHTML = "There is this word";
-          }
+    const showError = () => {
+      for (let item of data) {
+        if (item.text.includes(input.value.trim())) {
+          document.querySelector(".error").innerHTML = "There is this word";
         }
-      };
-    </script>
+      }
+    };
+  </script>
 
   <script src="../../public/script.js"></script>
 </body>
