@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palavras e Formulário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            width: 80%;
+            margin: 50px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 10px;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tag-text {
+            margin-right: 10px;
+        }
+
+        #inputPalavra {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #submitButton {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <!-- Tags serão adicionadas aqui dinamicamente -->
+</div>
+
+<form id="meuFormulario">
+    <!-- Campo de entrada de palavras -->
+    <input type="text" id="inputPalavra" placeholder="Digite uma palavra e pressione Enter" onkeydown="handleKeyPress(event)">
+    
+    <!-- Botão de enviar formulário -->
+    <button type="submit" id="submitButton">Enviar Formulário</button>
+</form>
+
+<script>
+    function handleKeyPress(event) {
+        var inputElement = document.getElementById("inputPalavra");
+        var container = document.getElementById("container");
+
+        // Verificar se o campo de entrada está focado
+        var inputFocused = document.activeElement === inputElement;
+
+        if (event.key === "Enter") {
+            if (inputFocused) {
+                // Evitar a ação padrão do Enter (enviar o formulário)
+                event.preventDefault();
+
+                // Criar uma nova tag
+                var tag = document.createElement("div");
+                tag.classList.add("tag");
+
+                var tagText = document.createElement("span");
+                tagText.classList.add("tag-text");
+                tagText.innerHTML = inputElement.value;
+
+                var closeButton = document.createElement("button");
+                closeButton.innerHTML = "X";
+                closeButton.onclick = function () {
+                    container.removeChild(tag);
+                };
+
+                tag.appendChild(tagText);
+                tag.appendChild(closeButton);
+
+                // Adicionar a tag ao container
+                container.appendChild(tag);
+
+                // Limpar o campo de entrada
+                inputElement.value = "";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
