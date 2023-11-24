@@ -26,6 +26,14 @@ if (!$pubs) {
   die('Consulta inválida: ' . $conexao->error);
 }
 
+if (isset($_POST['add'])) {
+  add();
+}
+
+function add (){
+  
+}
+
 
 ?>
 
@@ -156,9 +164,10 @@ if (!$pubs) {
             <?php
         
         while ($post = $pubs->fetch_assoc()) {
+
           echo '
-          <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vw;">
-              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
+          <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vw;position: relative;">
+              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
                   <div class="col">
                       <div class="postagem-user">
                           <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
@@ -191,10 +200,20 @@ if (!$pubs) {
                               <i class="ph ph-warning"></i>
                           </div>
                       </div>
-                  </div>
+                  </div>';
+
+              // Verificar se o post pertence ao usuário atual
+          $idUsuarioDoPost = $post['ID_usuario']; // Substitua pelo campo correto em seu banco de dados
+
+          if ($idUsuarioDoPost != $_SESSION['ID_usuario']) {
+              // Se não for o usuário atual, exibir o botão "Adicionar Amigo"
+              echo '<button class="adicionar-amigo" data-id="' . $idUsuarioDoPost . '" style="width: max-content; height: max-content; display: flex; justify-content: center; align-items: center; border:none; background:none; position: absolute; top: 1rem; right: 1rem; z-index: 1000;"><i class="ph ph-user-plus" style="font-size: 2.5vw;font-weight: 600;color: #1289EA"></i></button>';
+          }
+
+              echo'
               </div>
-          </div>
-          ';
+              </div>
+              ';
       }
       
         
@@ -389,7 +408,29 @@ if (!$pubs) {
                     console.error('Erro ao enviar a solicitação Ajax:', error);
                 }
             });
+
+             // Lógica para o botão "Adicionar Amigo"
+      $('.adicionar-amigo').on('click', function () {
+        var usuario_id = $(this).data('id');
+        adicionarAmigo(usuario_id);
+      });
+
+      function adicionarAmigo(usuario_id) {
+        $.ajax({
+          type: 'GET',
+          url: 'adicionar_amigo.php',
+          data: { id: usuario_id },
+          success: function (response) {
+            $('#mensagem').text(response);
+          },
+          error: function () {
+            $('#mensagem').text('Erro ao processar a solicitação.');
+          }
         });
+      }
+        });
+
+       
 
         // Função para adicionar uma nova postagem ao feed
         function adicionarPostAoFeed(post) {
@@ -439,6 +480,9 @@ if (!$pubs) {
 `; // Substitua pelo HTML real
             feedElement.prepend(novoPostHTML);
         }
+    
+
+    
     });
 </script>
   <!-- Bootstrap JavaScript Libraries -->
