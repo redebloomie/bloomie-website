@@ -4,7 +4,7 @@
 include('connect.php'); // Certifique-se de ter um arquivo de conexão adequado
 
 if (isset($_GET['id'])) {
-    $usuario_id_1 = 1; // ID do usuário que está logado (você pode obter isso de uma sessão)
+    $usuario_id_1 = $_SESSION['ID_usuario']; // ID do usuário que está logado (você pode obter isso de uma sessão)
     $usuario_id_2 = $_GET['id'];
 
     // Verifique se os usuários não são os mesmos

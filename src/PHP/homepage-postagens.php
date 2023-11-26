@@ -26,15 +26,6 @@ if (!$pubs) {
   die('Consulta inválida: ' . $conexao->error);
 }
 
-if (isset($_POST['add'])) {
-  add();
-}
-
-function add (){
-  
-}
-
-
 ?>
 
 <!doctype html>
@@ -161,65 +152,120 @@ function add (){
             </form>
           </div>
           
-            <?php
-        
-        while ($post = $pubs->fetch_assoc()) {
-
-          echo '
-          <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2vw;position: relative;">
-              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
-                  <div class="col">
-                      <div class="postagem-user">
-                          <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
-                          <span>
-                          <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
-                          <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
-                          </span>
-                      </div>
-                  </div>
-                  <div class="col">
-                      <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
-                  </div>
-                  ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt=""></div>' : '') . '
-                  <div class="col-12 interacoes-post">
-                      <div class="options-post">
-                          <div class="rightside-op-post">
+          <?php
+            while ($post = $pubs->fetch_assoc()) {
+              $ID_usuario = $post['ID_usuario'];
+              $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $ID_usuario");
+              $saber = $saberr->fetch_assoc();
+              $id_post = $post['ID_post'];
+              $saber_curtidas = mysqli_query($conexao, "SELECT * FROM curtidas WHERE ID_post = $id_post");
+              $curtidas = $saber_curtidas->num_rows;
+          
+              echo '
+              <div class="col-12 d-flex justify-content-center post-container" id="feed">
+                  <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
+                      <div class="col">
+                          <div class="postagem-user">
+                              <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
                               <span>
-                                  <i class="ph ph-heart"></i>
-                                  <p></p>
-                              </span>
-                              <span>
-                                  <i class="ph ph-chat-circle"></i>
-                                  <p></p>
-                              </span>
-                              <span>
-                                  <i class="ph ph-link-simple-horizontal"></i>
+                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                                  <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
                               </span>
                           </div>
-                          <div class="leftside-op-post">
-                              <i class="ph ph-warning"></i>
+                      </div>
+                      <div class="col">
+                          <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
+                      </div>
+                      ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt=""></div>' : '') . '
+                      <div class="col-12 interacoes-post">
+                          <div class="options-post">
+                              <div class="rightside-op-post">
+                                  <span class="like-btn" data-post-id="' . $post['ID_post'] . '" data-user-id="' . $_SESSION['ID_usuario'] . '">
+                                      <i class="ph ph-heart"></i>
+                                      <div id="like">
+                                          <p>';
+          
+              // Verifica se o usuário já curtiu a postagem
+              $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
+          
+              if ($userLiked) {
+                  echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '">Gostei</a> | ';
+              } else {
+                  echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '">Gostar</a> | ';
+              }
+          
+              // Exibir a contagem de curtidas
+              echo $curtidas . ' gostaram</p>
+                                      </div>
+                                  </span>
+                                  <span>
+                                      <i class="ph ph-chat-circle"></i>
+                                      <p></p>
+                                  </span>
+                                  <span>
+                                      <i class="ph ph-link-simple-horizontal"></i>
+                                  </span>
+                              </div>
+                              <div class="leftside-op-post">
+                                  <i class="ph ph-warning"></i>
+                              </div>
                           </div>
                       </div>
-                  </div>';
-
-              // Verificar se o post pertence ao usuário atual
-          $idUsuarioDoPost = $post['ID_usuario']; // Substitua pelo campo correto em seu banco de dados
-
-          if ($idUsuarioDoPost != $_SESSION['ID_usuario']) {
-              // Se não for o usuário atual, exibir o botão "Adicionar Amigo"
-              echo '<button class="adicionar-amigo" data-id="' . $idUsuarioDoPost . '" style="width: max-content; height: max-content; display: flex; justify-content: center; align-items: center; border:none; background:none; position: absolute; top: 1rem; right: 1rem; z-index: 1000;"><i class="ph ph-user-plus" style="font-size: 2.5vw;font-weight: 600;color: #1289EA"></i></button>';
+                  </div>
+              </div>';
           }
+        
+            if (isset($_GET['like'])) {
+                like();
+            }
 
-              echo'
-              </div>
-              </div>
-              ';
-      }
-      
-        
-        $conexao->close();
-        
-      ?>
+            function like() {
+                global $conexao;
+                $post_id = $_GET['like'];
+                $user_id = $_SESSION['ID_usuario'];
+                $data = date('Y-m-d');
+
+                // Verifica se o usuário já deu like nesta postagem
+                $user_check = mysqli_query($conexao, "SELECT ID_usuario FROM curtidas WHERE ID_post = $post_id AND ID_usuario = $user_id");
+                $do_user_check = $user_check->num_rows;
+
+                if ($do_user_check == 0) {
+                    // Insere um novo like no banco de dados
+                    $inserir = mysqli_query($conexao, "INSERT INTO curtidas (ID_post, ID_usuario, data_curtida) VALUES ('$post_id', '$user_id', '$data')");
+                    if (!$inserir) {
+                        echo 'Erro ao inserir curtida: ' . mysqli_error($conexao);
+                    }
+                }
+            }
+
+            if (isset($_GET['unlike'])) {
+                unlike();
+            }
+
+            function unlike() {
+                global $conexao;
+                $post_id = $_GET['unlike'];
+                $user_id = $_SESSION['ID_usuario'];
+
+                // Remove o like do banco de dados
+                $del = mysqli_query($conexao, "DELETE FROM curtidas WHERE ID_post = '$post_id' AND ID_usuario = '$user_id'");
+                if (!$del) {
+                    echo 'Erro ao remover curtida: ' . mysqli_error($conexao);
+                }
+            }
+
+            // Função para verificar se o usuário curtiu a postagem
+function hasUserLikedPost($conexao, $post_id, $user_id) {
+  $query = "SELECT * FROM curtidas WHERE ID_post = $post_id AND ID_usuario = $user_id";
+  $result = mysqli_query($conexao, $query);
+
+  return $result->num_rows > 0;
+}
+
+            $conexao->close();
+          ?>
+
+
 
             </div>
           </div>
@@ -409,25 +455,8 @@ function add (){
                 }
             });
 
-             // Lógica para o botão "Adicionar Amigo"
-      $('.adicionar-amigo').on('click', function () {
-        var usuario_id = $(this).data('id');
-        adicionarAmigo(usuario_id);
-      });
+            
 
-      function adicionarAmigo(usuario_id) {
-        $.ajax({
-          type: 'GET',
-          url: 'adicionar_amigo.php',
-          data: { id: usuario_id },
-          success: function (response) {
-            $('#mensagem').text(response);
-          },
-          error: function () {
-            $('#mensagem').text('Erro ao processar a solicitação.');
-          }
-        });
-      }
         });
 
        
