@@ -250,9 +250,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`ID_post`),
   KEY `ID_autor` (`ID_usuario`),
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.post: ~115 rows (aproximadamente)
+-- Copiando dados para a tabela bloomie_db.post: ~126 rows (aproximadamente)
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
 INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imagem`, `texto`) VALUES
 	(1, 6, '', '2023-11-10 22:20:25', '../img/blu-disc.png', 'Oiiii'),
@@ -374,7 +374,18 @@ INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imag
 	(123, 6, 'winnie.s', '2023-11-26 14:53:23', '', ''),
 	(124, 6, 'winnie.s', '2023-11-26 14:57:05', '', ''),
 	(125, 6, 'winnie.s', '2023-11-26 15:03:44', '', ''),
-	(126, 6, 'winnie.s', '2023-11-26 15:43:30', '', 'oi\r\n\r\n');
+	(126, 6, 'winnie.s', '2023-11-26 15:43:30', '', 'oi\r\n\r\n'),
+	(127, 6, 'winnie.s', '2023-11-27 10:38:28', '', 'olaaa\r\n'),
+	(128, 6, 'winnie.s', '2023-11-27 10:41:36', '', 'oi'),
+	(129, 6, 'winnie.s', '2023-11-27 10:43:20', '', 'oi'),
+	(130, 6, 'winnie.s', '2023-11-27 10:45:10', '', 'teste\r\n'),
+	(131, 6, 'winnie.s', '2023-11-27 10:46:13', '', 'oxi'),
+	(132, 6, 'winnie.s', '2023-11-27 10:46:31', '', 'teste'),
+	(133, 6, 'winnie.s', '2023-11-27 10:46:42', '', 'ta funcionando normales'),
+	(134, 6, 'winnie.s', '2023-11-27 10:50:14', '', 'teste\r\n'),
+	(135, 6, 'winnie.s', '2023-11-27 10:50:30', '', 'teste2'),
+	(136, 6, 'winnie.s', '2023-11-27 10:50:47', '', 'test3'),
+	(137, 6, 'winnie.s', '2023-11-27 10:51:04', '', 'teste');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.posts_banidos
