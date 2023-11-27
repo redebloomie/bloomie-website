@@ -1,3 +1,52 @@
+<?php
+session_start();
+include('connect.php');
+
+$limit = 3; // Defina o limite desejado
+
+// Verifica se o campo tipo_personalidade do usuário está vazio
+if (empty($_SESSION['tipo_personalidade'])) {
+    // Se estiver vazio, exibe oportunidades de todas as personalidades
+
+    // Estágio
+    $estagios = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Estágios' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Aprendizado
+    $aprendizado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Aprendizados' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Bolsas de Estudo
+    $bolsas_estudo = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Bolsas de Estudo' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Concursos e Competições
+    $concursos_competicoes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Concursos e Competições' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Voluntariado
+    $voluntariado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Voluntariado' ORDER BY data_publicacao DESC LIMIT $limit");
+} else {
+    // Se não estiver vazio, exibe oportunidades apenas da personalidade do usuário
+    $tipo_personalidade = $_SESSION['tipo_personalidade'];
+
+    // Estágio
+    $estagios = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Estágios' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Aprendizado
+    $aprendizado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Aprendizados' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Bolsas de Estudo
+    $bolsas_estudo = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Bolsas de Estudo' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Concursos e Competições
+    $concursos_competicoes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Concursos e Competições' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+
+    // Voluntariado
+    $voluntariado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Voluntariado' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+}
+
+// Restante do seu código para exibir as oportunidades
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -124,52 +173,31 @@
                   </span>
                 </div>
                 <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px;">
-                  <div class="col">
+                <?php
+            while ($opor = $estagios->fetch_assoc()) {
+          
+              echo '
+              <div class="col">
                     <div class="row-cols-1 justify-content-center align-items-center g-2">
                       <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
+                        <img src="'. $opor['imagem'].'" alt="">
+                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
                       </div>
                       <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Estágio na Gloogle</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
+                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
+                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
                       </div>
                       <div class="col">
                         <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
                       </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Estágio na Gloogle</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
-                      </div>
-                      <div class="col">
-                        <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Estágio na Gloogle</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
-                      </div>
-                      <div class="col">
-                        <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
-                      </div>
+                  </div>';
+          }
+          ?>
+                  <div class="col-1">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                     </div>
                   </div>
                 </div>
@@ -188,52 +216,34 @@
                   </span>
                 </div>
                 <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px;">
-                  <div class="col">
+                <?php
+            while ($opor = $aprendizado->fetch_assoc()) {
+          
+              echo '
+              <div class="col">
                     <div class="row-cols-1 justify-content-center align-items-center g-2">
                       <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
+                        <img src="'. $opor['imagem'].'" alt="">
+                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
                       </div>
                       <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Curso Harvard CS50</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
+                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
+                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
                       </div>
                       <div class="col">
                         <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
                       </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Estágio na Gloogle</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
-                      </div>
-                      <div class="col">
-                        <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="https://source.unsplash.com/random/" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">A Google está de portas abertas para receber um novo estagiário, por isso, o processo seletivo para essa escolha... <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">Estágio na Gloogle</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> 22/06/2023</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> 16 - 17 anos</p>
-                      </div>
-                      <div class="col">
-                        <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
-                      </div>
+                  </div>';
+          }
+
+            $conexao->close();
+          ?>
+                
+                  <div class="col-1">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                     </div>
                   </div>
                 </div>
@@ -300,6 +310,11 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-1">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -364,6 +379,11 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-1">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -426,6 +446,11 @@
                       <div class="col">
                         <button type="button" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</button>
                       </div>
+                    </div>
+                  </div>
+                  <div class="col-1">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                     </div>
                   </div>
                 </div>

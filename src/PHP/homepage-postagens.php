@@ -277,35 +277,71 @@ function hasUserLikedPost($conexao, $post_id, $user_id) {
         <div id="sidebar-postagens" class="row-cols-1 justify-content-center align-items-center rightsidebar-group">
           <div class="col rounded text-center">
             <div class="container rightsidebar-container-1">
-              <div class="row-cols-1 destaques justify-content-center align-items-center g-0">
-                <div class="col destaques-top text-nowrap">
-                  <p style="color: #1289EA; font-weight: 500;">Destaques da semana</p>
-                  <p style="color: #DBAC01; font-weight: 500;">Arraste e confira!</p>
-                </div>
-                <div class="col text-start destaques-post">
-                  <span style="display:flex; flex-direction: row;" class="destaques-post-user">
-                    <img src="https://source.unsplash.com/random" alt="">
+            <?php
+include('connect.php');
+
+// Consultar os posts mais curtidos da semana
+$sql = "SELECT post.*, usuario.*, COUNT(curtidas.ID_curtida) AS num_curtidas
+        FROM post
+        JOIN usuario ON post.ID_usuario = usuario.ID_usuario
+        LEFT JOIN curtidas ON post.ID_post = curtidas.ID_post
+        WHERE post.data_publicacao >= NOW() - INTERVAL 3 WEEK
+        GROUP BY post.ID_post
+        ORDER BY num_curtidas DESC
+        LIMIT 1"; // Ajuste a quantidade ou as condições conforme necessário
+$result = $conexao->query($sql);
+
+if ($result) {
+    $destaque = $result->fetch_assoc();
+    // Verifica se há resultados
+    if ($destaque) {
+?>
+        <div class="row-cols-1 destaques justify-content-center align-items-center g-0">
+            <div class="col destaques-top text-nowrap">
+                <p style="color: #1289EA; font-weight: 500;">Destaque da semana</p>
+                <p style="color: #DBAC01; font-weight: 500;">Confira o post mais curtido!</p>
+            </div>
+            <div class="col text-start destaques-post">
+                <span style="display:flex; flex-direction: row;" class="destaques-post-user">
+                    <img src="<?php echo $destaque['foto_perfil']; ?>" alt="">
                     <span>
-                      <p style="font-weight: 500;">Nome de usuário</p>
-                      <p style="font-size: 1vw;">21/11/2023</p>
+                        <p style="font-weight: 500;"><?php echo $destaque['usuario']; ?></p>
+                        <p style="font-size: 1vw;"><?php echo date('d/m/Y', strtotime($destaque['data_publicacao'])); ?></p>
                     </span>
-                  </span>
-                  <div style="display:flex; flex-direction: column;" class="destaques-post-text">
-                    <p>Descubra a essência que impulsiona a Bloomie e transforma... Ler mais.</p>
+                </span>
+                <div style="display:flex; flex-direction: column;" class="destaques-post-text">
+                    <p><?php echo $destaque['texto']; ?></p>
                     <span class="destaques-post-tags">
-                      <p style="background-color: #F2C934;">#educação</p>
-                      <p style="background-color: #5AB5FF;">#redesocial</p>
+                        <!-- Adicione tags aqui, se necessário -->
                     </span>
-                    <img src="/src/assets/sobre_foto.png" alt="">
-                  </div>
+                    <?php
+                    // Verifica se há uma URL de imagem
+                    if (!empty($destaque['imagem'])) {
+                    ?>
+                        <img src="<?php echo $destaque['imagem']; ?>" alt="Imagem do post">
+                    <?php
+                    }
+                    ?>
                 </div>
-                <div class="col dots"
-                  style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
-                  <div class="dot" style="background-color: #1185E3;"></div>
-                  <div class="dot" style="background-color: #0C5D9E;"></div>
-                  <div class="dot" style="background-color: #DBAC01;"></div>
-                </div>
-              </div>
+            </div>
+            <div class="col dots" style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
+                <div class="dot" style="background-color: #1185E3;"></div>
+                <div class="dot" style="background-color: #0C5D9E;"></div>
+                <div class="dot" style="background-color: #DBAC01;"></div>
+            </div>
+        </div>
+<?php
+    } else {
+        echo 'Nenhum destaque encontrado.';
+    }
+} else {
+    echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sql;
+}
+
+// Fechar a conexão com o banco de dados
+$conexao->close();
+?>
+
             </div>
           </div>
           <div class="col rounded text-center">
