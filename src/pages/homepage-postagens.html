@@ -148,7 +148,14 @@
                     </span>
                   </span>
                   <div style="display:flex; flex-direction: column;" class="destaques-post-text">
-                    <p>Descubra a essência que impulsiona a Bloomie e transforma... Ler mais.</p>
+                    <p>Descubra a essência que impulsiona a Bloomie e transforma <span id="pontos">...</span><span id="mais">
+                       Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                       when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                       It has survived not only five centuries, but also the leap into electronic typesetting, remaining.</span></p>
+
+                       <button onclick="LeiaMais"  id="btnLeiaMais">Leia Mais</button>
+
+                  
                     <span class="destaques-post-tags">
                       <p style="background-color: #F2C934;">#educação</p>
                       <p style="background-color: #5AB5FF;">#redesocial</p>
@@ -230,6 +237,26 @@
   </footer>
 
   <script>
+
+    function LeiaMais(){
+      var pontos=document.getElementById("pontos");
+      var maisTexto=document.getElementById("mais");
+      var btnLeiaMais=document.getElementById("btnLeiaMais");
+
+      if(pontos.style.display === "none"){
+        pontos.style.display="inline";
+        maisTexto.style.display="none";
+        btnLeiaMais.innerHTML="Leia Mais";
+      }else{
+        pontos.style.display="nome";
+        maisTexto.style.display="inline";
+        btnLeiaMais.innerHTML="Leia Menos";
+      }
+
+
+    }
+
+
     const uploadImagem = document.getElementById('uploadImagem');
     const previewImage = document.getElementById('previewImage');
     const removeImageButton = document.getElementById('removeImageButton');
