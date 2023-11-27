@@ -162,7 +162,7 @@ if (!$pubs) {
               $curtidas = $saber_curtidas->num_rows;
           
               echo '
-              <div class="col-12 d-flex justify-content-center post-container" id="feed">
+              <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
                   <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
                       <div class="col">
                           <div class="postagem-user">
@@ -505,7 +505,6 @@ $conexao->close();
             // Exemplo: Adicionando a postagem ao início do feed
             var feedElement = $('#feed');
             var novoPostHTML = `
-            
             <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
     <div class="col">
         <div class="postagem-user">
@@ -540,7 +539,6 @@ $conexao->close();
             </div>
         </div>
     </div>
-
     </div>
 `; // Substitua pelo HTML real
             feedElement.prepend(novoPostHTML);
