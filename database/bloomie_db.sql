@@ -47,15 +47,17 @@ CREATE TABLE IF NOT EXISTS `banimento` (
 
 -- Copiando estrutura para tabela bloomie_db.bloomizade
 CREATE TABLE IF NOT EXISTS `bloomizade` (
-  `bloomizade` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) DEFAULT NULL,
-  `ID_bloomigo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`bloomizade`),
-  KEY `ID_usuario` (`ID_usuario`),
-  KEY `ID_bloomigo` (`ID_bloomigo`),
-  CONSTRAINT `usuario1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `usuario2` FOREIGN KEY (`ID_bloomigo`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ID_bloomizade` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id_1` int(11) DEFAULT NULL,
+  `usuario_id_2` int(11) DEFAULT NULL,
+  `status` enum('pendente','aceito') DEFAULT 'pendente',
+  `data_criacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID_bloomizade`),
+  KEY `usuario_id_1` (`usuario_id_1`),
+  KEY `usuario_id_2` (`usuario_id_2`),
+  CONSTRAINT `bloomizade_ibfk_1` FOREIGN KEY (`usuario_id_1`) REFERENCES `usuario` (`ID_usuario`),
+  CONSTRAINT `bloomizade_ibfk_2` FOREIGN KEY (`usuario_id_2`) REFERENCES `usuario` (`ID_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bloomie_db.bloomizade: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `bloomizade` DISABLE KEYS */;
@@ -105,16 +107,18 @@ CREATE TABLE IF NOT EXISTS `curtidas` (
   `ID_curtida` int(11) NOT NULL AUTO_INCREMENT,
   `ID_usuario` int(11) DEFAULT NULL,
   `ID_post` int(11) DEFAULT NULL,
-  `data_curtida` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_curtida` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_curtida`),
   KEY `ID_usuario` (`ID_usuario`),
   KEY `ID_post` (`ID_post`),
   CONSTRAINT `curtidas_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`),
   CONSTRAINT `curtidas_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID_post`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bloomie_db.curtidas: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `curtidas` DISABLE KEYS */;
+INSERT INTO `curtidas` (`ID_curtida`, `ID_usuario`, `ID_post`, `data_curtida`) VALUES
+	(64, 6, 106, '2023-11-26 00:00:00');
 /*!40000 ALTER TABLE `curtidas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.empresa
@@ -155,9 +159,9 @@ CREATE TABLE IF NOT EXISTS `oportunidade` (
   `tipo_personalidade` varchar(50) CHARACTER SET utf8 NOT NULL,
   `titulo` varchar(50) CHARACTER SET utf8 NOT NULL,
   `status_opor` varchar(25) CHARACTER SET utf8 NOT NULL,
-  `tempo_expirar` datetime NOT NULL,
+  `tempo_expirar` date NOT NULL,
   `tipo` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `inicio` datetime NOT NULL,
+  `inicio` date NOT NULL,
   `link` varchar(64) CHARACTER SET utf8 NOT NULL,
   `tags` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `cidade` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -172,35 +176,35 @@ CREATE TABLE IF NOT EXISTS `oportunidade` (
 -- Copiando dados para a tabela bloomie_db.oportunidade: ~29 rows (aproximadamente)
 /*!40000 ALTER TABLE `oportunidade` DISABLE KEYS */;
 INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, `categoria`, `descricao`, `imagem`, `tipo_personalidade`, `titulo`, `status_opor`, `tempo_expirar`, `tipo`, `inicio`, `link`, `tags`, `cidade`, `estado`, `escolaridade`, `faixa_etaria`) VALUES
-	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01 00:00:00', NULL, '2023-10-03 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'ativa', '2023-11-01 00:00:00', NULL, '2023-10-03 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(6, 16, '2023-10-29 03:00:13', 'EstÃ¡gios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'inativa', '2023-10-13 00:00:00', NULL, '2023-10-11 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(7, 19, '2023-11-19 16:16:56', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'pendente', '2023-11-23 00:00:00', NULL, '2023-11-07 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(8, 6, '2023-11-19 16:22:52', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'ativa', '2023-11-30 00:00:00', NULL, '2023-11-07 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'PB', 'Ensino fundamental completo', NULL),
-	(9, 6, '2023-11-19 16:25:05', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'negada', '2023-11-30 00:00:00', NULL, '2023-11-10 00:00:00', 'bloomie.com', NULL, 'Amparo do São Francisco', 'SE', 'Ensino superior incompleto', NULL),
-	(10, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-15 00:00:00', NULL, '2023-11-29 00:00:00', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
-	(11, 6, '2023-11-19 16:41:15', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'negada', '2023-11-28 00:00:00', NULL, '2023-11-23 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'PB', 'Ensino fundamental completo', NULL),
-	(12, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/blu-DISC.png', 'dominante', 'Oportunidade', 'inativa', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(13, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(16, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(18, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(19, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(20, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(21, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(22, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(23, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(24, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(25, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(26, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(27, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(28, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(29, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(30, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(31, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(33, 21, '2023-11-19 19:09:06', 'teste', 'teste', 'teste', 'teste', 'teste', '', '2023-11-19 19:09:34', NULL, '2023-11-19 19:09:37', 'teste', NULL, 'teste', 'PR', 'teste', NULL),
-	(34, 16, '2023-10-29 03:00:13', 'EstÃ¡gios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-10-13 00:00:00', NULL, '2023-10-11 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15 00:00:00', NULL, '2023-11-29 00:00:00', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL);
+	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'ativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(6, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'inativa', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(7, 19, '2023-11-19 16:16:56', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'pendente', '2023-11-23', NULL, '2023-11-07', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(8, 6, '2023-11-19 16:22:52', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'ativa', '2023-11-30', NULL, '2023-11-07', 'bloomie.com', NULL, 'Água Branca', 'PB', 'Ensino fundamental completo', NULL),
+	(9, 6, '2023-11-19 16:25:05', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'negada', '2023-11-30', NULL, '2023-11-10', 'bloomie.com', NULL, 'Amparo do São Francisco', 'SE', 'Ensino superior incompleto', NULL),
+	(10, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
+	(11, 6, '2023-11-19 16:41:15', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'negada', '2023-11-28', NULL, '2023-11-23', 'bloomie.com', NULL, 'Água Branca', 'PB', 'Ensino fundamental completo', NULL),
+	(12, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/blu-DISC.png', 'dominante', 'Oportunidade', 'inativa', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(13, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(16, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(18, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', '', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(19, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(20, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(21, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(22, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(23, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(24, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(25, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(26, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(27, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(28, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(29, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(30, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(31, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(33, 21, '2023-11-19 19:09:06', 'teste', 'teste', 'teste', 'teste', 'teste', '', '2023-11-19', NULL, '2023-11-19', 'teste', NULL, 'teste', 'PR', 'teste', NULL),
+	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL);
 /*!40000 ALTER TABLE `oportunidade` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.oportunidades_inativas
@@ -246,9 +250,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`ID_post`),
   KEY `ID_autor` (`ID_usuario`),
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.post: ~92 rows (aproximadamente)
+-- Copiando dados para a tabela bloomie_db.post: ~115 rows (aproximadamente)
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
 INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imagem`, `texto`) VALUES
 	(1, 6, '', '2023-11-10 22:20:25', '../img/blu-disc.png', 'Oiiii'),
@@ -353,7 +357,24 @@ INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imag
 	(106, 7, 'nahtanPNG', '2023-11-19 00:03:28', '../img/blu-disc.png', 'OLA GENTEEEE'),
 	(107, 6, '_winnie.s', '2023-11-20 20:00:00', '', 'oi'),
 	(108, 6, '_winnie.s', '2023-11-20 20:00:00', '', 'oi'),
-	(109, 6, '_winnie.s', '2023-11-20 20:00:00', '', 'oi');
+	(109, 6, '_winnie.s', '2023-11-20 20:00:00', '', 'oi'),
+	(110, 6, 'winnie.s', '2023-11-26 11:24:15', '', ''),
+	(111, 6, 'winnie.s', '2023-11-26 11:29:15', '', ''),
+	(112, 6, 'winnie.s', '2023-11-26 11:47:10', '', ''),
+	(113, 6, 'winnie.s', '2023-11-26 12:13:07', '', 'heyy'),
+	(114, 6, 'winnie.s', '2023-11-26 12:13:14', '', 'oi gente'),
+	(115, 6, 'winnie.s', '2023-11-26 14:17:59', '', ''),
+	(116, 6, 'winnie.s', '2023-11-26 14:24:19', '', ''),
+	(117, 6, 'winnie.s', '2023-11-26 14:25:21', '', ''),
+	(118, 6, 'winnie.s', '2023-11-26 14:26:22', '', ''),
+	(119, 6, 'winnie.s', '2023-11-26 14:39:43', '', ''),
+	(120, 6, 'winnie.s', '2023-11-26 14:41:10', '', ''),
+	(121, 6, 'winnie.s', '2023-11-26 14:42:05', '', ''),
+	(122, 6, 'winnie.s', '2023-11-26 14:50:15', '', ''),
+	(123, 6, 'winnie.s', '2023-11-26 14:53:23', '', ''),
+	(124, 6, 'winnie.s', '2023-11-26 14:57:05', '', ''),
+	(125, 6, 'winnie.s', '2023-11-26 15:03:44', '', ''),
+	(126, 6, 'winnie.s', '2023-11-26 15:43:30', '', 'oi\r\n\r\n');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.posts_banidos
