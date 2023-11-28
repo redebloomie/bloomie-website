@@ -113,8 +113,6 @@ if (!$pubs) {
           </div>
         </div>
       </div>
-      
-      <?php include '../utils/menuRespon.php'; ?>
 
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
@@ -257,12 +255,12 @@ if (!$pubs) {
             }
 
             // Função para verificar se o usuário curtiu a postagem
-function hasUserLikedPost($conexao, $post_id, $user_id) {
-  $query = "SELECT * FROM curtidas WHERE ID_post = $post_id AND ID_usuario = $user_id";
-  $result = mysqli_query($conexao, $query);
+            function hasUserLikedPost($conexao, $post_id, $user_id) {
+              $query = "SELECT * FROM curtidas WHERE ID_post = $post_id AND ID_usuario = $user_id";
+              $result = mysqli_query($conexao, $query);
 
-  return $result->num_rows > 0;
-}
+              return $result->num_rows > 0;
+            }
 
             $conexao->close();
           ?>
@@ -332,17 +330,17 @@ function hasUserLikedPost($conexao, $post_id, $user_id) {
                 <div class="dot" style="background-color: #DBAC01;"></div>
             </div>
         </div>
-<?php
-    } else {
-        echo 'Nenhum destaque encontrado.';
-    }
-} else {
-    echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sql;
-}
+        <?php
+            } else {
+                echo 'Nenhum destaque encontrado.';
+            }
+        } else {
+            echo 'Erro na consulta ao banco de dados: ' . $conexao->error . ' SQL: ' . $sql;
+        }
 
-// Fechar a conexão com o banco de dados
-$conexao->close();
-?>
+        // Fechar a conexão com o banco de dados
+        $conexao->close();
+        ?>
 
             </div>
           </div>
@@ -404,6 +402,26 @@ $conexao->close();
         <div class="line-division"></div>
       </div>
     </div>
+
+    <!-- Adicione isso ao seu HTML -->
+      <div class="bottom-navigation">
+              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+                <i class="ph ph-house"></i>
+              </a>
+              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+                <img src="../assets/bluBloomie.png" alt="" style="width: 5vw;">
+              </a>
+              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+                <i class="ph ph-plus"></i>
+              </a>
+              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+                <i class="ph ph-bell"></i>
+              </a>
+              <a href="../pages/perfil.html" class="text-decoration-none text-white">
+                <i class="ph ph-user"></i>
+              </a>
+              <!-- Adicione mais itens de navegação conforme necessário -->
+      </div>
   </main>
 
   <footer>
