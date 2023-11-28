@@ -310,6 +310,40 @@
 
   </footer>
 
+  <script>
+
+function salvarConfiguracoes() {
+    // Obtenha os valores dos checkboxes
+    var notificacaoGerais = document.getElementById("gerais").checked ? 1 : 0;
+    var notificacaoCurtidasComentarios = document.getElementById("curtidas_comentarios").checked ? 1 : 0;
+    var notificacaoPlataforma = document.getElementById("plataforma").checked ? 1 : 0;
+
+    // Crie um objeto FormData para enviar os dados
+    var formData = new FormData();
+    formData.append('notificacao_gerais', notificacaoGerais);
+    formData.append('notificacao_curtidas_comentarios', notificacaoCurtidasComentarios);
+    formData.append('notificacao_plataforma', notificacaoPlataforma);
+
+    // Faça uma requisição assíncrona usando Fetch API
+    fetch('salvar_configuracoes.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Exiba a mensagem de retorno
+        document.getElementById('mensagem').innerHTML = data.message;
+    })
+    .catch(error => {
+        console.error('Erro ao salvar configurações:', error);
+    });
+}
+
+
+  </script>
+
+
+
   <!-- Bootstrap JavaScript Libraries -->
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
