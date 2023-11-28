@@ -22,93 +22,102 @@
 
 <body>
 
-  <nav class="navbar-p">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a href="" class="nav-link">
-          <i class="ph-bold ph-house" style="color: #fff;"></i>
-          <span class="link-text" style="color: #fff;">Home</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="" class="nav-link">
-          <i class="ph-bold ph-info" style="color: #fff;"></i>
-          <span class="link-text" style="color: #fff;">Sobre</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="" class="nav-link">
-          <i class="ph-bold ph-user" style="color: #fff;"></i>
-          <span class="link-text" style="color: #fff;">Login</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="" class="nav-link">
-          <i class="ph-bold ph-users" style="color: #fff;"></i>
-          <span class="link-text" style="color: #fff;">Parcerias</span>
-        </a>
-      </li>
-    </ul>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-white">
+    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
   </nav>
 
-  <div class="container-menu">
-    <nav class="navigation" role="navigation">
-      <div id="menuToggle">
-        <input type="checkbox" />
-        <span></span>
-        <span></span>
-        <span></span>
-        <ul id="menu">
-          <a href="#" style="display: flex; flex-direction: row; align-items: center;">
-            <i class="ph-bold ph-house" style="font-size: 30px; margin-right: 10px;"></i>
-            <li>Home</li>
-          </a>
-          <a href="#" style="display: flex; flex-direction: row; align-items: center;">
-            <i class="ph-bold ph-info" style="font-size: 30px; margin-right: 10px;"></i>
-            <li>Sobre</li>
-          </a>
-          <a href="#" style="display: flex; flex-direction: row; align-items: center;">
-            <i class="ph-bold ph-user" style="font-size: 30px; margin-right: 10px;"></i>
-            <li>Perfil</li>
-          </a>
-          <a href="#" style="display: flex; flex-direction: row; align-items: center;">
-            <i class="ph-bold ph-users" style="font-size: 30px; margin-right: 10px;"></i>
-            <li>Parcerias</li>
-          </a>
-        </ul>
+  <main>
+    <div class="row justify-content-start align-items-start g-0">
+      <div class="col-2 bg-primary sidebar-container">
+        <div class="container text-center sidebar">
+          <div class="row row-cols-1 justify-content-around align-items-center g-5">
+            <div class="col">
+              <span class="searchbar rounded-4">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" name="" id="" placeholder="Buscar...">
+              </span>
+            </div>
+            <div class="col">
+              <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-house"></i>
+                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Home</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-user"></i>
+                  <a href="../pages/perfil.html" class="text-decoration-none text-white">Perfil</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-bell-ringing"></i>
+                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-plant"></i>
+                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-gear"></i>
+                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-question"></i>
+                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <a href="" class="text-decoration-none text-white">Sair</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </nav>
-  </div>
 
-  <section id="cadastro">
-    <div class="cadastro-container">
-      <div class="form-cadastro" style="width: 40vw;">
-        <h2 class="text-center" style="font-weight: 700;">Para apagar sua conta, confirme suas informações.</h2>
-        <form method="POST" action="../PHP/excluirConta.php" class="row g-3" style="width: 30vw;">
-          <div class="col-md-12">
-            <span>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Email"
-                style="color: #1185E3;">
-            </span>
+      <div class="col-10 justify-content-center disc-op-container" style="margin: 0 0 0 15vw; display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div class="cadastro-container">
+          <div class="form-cadastro" style="width: 40vw;">
+            <h2 class="text-center" style="font-weight: 700;">Para apagar sua conta, confirme suas informações.</h2>
+            <form method="POST" action="../PHP/excluirConta.php" class="row g-3" style="width: 30vw;">
+              <div class="col-md-12">
+                <span>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Email"
+                    style="color: #1185E3;">
+                </span>
+              </div>
+              <div class="col-md-12">
+                <span>
+                  <input type="password" class="form-control" name="senha" id="senha"
+                    placeholder="Senha" style="color: #1185E3;">
+                  <i class="ph-bold ph-eye-slash" id="togglePassword"></i>
+                </span>
+              </div>
+              <div class="col-md-12 text-center btn-lg" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1vw;">
+                <input type="submit" name="submit" value="Excluir conta" class="btn btn-primary" style="background-color: #FF0E0E; width: 10vw; color: #fff; border: none;">
+                <a href="" class="btn btn-primary rounded-4" style="width: 10vw;">Cancelar</a>
+              </div>
+            </form>
           </div>
-          <div class="col-md-12">
-            <span>
-              <input type="password" class="form-control" name="senha" id="senha"
-                placeholder="Senha" style="color: #1185E3;">
-              <i class="ph-bold ph-eye-slash" id="togglePassword"></i>
-            </span>
-          </div>
-          <div class="col-md-12 text-center btn-lg" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1vw;">
-            <input type="submit" name="submit" value="Excluir conta" class="btn btn-primary" style="background-color: #FF0E0E; width: 10vw; color: #fff; border: none;">
-            <a href="" class="btn btn-primary rounded-4" style="width: 10vw;">Cancelar</a>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-  </section>
+
+    <div class="bottom-navigation">
+      <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+        <i class="ph ph-house"></i>
+      </a>
+      <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+        <img src="../assets/bluBloomie.png" alt="" style="width: 5vw;">
+      </a>
+      <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+        <i class="ph ph-plus"></i>
+      </a>
+      <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
+        <i class="ph ph-bell"></i>
+      </a>
+      <a href="../pages/perfil.html" class="text-decoration-none text-white">
+        <i class="ph ph-user"></i>
+      </a>
+</div>
+  </main>
 
   <!-- Bootstrap JavaScript Libraries -->
   <script>
