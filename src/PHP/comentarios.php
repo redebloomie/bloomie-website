@@ -2,7 +2,7 @@
 include('connect.php');
 
 if (isset($_POST['comnetar']) && $_POST['comentar'] == "comentar"){
-  $usuario = $_POST['usuario']; esse campo é pra mostra o nome d usuario que ta comentando, não sei como fazer isso
+  $usuario = $_POST['usuario']; //esse campo é pra mostra o nome d usuario que ta comentando, não sei como fazer isso
   $comentario = $_POST['comentario'];
   $data = date("d/m/Y");
   $hora = date ("H:i");

@@ -57,11 +57,11 @@ if (!$pubs) {
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
-          <a href="../pages/homepage-postagens.html"><button type="button" id="btnPostagens" class="btn"
+          <a href="homepage-postagens.php"><button type="button" id="btnPostagens" class="btn"
             style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Postagens</button></a>
         </li>
         <li class="nav-item">
-          <a href="../pages/homepage-oportunidades.html"><button type="button" id="btnOportunidades" class="btn"
+          <a href="homepage-oportunidades.php"><button type="button" id="btnOportunidades" class="btn"
             style="color: #5AB5FF; font-weight: 500;">Oportunidades</button></a>
         </li>
       </ul>
@@ -278,24 +278,24 @@ function hasUserLikedPost($conexao, $post_id, $user_id) {
           <div class="col rounded text-center">
             <div class="container rightsidebar-container-1">
             <?php
-include('connect.php');
+              include('connect.php');
 
-// Consultar os posts mais curtidos da semana
-$sql = "SELECT post.*, usuario.*, COUNT(curtidas.ID_curtida) AS num_curtidas
-        FROM post
-        JOIN usuario ON post.ID_usuario = usuario.ID_usuario
-        LEFT JOIN curtidas ON post.ID_post = curtidas.ID_post
-        WHERE post.data_publicacao >= NOW() - INTERVAL 3 WEEK
-        GROUP BY post.ID_post
-        ORDER BY num_curtidas DESC
-        LIMIT 1"; // Ajuste a quantidade ou as condições conforme necessário
-$result = $conexao->query($sql);
+              // Consultar os posts mais curtidos da semana
+              $sql = "SELECT post.*, usuario.*, COUNT(curtidas.ID_curtida) AS num_curtidas
+                      FROM post
+                      JOIN usuario ON post.ID_usuario = usuario.ID_usuario
+                      LEFT JOIN curtidas ON post.ID_post = curtidas.ID_post
+                      WHERE post.data_publicacao >= NOW() - INTERVAL 3 WEEK
+                      GROUP BY post.ID_post
+                      ORDER BY num_curtidas DESC
+                      LIMIT 1"; // Ajuste a quantidade ou as condições conforme necessário
+              $result = $conexao->query($sql);
 
-if ($result) {
-    $destaque = $result->fetch_assoc();
-    // Verifica se há resultados
-    if ($destaque) {
-?>
+              if ($result) {
+                  $destaque = $result->fetch_assoc();
+                  // Verifica se há resultados
+                  if ($destaque) {
+            ?>
         <div class="row-cols-1 destaques justify-content-center align-items-center g-0">
             <div class="col destaques-top text-nowrap">
                 <p style="color: #1289EA; font-weight: 500;">Destaque da semana</p>

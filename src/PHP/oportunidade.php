@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  include('connect.php');
+  $idOportunidade = $_GET['id'];
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -19,16 +25,22 @@
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+      <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
-          <button type="button" id="btnPostagens" class="btn">Postagens</button>
+          <a href="homepage-postagens.php">
+            <button type="button" id="btnPostagens" class="btn"
+            style="color: #5AB5FF; font-weight: 500;">Postagens</button>
+          </a>
         </li>
         <li class="nav-item">
-          <button type="button" id="btnOportunidades" class="btn">Oportunidades</button>
+          <a href="homepage-oportunidades-nm.php">
+            <button type="button" id="btnOportunidades" class="btn"
+            style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Oportunidades</button>
+          </a>
         </li>
       </ul>
     </div>
@@ -60,7 +72,7 @@
                   <a href="" class="text-decoration-none text-white">Notificações</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-plant"></i>
+                  <i class="ph ph-plant"></i> 
                   <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
@@ -81,54 +93,63 @@
       </div>
 
       <div class="col-10 d-flex align-items-center justify-content-center pg-postagens oportunidade-page" style="margin-top: 5.5vw;">
-        <div class="oportunidade-container-expand">
+      <?php
+        // Recupere as oportunidades
+        $oportunidades = $conexao->query("SELECT * FROM oportunidade WHERE ID_oportunidade = " . $_GET['id']);
+
+        while ($oportunidade = $oportunidades->fetch_assoc()) {
+          echo '
+          <div class="oportunidade-container-expand">
             <div class="oportunidade-expand-foto">
-                <p class="tipo-oportunidade">Concurso</p>
-                <img src="https://source.unsplash.com/random/" alt="">
+              <p class="tipo-oportunidade">' . $oportunidade['categoria'] . '</p>
+              <img src="' . $oportunidade['imagem'] . '" alt="">
             </div>
             <div class="oportunidade-expand-info">
-                <h2>Nome da oportunidade</h2>
-                <span class="oportunidade-datas span-row">
-                    <p><span style="color: #1289EA; font-size: 17px;">Início:</span> 00/00/0000</p>
-                    <p><span style="color: #1289EA; font-size: 17px;">Vencimento:</span> 00/00/0000</p>
+              <h2>' . $oportunidade['titulo'] . '</h2>
+              <span class="oportunidade-datas span-row">
+                <p><span style="color: #1289EA; font-size: 17px;">Início:</span> ' . $oportunidade['inicio'] . '</p>
+                <p><span style="color: #1289EA; font-size: 17px;">Vencimento:</span> ' . $oportunidade['tempo_expirar'] . '</p>
+              </span>
+              <p>' . $oportunidade['descricao'] . '</p>
+              <div class="oportunidades-expand-tags">
+                <p style="color: #1289EA; font-size: 17px;">Tags relacionadas:</p>
+                <span class="span-row tags-rel">
+                  <p style="background-color: #F2C934; padding: 0 10px; border-radius: 15px;">Competição</p>
+                  <p style="background-color: #88c2f1b2; padding: 0 10px; border-radius: 15px;">Olimpíada</p>
+                  <p style="background-color: #5AB5FF; padding: 0 10px; border-radius: 15px;">STEM</p>
                 </span>
-                <p>A Oportunidade X está com as inscrições abertas e você não pode perder! É ideal para o estudante que busca se desenvolver pessoalmente e profissionalmente. Vamos juntos transformar o futuro, inscreva-se agora!</p>
-                <div class="oportunidades-expand-tags">
-                    <p style="color: #1289EA; font-size: 17px;">Tags relacionadas:</p>
-                    <span class="span-row tags-rel">
-                        <p style="background-color: #F2C934; padding: 0 10px; border-radius: 15px;">Competição</p>
-                        <p style="background-color: #88c2f1b2; padding: 0 10px; border-radius: 15px;">Olimpíada</p>
-                        <p style="background-color: #5AB5FF; padding: 0 10px; border-radius: 15px;">STEM</p>
-                    </span>
-                </div>
-                <span class="span-row">
-                    <p><span style="color: #1289EA; font-size: 17px;">Escolaridade:</span> Livre</p>
-                    <p><span style="color: #1289EA; font-size: 17px;">Faixa etária:</span> Livre</p>
-                    <p><span style="color: #1289EA; font-size: 17px;">Região:</span>  Online</p>
-                </span>
-                <button>Acessar oportunidade</button>
-            
+              </div>
+              <span class="span-row">
+                <p><span style="color: #1289EA; font-size: 17px;">Escolaridade:</span> ' . $oportunidade['escolaridade'] . '</p>
+                <p><span style="color: #1289EA; font-size: 17px;">Faixa etária:</span> ' . $oportunidade['faixa_etaria'] . '</p>
+                <p><span style="color: #1289EA; font-size: 17px;">Região:</span> ' . $oportunidade['estado'] . '</p>
+              </span>
+              <a href="acessos_opor.php?id=' . $oportunidade['ID_oportunidade'] . '" class="btn btn-primary col-12">Acessar oportunidade</a>
             </div>
-        </div>
-        <div class="oportunidades-parecidas">
+          </div>';
+
+          // Recupere as oportunidades semelhantes
+          $limit = 3;
+          $oportunidadesSemelhantes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = '" . $oportunidade['categoria'] . "' AND tipo_personalidade = '" . $oportunidade['tipo_personalidade'] . "' LIMIT $limit");
+
+          echo '
+          <div class="oportunidades-parecidas">
             <h2>Se você gostou disso, também pode gostar de...</h2>
-            <span>
-                <div class="op-parecidas-item">
-                  <img src="https://source.unsplash.com/random/" alt="">
-                  <p>Nome da oportunidade</p>
-                </div>
-
-                <div class="op-parecidas-item">
-                  <img src="https://source.unsplash.com/random/" alt="">
-                  <p>Nome da oportunidade</p>
-                </div>
-
-                <div class="op-parecidas-item">
-                  <img src="https://source.unsplash.com/random/" alt="">
-                  <p>Nome da oportunidade</p>
-                </div>
+            <span>';
+          while ($oportunidadeSemelhante = $oportunidadesSemelhantes->fetch_assoc()) {
+            echo '
+            <a href="oportunidade.php?id=' . $oportunidadeSemelhante['ID_oportunidade'] . '" class="text-decoration-none">
+              <div class="op-parecidas-item">
+                <img src="' . $oportunidadeSemelhante['imagem'] . '" alt="">
+                <p>' . $oportunidadeSemelhante['titulo'] . '</p>
+              </div>
+            </a>';
+          }
+          echo '
             </span>
-        </div>
+          </div>';
+        }
+        ?>
       </div>
     </div>
   </main>
