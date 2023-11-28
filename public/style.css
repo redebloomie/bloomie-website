@@ -3030,6 +3030,29 @@ input[type="file"] {
 .arrow-down {
   transform: rotate(180deg);
 }
+.quadradojean {
+  height: 40vh;
+}
+@media (min-width: 768px) {
+  .quadradojean {
+    margin-left: 14em;
+  }
+}
+@media (max-width: 768px) {
+  .quadradojean {
+    margin-left: 8em;
+  }
+}
+@media (max-width: 320px) {
+  .quadradojean {
+    height: 0vh;
+  }
+}
+@media (min-width: 1440px) {
+  .quadradojean {
+    margin-left: 16em;
+  }
+}
 
 /*excluir*/
 
