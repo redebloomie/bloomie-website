@@ -17,6 +17,23 @@
 CREATE DATABASE IF NOT EXISTS `bloomie_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `bloomie_db`;
 
+-- Copiando estrutura para tabela bloomie_db.acessos_oportunidade
+CREATE TABLE IF NOT EXISTS `acessos_oportunidade` (
+  `ID_acesso` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_oportunidade` int(11) DEFAULT NULL,
+  `data_acesso` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID_acesso`),
+  KEY `ID_oportunidade` (`ID_oportunidade`),
+  CONSTRAINT `acessos_oportunidade_ibfk_1` FOREIGN KEY (`ID_oportunidade`) REFERENCES `oportunidade` (`ID_oportunidade`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela bloomie_db.acessos_oportunidade: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `acessos_oportunidade` DISABLE KEYS */;
+INSERT INTO `acessos_oportunidade` (`ID_acesso`, `ID_oportunidade`, `data_acesso`) VALUES
+	(1, 6, '2023-11-27 23:16:00'),
+	(2, 6, '2023-11-27 23:19:46');
+/*!40000 ALTER TABLE `acessos_oportunidade` ENABLE KEYS */;
+
 -- Copiando estrutura para tabela bloomie_db.adm
 CREATE TABLE IF NOT EXISTS `adm` (
   `ID_adm` int(11) NOT NULL AUTO_INCREMENT,
@@ -177,9 +194,9 @@ CREATE TABLE IF NOT EXISTS `oportunidade` (
 /*!40000 ALTER TABLE `oportunidade` DISABLE KEYS */;
 INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, `categoria`, `descricao`, `imagem`, `tipo_personalidade`, `titulo`, `status_opor`, `tempo_expirar`, `tipo`, `inicio`, `link`, `tags`, `cidade`, `estado`, `escolaridade`, `faixa_etaria`) VALUES
 	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'ativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(6, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'inativa', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(7, 19, '2023-11-19 16:16:56', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'pendente', '2023-11-23', NULL, '2023-11-07', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'negada', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(6, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'MaisCurtido', 'inativa', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', '15 - 17 anos'),
+	(7, 19, '2023-11-19 16:16:56', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'aceita', '2023-11-23', NULL, '2023-11-07', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(8, 6, '2023-11-19 16:22:52', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'ativa', '2023-11-30', NULL, '2023-11-07', 'bloomie.com', NULL, 'Água Branca', 'PB', 'Ensino fundamental completo', NULL),
 	(9, 6, '2023-11-19 16:25:05', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'estavel', 'Oportunidade', 'negada', '2023-11-30', NULL, '2023-11-10', 'bloomie.com', NULL, 'Amparo do São Francisco', 'SE', 'Ensino superior incompleto', NULL),
 	(10, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
@@ -252,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.post: ~126 rows (aproximadamente)
+-- Copiando dados para a tabela bloomie_db.post: ~115 rows (aproximadamente)
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
 INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imagem`, `texto`) VALUES
 	(1, 6, '', '2023-11-10 22:20:25', '../img/blu-disc.png', 'Oiiii'),
@@ -421,24 +438,6 @@ CREATE TABLE IF NOT EXISTS `post_excluidos` (
 /*!40000 ALTER TABLE `post_excluidos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `post_excluidos` ENABLE KEYS */;
 
--- Copiando estrutura para tabela bloomie_db.token
-CREATE TABLE IF NOT EXISTS `token` (
-  `ID_token` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
-  `token` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `revogado` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `criado` datetime NOT NULL,
-  `atualizado` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `data_expiracao` datetime NOT NULL,
-  PRIMARY KEY (`ID_token`),
-  KEY `ID_usuario` (`ID_usuario`),
-  CONSTRAINT `usuario_token` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Copiando dados para a tabela bloomie_db.token: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `token` DISABLE KEYS */;
-/*!40000 ALTER TABLE `token` ENABLE KEYS */;
-
 -- Copiando estrutura para tabela bloomie_db.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
   `ID_usuario` int(11) NOT NULL AUTO_INCREMENT,
@@ -465,8 +464,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`ID_usuario`, `usuario`, `email`, `nome`, `senha`, `sobrenome`, `estado`, `cidade`, `tipo`, `foto_perfil`, `sobre`, `instituicao`, `personalidade`, `data_nasc`, `data_criacao`) VALUES
 	(5, 'winnie', 'winnie@gmail.com', '', 'winnie', '', '', '', '', '', '', NULL, '', '2023-11-10', '2023-10-01 18:23:08'),
-	(6, 'winnie.s', 'winniestefany303@gmail.com', 'winnie', '$2y$10$Q/jV4/5ljj/ZV4.GBXBlhen9UCK8c7Ar7/h.xXnpA8EIq6AyegwAu', 'silva', 'SP', 'SÃ£o Paulo', '', '../img/blu-disc.png', '', NULL, 'Dominância', '2023-11-12', '2023-11-02 18:23:21'),
-	(7, 'nahtanPNG', 'nathan.ferreiira13@gmail.com', 'Nathan', '$2y$10$HhCyzRhRAOT.x/YO/UzCZOwPjkx.De3Di43MrykeaoXvP6cIjmNPm', 'Ferreira', 'SP', 'SÃ£o Paulo', '', '../img/foto_nathan.jpeg', 'Desenvolvedor Full-Stack e co-fundador da TransFast:)', NULL, 'Dominância', '2023-11-12', '2023-11-03 03:23:20'),
+	(6, 'winnie.s', 'winniestefany303@gmail.com', 'winnie', '$2y$10$Q/jV4/5ljj/ZV4.GBXBlhen9UCK8c7Ar7/h.xXnpA8EIq6AyegwAu', 'silva', 'SP', 'SÃ£o Paulo', '', '../img/blu-disc.png', '', NULL, 'influente', '2023-11-12', '2023-11-02 18:23:21'),
+	(7, 'nahtanPNG', 'nathan.ferreiira13@gmail.com', 'Nathan', '$2y$10$HhCyzRhRAOT.x/YO/UzCZOwPjkx.De3Di43MrykeaoXvP6cIjmNPm', 'Ferreira', 'SP', 'SÃ£o Paulo', '', '../img/foto_nathan.jpeg', 'Desenvolvedor Full-Stack e co-fundador da TransFast:)', NULL, 'dominante', '2023-11-12', '2023-11-03 03:23:20'),
 	(8, 'winnioe', 'teste@gmail.com', 'Teste', '$2y$10$WdMBOYAVQQhYwymY9LcsaOeXQorQc904RLytOXbRtqINM8ex6lVG6', 'Teste', 'SE', 'Amparo do SÃ£o Francisco', '', '', '', NULL, NULL, '2023-11-12', '2023-11-04 18:23:19'),
 	(10, 'winnio', 'test1e@gmail.com', 'Teste', '$2y$10$g7lKKJR6ZhJ11mytG8E8huIz3IVhqYolDtWFhBwomArcGyAKfEBsm', 'Teste', 'SE', 'Amparo do SÃ£o Francisco', '', '', '', NULL, NULL, '2023-11-12', '2023-11-05 18:23:18'),
 	(11, 'testeee', 'testw@gmail.com', 'Teste', '$2y$10$Rq92u4N59pmduKjRVBTM9u92w1gyVv3eBIJUpo86dSjt3865jICxK', 'teste', 'RN', 'ArÃªs', '', '', '', NULL, NULL, '2023-11-12', '2023-11-06 18:23:17'),
