@@ -113,6 +113,8 @@ if (!$pubs) {
           </div>
         </div>
       </div>
+      
+      <?php include '../utils/menuRespon.php'; ?>
 
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
