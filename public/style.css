@@ -3000,3 +3000,26 @@ input[type="file"] {
   padding-left: 30px; /* Espaçamento para acomodar o ícone de lupa */
   box-sizing: border-box;
 }
+.admleft {
+  margin-left: 14em;
+}
+@media (min-width: 768px) {
+  .admleft {
+    margin-left: 14em;
+  }
+}
+@media (max-width: 768px) {
+  .admleft {
+    margin-left: 0em;
+  }
+}
+@media (max-width: 320px) {
+  .admleft {
+    margin-left: 0;
+  }
+}
+@media (min-width: 1440px) {
+  .admleft {
+    margin-left: 16em;
+  }
+}
