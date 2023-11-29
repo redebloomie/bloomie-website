@@ -1043,7 +1043,7 @@ input[type="file"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 98;
+  z-index: 999;
 }
 
 .rightsidebar-group {

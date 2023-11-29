@@ -1,6 +1,8 @@
 <?php
+session_start();
 // Conectar ao banco de dados (utilize suas credenciais)
 include('connect.php');
+$idUsuario = $_SESSION['ID_usuario'];
 
 // Configurações de paginação para oportunidades pendentes
 $porPagina = 8;
@@ -8,92 +10,16 @@ $paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendent
 $offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
 
 // Consulta para obter oportunidades pendentes com paginação
-$queryPendentes = "SELECT * FROM usuario LIMIT $offsetPendentes, $porPagina";
+$queryPendentes = "SELECT * FROM post LIMIT $offsetPendentes, $porPagina";
 $resultPendentes = mysqli_query($conexao, $queryPendentes);
 
 // Consulta para obter o número total de oportunidades pendentes
-$totalQueryPendentes = "SELECT COUNT(*) as total FROM usuario";
+$totalQueryPendentes = "SELECT COUNT(*) as total FROM post";
 $totalResultPendentes = mysqli_query($conexao, $totalQueryPendentes);
 $totalPendentes = mysqli_fetch_assoc($totalResultPendentes)['total'];
 
 // Calcular o número total de páginas para oportunidades pendentes
 $numPaginasPendentes = ceil($totalPendentes / $porPagina);
-
-// --------------------------------------------------------------------------------------------------
-
-// Configurações de paginação para oportunidades expiradas
-$porPagina = 4;
-$paginaAtualExpiradas = isset($_GET['pagina_expiradas']) ? $_GET['pagina_expiradas'] : 1;
-$offsetExpiradas = ($paginaAtualExpiradas - 1) * $porPagina;
-
-// Consulta para obter oportunidades expiradas com paginação
-$queryExpiradas = "SELECT * FROM oportunidade WHERE status_opor = 'expirada' LIMIT $offsetExpiradas, $porPagina";
-$resultExpiradas = mysqli_query($conexao, $queryExpiradas);
-
-// Consulta para obter o número total de oportunidades expiradas
-$totalQueryExpiradas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'expirada'";
-$totalResultExpiradas = mysqli_query($conexao, $totalQueryExpiradas);
-$totalExpiradas = mysqli_fetch_assoc($totalResultExpiradas)['total'];
-
-// Calcular o número total de páginas para oportunidades expiradas
-$numPaginasExpiradas = ceil($totalExpiradas / $porPagina);
-
-// ---------------------------------------------------------------------------------------------------
-
-// Configurações de paginação para oportunidades Aceitas
-$porPagina = 4;
-$paginaAtualAceitas = isset($_GET['pagina_Aceitas']) ? $_GET['pagina_Aceitas'] : 1;
-$offsetAceitas = ($paginaAtualAceitas - 1) * $porPagina;
-
-// Consulta para obter oportunidades Aceitas com paginação
-$queryAceitas = "SELECT * FROM oportunidade WHERE status_opor = 'aceita' LIMIT $offsetAceitas, $porPagina";
-$resultAceitas = mysqli_query($conexao, $queryAceitas);
-
-// Consulta para obter o número total de oportunidades Aceitas
-$totalQueryAceitas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'aceita'";
-$totalResultAceitas = mysqli_query($conexao, $totalQueryAceitas);
-$totalAceitas = mysqli_fetch_assoc($totalResultAceitas)['total'];
-
-// Calcular o número total de páginas para oportunidades Aceitas
-$numPaginasAceitas = ceil($totalAceitas / $porPagina);
-
-// ---------------------------------------------------------------------------------------------
-
-// Configurações de paginação para oportunidades Negadas
-$porPagina = 4;
-$paginaAtualNegadas = isset($_GET['pagina_negadas']) ? $_GET['pagina_negadas'] : 1;
-$offsetNegadas = ($paginaAtualNegadas - 1) * $porPagina;
-
-// Consulta para obter oportunidades Negadas com paginação
-$queryNegadas = "SELECT * FROM oportunidade WHERE status_opor = 'negada' LIMIT $offsetNegadas, $porPagina";
-$resultNegadas = mysqli_query($conexao, $queryNegadas);
-
-// Consulta para obter o número total de oportunidades Negadas
-$totalQueryNegadas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'negada'";
-$totalResultNegadas = mysqli_query($conexao, $totalQueryNegadas);
-$totalNegadas = mysqli_fetch_assoc($totalResultNegadas)['total'];
-
-// Calcular o número total de páginas para oportunidades Negadas
-$numPaginasNegadas = ceil($totalNegadas / $porPagina);
-
-// ----------------------------------------------------------------------------------------------
-
-// Configurações de paginação para oportunidades Inativas
-$porPagina = 4;
-$paginaAtualInativas = isset($_GET['pagina_inativas']) ? $_GET['pagina_inativas'] : 1;
-$offsetInativas = ($paginaAtualInativas - 1) * $porPagina;
-
-// Consulta para obter oportunidades Inativas com paginação
-$queryInativas = "SELECT * FROM oportunidades_inativas LIMIT $offsetInativas, $porPagina";
-$resultInativas = mysqli_query($conexao, $queryInativas);
-
-// Consulta para obter o número total de oportunidades Inativas
-$totalQueryInativas = "SELECT COUNT(*) as total FROM oportunidades_inativas";
-$totalResultInativas = mysqli_query($conexao, $totalQueryInativas);
-$totalInativas = mysqli_fetch_assoc($totalResultInativas)['total'];
-
-// Calcular o número total de páginas para oportunidades Inativas
-$numPaginasInativas = ceil($totalInativas / $porPagina);
 
 // Fechar a conexão
 mysqli_close($conexao);
@@ -165,7 +91,7 @@ mysqli_close($conexao);
       <div class="col-10 d-flex justify-content-center d-flex flex-column perfil-pg"
         style="margin-top: 5.5vw; margin-left: 20vw; width: 75vw;">
         
-          <h2 class="mb-3 txtj text-primary">Usuários</h2>
+          <h2 class="mb-3 txtj text-primary">Postagens</h2>
           <div class="input-group rounded" style="width:20vw;">
             <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
             <span class="input-group-text border-0" id="search-addon">
@@ -211,36 +137,35 @@ mysqli_close($conexao);
 
     <div class="border border-primary p-3 rounded-5 mb-5 feedExp">
     <?php
-// Conectar ao banco de dados (utilize suas credenciais)
-include('connect.php');
+      // Conectar ao banco de dados (utilize suas credenciais)
+      include('connect.php');
 
-// Verifica se há resultados
-if (mysqli_num_rows($resultPendentes) > 0) {
-    $rowCount = 0;
-    while ($row = mysqli_fetch_assoc($resultPendentes)) {
-        // Exiba as informações da oportunidade pendente
-        echo '<div class="d-flex justify-content-between align-items-center">';
-        echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_usuario'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
-        echo '<img src="' . $row['foto_perfil'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
-        echo '<p class="mb-0 h5 text mg">' . $row['nome'] . $row['sobrenome'] . '</p>';
-        echo '<p class="mb-0 h5 text mg">@' . $row['usuario'] .'</p>';
-        echo '</a>';
-        echo '</div>';
-        echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'negada\')">Banir</button>';
-        echo '</div>';
-        echo '</div>';
-        // Adicione a linha separadora, exceto para a última oportunidade
-        if ($rowCount < mysqli_num_rows($resultPendentes) - 1) {
-            echo '<div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>';
-        }
+      // Verifica se há resultados
+      if (mysqli_num_rows($resultPendentes) > 0) {
+          $rowCount = 0;
+          while ($row = mysqli_fetch_assoc($resultPendentes)) {
+              // Exiba as informações da oportunidade pendente
+              echo '<div class="d-flex justify-content-between align-items-center">';
+              echo '<div class="d-flex justify-content-start align-items-center col-6">';
+              echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_usuario'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+              echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
+              echo '<p class="mb-0 h5 text mg">' . $row['texto'] .'</p>';
+              echo '</a>';
+              echo '</div>';
+              echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
+              echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'negada\')">Banir</button>';
+              echo '</div>';
+              echo '</div>';
+              // Adicione a linha separadora, exceto para a última oportunidade
+              if ($rowCount < mysqli_num_rows($resultPendentes) - 1) {
+                  echo '<div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>';
+              }
 
-        $rowCount++;
-    }
-    } else {
-        echo 'Nenhuma oportunidade pendente.';
-    }
+              $rowCount++;
+          }
+          } else {
+              echo 'Nenhuma oportunidade pendente.';
+          }
     ?>
     </div>
 

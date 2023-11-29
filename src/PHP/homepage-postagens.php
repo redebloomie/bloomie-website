@@ -26,6 +26,88 @@ if (!$pubs) {
   die('Consulta inválida: ' . $conexao->error);
 }
 
+if (isset($_POST['add'])) {
+  add();
+}
+
+function add() {
+  global $conexao;
+
+  $idUsuario = $_SESSION['ID_usuario'];
+  $idPostUser = $_POST['idPostUser'];
+
+  $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $idPostUser");
+  $saber = mysqli_fetch_assoc($saberr);
+
+  $ins = "INSERT INTO bloomizade (usuario_id_1, usuario_id_2) VALUES (?, ?)";
+  $stmt = mysqli_prepare($conexao, $ins);
+
+  if ($stmt) {
+      mysqli_stmt_bind_param($stmt, "ii", $idUsuario, $idPostUser);
+      $conf = mysqli_stmt_execute($stmt);
+
+      if ($conf) {
+          header("Location: homepage-postagens.php");
+          exit();
+      } else {
+          $error_message = "Erro ao adicionar amigo: " . mysqli_error($conexao);
+          echo '<script>console.error("' . $error_message . '");</script>';
+      }
+
+      mysqli_stmt_close($stmt);
+  } else {
+      $error_message = "Erro na preparação da consulta: " . mysqli_error($conexao);
+      echo '<script>console.error("' . $error_message . '");</script>';
+  }
+}
+
+
+if (isset($_POST['cancel'])) {
+  cancel($conexao);
+}
+
+function cancel($conexao) {
+  $idUsuario = $_SESSION['ID_usuario'];
+  $idPostUser = $_POST['idPostUser'];
+
+  $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $idPostUser");
+  $saber = mysqli_fetch_assoc($saberr);
+
+  $ins = "DELETE FROM bloomizade WHERE usuario_id_1 = ? AND usuario_id_2 = ?";
+  $stmt = mysqli_prepare($conexao, $ins);
+  mysqli_stmt_bind_param($stmt, "ii", $idUsuario, $idPostUser);
+  $conf = mysqli_stmt_execute($stmt);
+
+  if ($conf) {
+      header("Location: homepage-postagens.php");
+  } else {
+      echo "erro";
+  }
+}
+
+if (isset($_POST['remover'])) {
+  remover($conexao);
+}
+
+function remover($conexao) {
+  $idUsuario = $_SESSION['ID_usuario'];
+  $idPostUser = $_POST['idPostUser'];
+
+  $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $idPostUser");
+  $saber = mysqli_fetch_assoc($saberr);
+
+  $ins = "DELETE FROM bloomizade WHERE (usuario_id_1 = ? AND usuario_id_2 = ?) OR (usuario_id_1 = ? AND usuario_id_2 = ?)";
+  $stmt = mysqli_prepare($conexao, $ins);
+  mysqli_stmt_bind_param($stmt, "iiii", $idUsuario, $idPostUser, $idPostUser, $idUsuario);
+  $conf = mysqli_stmt_execute($stmt);
+
+  if ($conf) {
+      header("Location: homepage-postagens.php");
+  } else {
+      echo "erro";
+  }
+}
+
 ?>
 
 <!doctype html>
@@ -117,7 +199,7 @@ if (!$pubs) {
       <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
           <div class="col-12 d-flex justify-content-center">
-            <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data">
+            <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data" id="formPost">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
                   <textarea class="col-12 post-section multiline-input" id="textArea" rows="3" name="texto" wrap="hard"
@@ -171,7 +253,30 @@ if (!$pubs) {
                                   <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
                                   <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
                               </span>
-                          </div>
+                              <form method="POST">
+                              <input type="hidden" name="idPostUser" value="' . $post['ID_usuario'] . '">';
+                              
+                              $idPostUser = $post['ID_usuario'];
+                              $amigos = mysqli_query($conexao, "SELECT * FROM bloomizade WHERE usuario_id_1 = $ID_usuario OR usuario_id_2 = $idPostUser");
+                              $amigoss = mysqli_fetch_assoc($amigos);
+
+                              // Verifica se o post é do próprio usuário
+                              $postDoProprioUsuario = $post['ID_usuario'] == $_SESSION['ID_usuario'];
+
+                              // Exibe os botões apenas se o post não for do próprio usuário
+                              if (!$postDoProprioUsuario) {
+                                  if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status'] == 'aceito') {
+                                      echo '<input type="submit" id="remover" name="remover" value="Remover">';
+                                  } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status'] == 'pendente') {
+                                      echo '<input type="submit" id="cancel" name="cancel" value="Cancelar">';
+                                  } else {
+                                      echo '<input type="submit" id="add" name="add" value="Seguir">';
+                                  }
+                              }
+
+                        echo'
+                        </form>
+                        </div>
                       </div>
                       <div class="col">
                           <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
@@ -475,7 +580,7 @@ if (!$pubs) {
 
     $(document).ready(function () {
         // Manipulador de envio do formulário
-        $('form').submit(function (event) {
+        $('#formPost').submit(function (event) {
             event.preventDefault();
 
             $.ajax({

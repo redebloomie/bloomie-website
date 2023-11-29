@@ -181,8 +181,8 @@ mysqli_close($conexao);
           
           
             <div class="d-flex justify-content-between  col-md-12">
-              <button class="btn btn-success col-md-5 mb-5" onclick="atualizarStatus(<?php echo $idOportunidade; ?>, 'aceita')"><span>Aceitar <br>oportunidade</span></button>
-              <button class="btn btn-danger col-md-5 mb-5" onclick="atualizarStatus(<?php echo $idOportunidade; ?>, 'negada')"><span>Negar <br>oportunidade</span></button>
+              <button class="btn btn-success col-md-5 mb-5" onclick="atualizarStatus(<?php $idOportunidade; ?>, 'aceita')"><span>Aceitar <br>oportunidade</span></button>
+              <button class="btn btn-danger col-md-5 mb-5" onclick="atualizarStatus(<?php $idOportunidade; ?>, 'negada')"><span>Negar <br>oportunidade</span></button>
             </div>
         </div>
       </section>
