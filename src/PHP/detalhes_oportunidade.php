@@ -157,33 +157,40 @@ mysqli_close($conexao);
             <div class="col-12 col-md-12 col-lg-12 " >
                 <input type="text" class="form-control rounded-4 mb-3" id="" value="<?php echo $detalhes['escolaridade']; ?>" readonly style="border-color: #1185e3;" >
             </div>
-    
+          </div>
+
+          <div class="col p-2">
+            <h5 class="text-start h6">Tipo de personalidade</h5>
+            <div class="col-12 col-md-12 col-lg-12 " >
+                <input type="text" class="form-control rounded-4 mb-3" id="" value="<?php echo $detalhes['tipo_personalidade']; ?>" readonly style="border-color: #1185e3;" >
+            </div>
           </div>
 
           
           <div class="col p-2">
-            <h5 class="text-start h6 ">Link de acesso à oportunidade</h5>
-            <div class="col-12 col-md-12 col-lg-12 mb-5 " >
-                <input type="text" class="form-control rounded-4" id="" value="<?php echo $detalhes['link']; ?>" readonly style="border-color: #1185e3;" >
+            <h5 class="text-start h6">Link de acesso a oportunidade</h5>
+            <div class="col-12 col-md-12 col-lg-12 " >
+                <input type="text" class="form-control rounded-4 mb-3" id="" value="<?php echo $detalhes['link']; ?>" readonly style="border-color: #1185e3;" >
             </div>
-    
           </div>
           
           <div class="col p-2">
           <h5 class="text-start h6 ">Foto relacionada à oportunidade</h5>
             <div class="border border-primary bg-primary rounded-4 col-md-6 mb-5" >
-              <img src="../assets/blu-personalidade1.png" class="img-fluid" alt="">
+              <img src="<?php echo $detalhes['imagem']; ?>" class="img-fluid rounded-4" alt="" style="width: 100%;height: 200px; object-fit: cover;position: relative;">
 
             </div>
     
           </div>
           
           
-          
+          <?php
+            echo'
             <div class="d-flex justify-content-between  col-md-12">
-              <button class="btn btn-success col-md-5 mb-5" onclick="atualizarStatus(<?php $idOportunidade; ?>, 'aceita')"><span>Aceitar <br>oportunidade</span></button>
-              <button class="btn btn-danger col-md-5 mb-5" onclick="atualizarStatus(<?php $idOportunidade; ?>, 'negada')"><span>Negar <br>oportunidade</span></button>
-            </div>
+              <button class="btn btn-success col-md-5 mb-5" onclick="atualizarStatus(' . $idOportunidade . ', \'aceita\')"><span>Aceitar <br>oportunidade</span></button>
+              <button class="btn btn-danger col-md-5 mb-5" onclick="atualizarStatus(' . $idOportunidade . ', \'negada\')"><span>Negar <br>oportunidade</span></button>
+            </div>';
+          ?>
         </div>
       </section>
       
@@ -207,6 +214,39 @@ mysqli_close($conexao);
   </footer>
 
   <!-- Bootstrap JavaScript Libraries -->
+
+  <script>
+    function atualizarStatus(ID_oportunidade, acao) {
+    // Crie um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Configurar a solicitação AJAX
+    xhr.open('POST', 'atualizar_status.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Configurar a função de retorno de chamada
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do servidor está disponível aqui
+            console.log(xhr.responseText);
+
+            // Atualizar a interface do usuário conforme necessário
+            // (por exemplo, esconder o item, atualizar o status, etc.)
+
+            // Recarregar a página para refletir as alterações
+            location.reload();
+        }
+    };
+
+    // Preparar os dados a serem enviados
+    var dados = 'ID_oportunidade=' + ID_oportunidade + '&acao=' + acao;
+
+    // Enviar a solicitação AJAX com os dados
+    xhr.send(dados);
+}
+
+
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

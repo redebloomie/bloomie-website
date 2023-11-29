@@ -265,9 +265,9 @@ function remover($conexao) {
 
                               // Exibe os botões apenas se o post não for do próprio usuário
                               if (!$postDoProprioUsuario) {
-                                  if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status'] == 'aceito') {
+                                  if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'aceito') {
                                       echo '<input type="submit" id="remover" name="remover" value="Remover">';
-                                  } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status'] == 'pendente') {
+                                  } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'pendente') {
                                       echo '<input type="submit" id="cancel" name="cancel" value="Cancelar">';
                                   } else {
                                       echo '<input type="submit" id="add" name="add" value="Seguir">';

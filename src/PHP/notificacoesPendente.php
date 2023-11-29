@@ -199,7 +199,7 @@ mysqli_close($conexao);
               
                 <div class="d-flex justify-content-between align-items-center ">
                   <div class="d-flex align-items-center col-8 col-sm-6 col-md-6  ">
-                    <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
+                    <img src="'.$row["imagem"].'" class=" rounded-5 col-4 " style="width: 50px; height: 50px; object-fit: cover;">
                     <div class="usudata">
                       <p class=" mb-0 h5 text mg  " >'.$row["titulo"].'</p>
                       <p id="data" class="mb-0 text mg  " style=" color: #5AB5FF;">'.$row["data_publicacao"].'</p>

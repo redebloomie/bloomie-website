@@ -1,3 +1,39 @@
+<?php
+session_start();
+// Conectar ao banco de dados (utilize suas credenciais)
+include('connect.php');
+$idUsuario = $_SESSION['ID_usuario'];
+
+// Configurações de paginação para oportunidades pendentes
+$porPagina = 4;
+$paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendentes'] : 1;
+$offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
+
+// Consulta para obter oportunidades pendentes com paginação
+$queryPendentes = "SELECT * FROM bloomizade WHERE usuario_id_2 = $idUsuario";
+$resultPendentes = mysqli_query($conexao, $queryPendentes);
+
+$queryBloomigo = "
+    SELECT u.* 
+    FROM usuario u
+    JOIN bloomizade s ON u.ID_usuario = s.usuario_id_1
+    WHERE s.usuario_id_2 = $idUsuario;
+";
+
+$resultBloomigo = mysqli_query($conexao, $queryBloomigo);
+
+// Consulta para obter o número total de oportunidades pendentes
+$totalQueryPendentes = "SELECT COUNT(*) as total FROM bloomizade WHERE usuario_id_2 = $idUsuario";
+$totalResultPendentes = mysqli_query($conexao, $totalQueryPendentes);
+$totalPendentes = mysqli_fetch_assoc($totalResultPendentes)['total'];
+
+// Calcular o número total de páginas para oportunidades pendentes
+$numPaginasPendentes = ceil($totalPendentes / $porPagina);
+
+// Fechar a conexão
+mysqli_close($conexao);
+?>
+
 <!doctype html>
 
 <html lang="en">
@@ -169,17 +205,38 @@
           </div>
         </div>
       
-        <div class="d-flex justify-content-between align-items-center ">
-          <div class="d-flex align-items-center col-6 ">
-            <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
-            <p class=" mb-0 h5 text mg  ">nome do usuario jean gostoso</p>
-          </div>
-          <div class=" d-flex p-1 col-6 col-sm-4 col-md-6  justify-content-end ">
-            <button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb">Aceitar</button>
-            <button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb ">Negar</button>
-          </div>
-        </div>
-        <div class=" bg-primary col-12  mt-3 " style="height: 1px;"></div>
+        <?php
+
+          // Verifica se há resultados
+          if (mysqli_num_rows($resultBloomigo) > 0) {
+              $rowCount = 0;
+              while ($row = mysqli_fetch_assoc($resultBloomigo)) {
+                  // Exiba as informações da oportunidade pendente
+                  echo '
+                
+              
+                <div class="d-flex justify-content-between align-items-center ">
+                  <div class="d-flex align-items-center col-8 col-sm-6 col-md-6  ">
+                    <img src="'.$row["foto_perfil"].'" class=" rounded-5 col-4 " style="width: 50px; height: 50px; object-fit: cover;">
+                    <div class="usudata">
+                      <p class=" mb-0 h5 text mg  " >'.$row["nome"].'</p>
+                      <p class=" mb-0 h5 text mg  " >@'.$row["usuario"].'</p>
+                      <p id="data" class="mb-0 text mg  " style=" color: #5AB5FF;">'.$row["data_criacao"].'</p>
+                    </div>
+                  </div>
+                  <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
+                    
+                    <button class="btn btn-success bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'aceito\')>Aceitar</button>
+                  </div>
+                </div>
+                <div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>
+                  ';
+                  $rowCount++;
+              }
+              } else {
+                  echo 'Nenhuma oportunidade pendente.';
+              }
+          ?>
       </section>
       
       <div class="bottom-navigation">
@@ -210,6 +267,39 @@
     <!-- place footer here -->
 
   </footer>
+
+  <script>
+    function atualizarStatus(usuario_id_1, acao) {
+    // Crie um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Configurar a solicitação AJAX
+    xhr.open('POST', 'atualizar_soli.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Configurar a função de retorno de chamada
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do servidor está disponível aqui
+            console.log(xhr.responseText);
+
+            // Atualizar a interface do usuário conforme necessário
+            // (por exemplo, esconder o item, atualizar o status, etc.)
+
+            // Recarregar a página para refletir as alterações
+            location.reload();
+        }
+    };
+
+    // Preparar os dados a serem enviados
+    var dados = 'usuario_id_1=' + usuario_id_1 +  '&acao=' + acao;
+
+    // Enviar a solicitação AJAX com os dados
+    xhr.send(dados);
+}
+
+
+  </script>
 
   <!-- Bootstrap JavaScript Libraries -->
 

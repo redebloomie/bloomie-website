@@ -47,6 +47,15 @@ CREATE TABLE IF NOT EXISTS `adm` (
 /*!40000 ALTER TABLE `adm` DISABLE KEYS */;
 /*!40000 ALTER TABLE `adm` ENABLE KEYS */;
 
+-- Copiando estrutura para evento bloomie_db.Atualizar status oportunidade
+DELIMITER //
+CREATE EVENT `Atualizar status oportunidade` ON SCHEDULE EVERY 1 DAY STARTS '2023-11-29 00:00:00' ON COMPLETION PRESERVE ENABLE DO BEGIN
+UPDATE oportunidade
+SET status_opor = 'expirada'
+WHERE status_opor = 'pendente' AND tempo_expirar < NOW();
+END//
+DELIMITER ;
+
 -- Copiando estrutura para tabela bloomie_db.banimento
 CREATE TABLE IF NOT EXISTS `banimento` (
   `ID_banimento` int(11) NOT NULL AUTO_INCREMENT,
@@ -188,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `oportunidade` (
   PRIMARY KEY (`ID_oportunidade`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `usuario_oportunidade` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.oportunidade: ~29 rows (aproximadamente)
 /*!40000 ALTER TABLE `oportunidade` DISABLE KEYS */;
@@ -218,10 +227,11 @@ INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, 
 	(29, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(30, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(31, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
-	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
+	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(33, 21, '2023-11-19 19:09:06', 'teste', 'teste', 'teste', 'teste', 'teste', '', '2023-11-19', NULL, '2023-11-19', 'teste', NULL, 'teste', 'PR', 'teste', NULL),
 	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL);
+	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
+	(36, 6, '2023-11-28 20:22:39', 'Aprendizados', 'Descrição da oportunidade', '../img/20231024_152203.jpg', 'influente', 'teste', 'pendente', '2023-11-30', 'Workshop', '2023-11-01', 'bloomie.com', NULL, 'Abaiara', 'CE', 'Ensino médio incompleto', '15 a 18 anos');
 /*!40000 ALTER TABLE `oportunidade` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.oportunidades_inativas
@@ -267,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`ID_post`),
   KEY `ID_autor` (`ID_usuario`),
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.post: ~115 rows (aproximadamente)
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
@@ -402,7 +412,20 @@ INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imag
 	(134, 6, 'winnie.s', '2023-11-27 10:50:14', '', 'teste\r\n'),
 	(135, 6, 'winnie.s', '2023-11-27 10:50:30', '', 'teste2'),
 	(136, 6, 'winnie.s', '2023-11-27 10:50:47', '', 'test3'),
-	(137, 6, 'winnie.s', '2023-11-27 10:51:04', '', 'teste');
+	(137, 6, 'winnie.s', '2023-11-27 10:51:04', '', 'teste'),
+	(138, 6, 'winnie.s', '2023-11-28 17:52:54', '', ''),
+	(139, 6, 'winnie.s', '2023-11-28 18:25:26', '', ''),
+	(140, 6, 'winnie.s', '2023-11-28 18:25:54', '', ''),
+	(141, 6, 'winnie.s', '2023-11-28 18:25:55', '', ''),
+	(142, 6, 'winnie.s', '2023-11-28 18:25:56', '', ''),
+	(143, 6, 'winnie.s', '2023-11-28 18:25:57', '', ''),
+	(144, 6, 'winnie.s', '2023-11-28 18:31:26', '', ''),
+	(145, 6, 'winnie.s', '2023-11-28 18:33:06', '', ''),
+	(146, 6, 'winnie.s', '2023-11-28 18:35:59', '', ''),
+	(147, 6, 'winnie.s', '2023-11-28 18:36:36', '', ''),
+	(148, 6, 'winnie.s', '2023-11-28 18:36:41', '', ''),
+	(149, 6, 'winnie.s', '2023-11-28 18:36:46', '', 'oiiii'),
+	(150, 6, 'winnie.s', '2023-11-28 19:45:12', '', 'oi gentye');
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.posts_banidos
