@@ -3098,6 +3098,11 @@ input[type="file"] {
   .admleft {
     margin-left: 0em;
   }
+  .linha {
+    display: flex;
+    flex-direction: column;
+    
+  }
 }
 @media (max-width: 320px) {
   .admleft {
@@ -3108,4 +3113,64 @@ input[type="file"] {
   .admleft {
     margin-left: 16em;
   }
+}
+/* bottom-tab*/
+
+.bottom-tab {
+  display: flex;
+  justify-content: space-around;
+  font-size: 24px;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: #0b528c;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra na parte inferior */
+}
+
+.bottom-tab a {
+  text-decoration: none;
+  color: #0b528c;
+}
+
+.bottom-tab-center {
+  position: relative;
+}
+
+.bottom-tab-center-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+#plusIcon {
+  font-size: 34px;
+}
+
+.bottom-tab-options {
+  display: none;
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Agora o pop-up é redondo */
+  padding: 10px;
+  z-index: 1;
+}
+
+.bottom-tab-options a {
+  display: block;
+  margin-bottom: 8px;
+  color: #1185e3;
+}
+
+/* Estilo para ajustar a posição do conteúdo principal */
+.admleft {
+  margin-bottom: 80px; /* Ajuste conforme necessário para evitar sobreposição com o Bottom Tab */
 }

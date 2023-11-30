@@ -103,16 +103,21 @@
           class="border border-primary rounded-4 col-12 col-md-12 p-3"
           style="height: 30em"
         >
-          <div class="d-flex align-items-center col-6 col-md-10 mb-4">
-            <div class="d-flex align-items-center col-6 col-md-10 mb-4">
+          <div class="d-flex align-items-center col-10 col-md-10 mb-4">
+            <div class="d-flex align-items-center col-12 col-md-10 mb-4">
               <div
                 class="bg-black rounded-5 col-4"
                 style="width: 50px; height: 50px"
               ></div>
-              <p class="mb-0 h5 text" style="margin-left: 1vw">
-                nome do usuário
-              </p>
-              <p class="txtj mb-0" style="margin-left: 2vw">@nomedeusuario</p>
+              <div class="d-flex linha col-12">
+                <p
+                  class="mb-0 h5 text"
+                  style="margin-left: 1vw; font-size: 18px"
+                >
+                  nome do usuário
+                </p>
+                <p class="txtj mb-0" style="margin-left: 1vw">@nomedeusuario</p>
+              </div>
             </div>
           </div>
           <p class="txtj">Banido em:</p>
@@ -135,7 +140,7 @@
             ></textarea>
           </div>
 
-          <div class="d-flex justify-content-center align-items-center mb-5">
+          <div class="d-flex justify-content-center align-items-center">
             <button
               class="btn btn-success btn-lg col-md-3 mx-3"
               style="height: 7vh"
@@ -150,12 +155,37 @@
             </button>
           </div>
         </div>
+        <nav class="bottom-tab">
+          <a
+            href="../pages/homepage-postagens.html"
+            class="text-decoration-none"
+          >
+            <i class="ph ph-house"></i>
+          </a>
+          <a href="../pages/perfil.html" class="text-decoration-none">
+            <i class="ph ph-user"></i>
+          </a>
+          <div class="bottom-tab-center">
+            <div class="bottom-tab-center-inner" id="bottomTabCenter">
+              <a href="./enviarOportunidade.html">
+                <i class="ph ph-plus-circle" id="plusIcon"></i>
+              </a>
+            </div>
+          </div>
+          <a href="./" class="text-decoration-none">
+            <i class="ph ph-bell"></i>
+          </a>
+          <a href="./configuracoes.html" class="text-decoration-none">
+            <i class="ph ph-gear"></i>
+          </a>
+        </nav>
       </section>
     </main>
 
     <footer>
       <!-- place footer here -->
     </footer>
+    <script src="./bottom_tab.js"></script>
 
     <!-- Bootstrap JavaScript Libraries -->
 
