@@ -14,7 +14,6 @@ if (isset($_POST['comnetar']) && $_POST['comentar'] == "comentar"){
     echo "Comentário enviado com sucesso"; // comentario salvo no banco (espero)
 
   }
-
     // mostrar comentarios na publicação 
     $selecione = mysql_query("SELECT * FROM comentarios WHERE  ID_post = '$ID_post' ");
     $conta = mysql_num_rows($selecione);
