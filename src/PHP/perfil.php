@@ -23,7 +23,7 @@
       }
 
       $stmt->close();
-  }  
+  } 
 ?>
 
 <!doctype html>
