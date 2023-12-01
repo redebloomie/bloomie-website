@@ -17,7 +17,7 @@ $queryBloomigo = "
     SELECT u.* 
     FROM usuario u
     JOIN bloomizade s ON u.ID_usuario = s.usuario_id_1
-    WHERE s.usuario_id_2 = $idUsuario;
+    WHERE s.usuario_id_2 = $idUsuario AND s.status_soli = 'pendente';
 ";
 
 $resultBloomigo = mysqli_query($conexao, $queryBloomigo);
@@ -189,13 +189,13 @@ mysqli_close($conexao);
         <div class="row">
           <ul class="nav nav-pills col-12 col-md-10 col-lg-9">
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link p-4 rounded-0  textlink"  href="./notificacoesGeral.html">Geral</a>
+              <a class="nav-link p-4 rounded-0  textlink"  href="notificacoesGeral.php">Geral</a>
             </li>
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link rounded-0 p-4 sombralink2 textlink" style="background-color: rgba(8, 158, 228, 0.3); " aria-current="page" href="./notificacoesSolicitacao.html">Solicitação</a>
+              <a class="nav-link rounded-0 p-4 sombralink2 textlink" style="background-color: rgba(8, 158, 228, 0.3); " aria-current="page" href="notificacoesSolicitacao.php">Solicitação</a>
             </li>
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link p-4 textlink" href="./notificacoesPendente.html">Pendente</a>
+              <a class="nav-link p-4 textlink" href="notificacoesPendente.php">Pendente</a>
             </li>
           </ul>
         </div>
@@ -226,8 +226,7 @@ mysqli_close($conexao);
                     </div>
                   </div>
                   <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
-                    
-                    <button class="btn btn-success bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'aceito\')>Aceitar</button>
+                    <button class="btn btn-success bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " onclick="atualizarStatus(' . $row['ID_usuario'] . ', \'aceito\')">Aceitar</button>
                   </div>
                 </div>
                 <div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>
@@ -235,7 +234,7 @@ mysqli_close($conexao);
                   $rowCount++;
               }
               } else {
-                  echo 'Nenhuma oportunidade pendente.';
+                  echo 'Nenhuma solicitação pendente.';
               }
           ?>
       </section>

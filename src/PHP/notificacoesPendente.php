@@ -170,10 +170,10 @@ mysqli_close($conexao);
         <div class="row">
           <ul class="nav nav-pills col-12 col-md-10 col-lg-9">
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link p-4 rounded-0  textlink"  href="./notificacoesGeral.html">Geral</a>
+              <a class="nav-link p-4 rounded-0  textlink"  href="./notificacoesGeral.php">Geral</a>
             </li>
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link rounded-0 p-4 textlink" href="./notificacoesSolicitacao.html">Solicitação</a>
+              <a class="nav-link rounded-0 p-4 textlink" href="notificacoesSolicitacao.php">Solicitação</a>
             </li>
             <li class="nav-item col-4 col-md-4">
               <a class="nav-link p-4 sombralink2  rounded-0 textlink" style="background-color: rgba(8, 158, 228, 0.3); " aria-current="page" href="./notificacoesPendente.html">Pendente</a>
@@ -205,10 +205,18 @@ mysqli_close($conexao);
                       <p id="data" class="mb-0 text mg  " style=" color: #5AB5FF;">'.$row["data_publicacao"].'</p>
                     </div>
                   </div>
-                  <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
-                    
-                    <button class="btn btn-primary bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb ">Pendente</button>
-                  </div>
+                  <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">';
+                    if ($row["status_opor"] == "pendente") {
+                      echo '<p class="bg-primary text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " style="font-weight: 400;">'.$row["status_opor"].'</p>
+                      <button class="btn btn-danger text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb ">Cancelar</button>';
+                    }else if ($row["status_opor"] == "aceita") {
+                      echo '<p class="bg-success text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " style="font-weight: 400;">'.$row["status_opor"].'</p>
+                      <button class="btn btn-danger text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb ">Cancelar</button>';
+                    }else if ($row["status_opor"] == "negada") {
+                      echo '<p class="bg-danger text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb " style="font-weight: 400;">'.$row["status_opor"].'</p>
+                      <button class="btn btn-danger text-white bt1 rounded-3 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb ">Cancelar</button>';
+                    }
+                  echo '</div>
                 </div>
                 <div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>
                   ';

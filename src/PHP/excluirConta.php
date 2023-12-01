@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
             if ($stmt === false) {
                 die('Erro de preparação da segunda consulta: ' . $conexao->error);
                 // Exibir informações adicionais para depuração
-echo 'Detalhes do erro: ' . $stmt->error;
+                echo 'Detalhes do erro: ' . $stmt->error;
             }
 
             // Associe os parâmetros

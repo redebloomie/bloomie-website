@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Atualize o status com base na ação
         switch ($acao) {
-            case 'aceita':
+            case 'aceito':
                 $novoStatus = 'aceito';
                 break;
             case 'negada':
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Atualize o status no banco de dados
-        $updateQuery = "UPDATE bloomizade SET status_opor = '$novoStatus' WHERE usuario_id_1 = $ID_usuario AND status_soli = 'pendente'";
+        $updateQuery = "UPDATE bloomizade SET status_soli = '$novoStatus' WHERE usuario_id_1 = $ID_usuario AND status_soli = 'pendente'";
         $result = mysqli_query($conexao, $updateQuery);
 
         if ($result) {
