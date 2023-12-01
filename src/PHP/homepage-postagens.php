@@ -108,6 +108,46 @@ function remover($conexao) {
   }
 }
 
+// Configurações de paginação para oportunidades pendentes
+$porPagina = 5;
+$paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendentes'] : 1;
+$offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
+
+// Consulta para obter amigos do usuário
+$queryAmigos = "SELECT usuario_id_2 FROM bloomizade WHERE usuario_id_1 = $idUsuario AND status_soli = 'aceito'";
+$resultAmigos = mysqli_query($conexao, $queryAmigos);
+
+$amigosIDs = [];
+
+while ($row = mysqli_fetch_assoc($resultAmigos)) {
+    $amigosIDs[] = $row['usuario_id_2'];
+}
+
+// Se houver amigos, liste os amigos de amigos
+if (!empty($amigosIDs)) {
+    $amigosIDsStr = implode(",", $amigosIDs);
+
+    $queryAmigosDeAmigos = "SELECT DISTINCT u.ID_usuario, u.nome, u.usuario
+                            FROM bloomizade b
+                            JOIN usuario u ON b.usuario_id_2 = u.ID_usuario
+                            WHERE b.usuario_id_1 IN ($amigosIDsStr)
+                            AND b.usuario_id_2 != $idUsuario
+                            LIMIT $offsetPendentes, $porPagina";
+
+    $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
+} else {
+    // Se não houver amigos, liste usuários específicos
+    $usuariosEspecificos = [6, 32, 33, 34, 35]; // IDs dos usuários específicos
+    $usuariosEspecificosStr = implode(",", $usuariosEspecificos);
+
+    $queryUsuariosEspecificos = "SELECT ID_usuario, nome, usuario, foto_perfil, sobrenome
+                                 FROM usuario
+                                 WHERE ID_usuario IN ($usuariosEspecificosStr)
+                                 LIMIT $offsetPendentes, $porPagina";
+
+    $resultAmigosDeAmigos = mysqli_query($conexao, $queryUsuariosEspecificos);
+}
+
 ?>
 
 <!doctype html>
@@ -266,11 +306,17 @@ function remover($conexao) {
                               // Exibe os botões apenas se o post não for do próprio usuário
                               if (!$postDoProprioUsuario) {
                                   if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'aceito') {
-                                      echo '<input type="submit" id="remover" name="remover" value="Remover">';
+                                      echo '
+                                      <label for="remover"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <input type="submit" id="remover" name="remover" value="Remover"  style="display: none">';
                                   } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'pendente') {
-                                      echo '<input type="submit" id="cancel" name="cancel" value="Cancelar">';
+                                      echo '
+                                      <label for="cancel"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i> Pendente</label>
+                                      <input type="submit" id="cancel" name="cancel" value="Cancelar"  style="display: none">';
                                   } else {
-                                      echo '<input type="submit" id="add" name="add" value="Seguir">';
+                                      echo '
+                                      <label for="add"><i class="ph ph-user-plus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <input type="submit" id="add" name="add" value="Seguir"  style="display: none">';
                                   }
                               }
 
@@ -458,46 +504,33 @@ function remover($conexao) {
                 </div>
                 <div class="col">
                   <div class="rows-cols-1 justify-content-center align-items-center g-2">
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Ayla Santos</p>
-                          <p style="font-size: 1vw;">@aylasantos</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Ayla Santos</p>
-                          <p style="font-size: 1vw;">@aylasantos</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Ayla Santos</p>
-                          <p style="font-size: 1vw;">@aylasantos</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Ayla Santos</p>
-                          <p style="font-size: 1vw;">@aylasantos</p>
-                        </span>
-                      </span>
-                    </div>
+                  <?php
+
+                    // Verifica se há resultados
+                    if (mysqli_num_rows($resultAmigosDeAmigos) > 0) {
+                        $rowCount = 0;
+                        while ($row = mysqli_fetch_assoc($resultAmigosDeAmigos)) {
+                            // Exiba as informações da oportunidade pendente
+                            echo '
+                            <div class="col destaques-bloomigos-user">
+                              <span style="display:flex; flex-direction: row;">
+                                <img src="'.$row['foto_perfil'].'" alt=""
+                                  style="border-radius: 100%; width: 3vw; height: 3vw; object-fit: cover;">
+                                <span style="display: flex; flex-direction: column; text-align: start;">
+                                  <p style="font-weight: 500;">'.$row['nome'].' '.$row['sobrenome'].'</p>
+                                  <p style="font-size: 1vw;">@'.$row['usuario'].'</p>
+                                </span>
+                              </span>
+                            </div>
+                            
+                            ';
+
+                            $rowCount++;
+                        }
+                        } else {
+                            echo 'Nenhuma postagem disponível.';
+                        }
+                  ?>
                   </div>
                 </div>
               </div>
