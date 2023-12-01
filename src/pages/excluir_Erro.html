@@ -150,15 +150,41 @@
 
       <section class="  container col-12 col-md-10 col-lg-10 d-flex align-items-center justify-content-center" style="padding-top: 5rem; ">
         <div class="text-center">
-          <img class="img-fluid w-25 "  src="../assets/bluBloomie.png" alt="">
+          <img class="img-fluid w-25 mt-5 "  src="../assets/bluBloomie.png" alt="">
           <p class="h1 txtT">Esta ação trará um vazio virtual. <br> Você quer apagar sua conta?</p>
           <p class="mb-0 mt-4 txtT " style="line-height: 1;">Ao clicar no botão abaixo, sua conta na Bloomie será <br> 
             <span class="text-danger text-center">excluída permanentemente.</span>  <br>Seus Bloomigos, postagens, oportunidades e outras <br> interações serão apagados. Você tem certeza?</p>
-            <div class="d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center mb-5">
               <button type="submit" class="btn btn-primary col-md-4 col-12 mt-4 rounded-4" style="font-weight: bold;"> <span class="h5">Continuar</span> </button>
               <button type="submit" class="btn btn-danger col-md-4 col-12 mt-4 rounded-4" style="font-weight: bold;"><span class="h5">Cancelar</span></button>
             </div>
         </div>
+        <nav class="bottom-tab">
+          <a
+            href="../pages/homepage-postagens.html"
+            class="text-decoration-none"
+          >
+            <i class="ph ph-house"></i>
+          </a>
+          <a href="../pages/perfil.html" class="text-decoration-none">
+            <i class="ph ph-user"></i>
+          </a>
+          <div class="bottom-tab-center">
+            <div class="bottom-tab-center-inner" id="bottomTabCenter">
+              <a href="./enviarOportunidade.html">
+                <i class="ph ph-plus-circle" id="plusIcon"></i>
+              </a>
+            </div>
+          </div>
+
+          <a href="../PHP/not.php" class="text-decoration-none">
+            <i class="ph ph-bell"></i>
+          </a>
+
+          <a href="./configuracoes.html" class="text-decoration-none">
+            <i class="ph ph-gear"></i>
+          </a>
+        </nav>
       </section>
       
       
@@ -179,7 +205,7 @@
     <!-- place footer here -->
 
   </footer>
-
+  <script src="./bottom_tab.js"></script>
   <!-- Bootstrap JavaScript Libraries -->
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
