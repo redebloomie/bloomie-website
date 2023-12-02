@@ -245,50 +245,46 @@ if ($consultaUsuario->num_rows > 0) {
                 <h2>Posts</h2>
               </span>
               <?php
-        
-        while ($post = $consultaPostagens->fetch_assoc()) {
-          echo '
-              <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
-                  <div class="col">
-                      <div class="postagem-user">
-                          <img src="' . $dadosUsuario['foto_perfil'] . '" alt="Imagem do usuário">
-                          <span>
-                          <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
-                          </span>
-                      </div>
-                  </div>
-                  <div class="col">
-                      <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
-                  </div>
-                  ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt="" style="height: 10vw"></div>' : '') . '
-                  <div class="col-12 interacoes-post">
-                      <div class="options-post">
-                          <div class="rightside-op-post">
-                              <span>
-                                  <i class="ph ph-heart"></i>
-                                  <p></p>
-                              </span>
-                              <span>
-                                  <i class="ph ph-chat-circle"></i>
-                                  <p></p>
-                              </span>
-                              <span>
-                                  <i class="ph ph-link-simple-horizontal"></i>
-                              </span>
+                while ($post = $consultaPostagens->fetch_assoc()) {
+                  echo '
+                      <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
+                          <div class="col">
+                              <div class="postagem-user">
+                                  <img src="' . $dadosUsuario['foto_perfil'] . '" alt="Imagem do usuário">
+                                  <span>
+                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                                  </span>
+                              </div>
                           </div>
-                          <div class="leftside-op-post">
-                              <i class="ph ph-warning"></i>
+                          <div class="col">
+                              <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
                           </div>
-                      </div>
+                          ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt="" style="height: 10vw"></div>' : '') . '
+                          <div class="col-12 interacoes-post">
+                              <div class="options-post">
+                                  <div class="rightside-op-post">
+                                      <span>
+                                          <i class="ph ph-heart"></i>
+                                          <p></p>
+                                      </span>
+                                      <span>
+                                          <i class="ph ph-chat-circle"></i>
+                                          <p></p>
+                                      </span>
+                                      <span>
+                                          <i class="ph ph-link-simple-horizontal"></i>
+                                      </span>
+                                  </div>
+                                  <div class="leftside-op-post">
+                                      <i class="ph ph-warning"></i>
+                                  </div>
+                              </div>
+                          </div>
                   </div>
-          </div>
-          ';
-      }
-      
-        
-        $conexao->close();
-        
-      ?>
+                  ';
+                }
+                $conexao->close();
+              ?>
               <div class="perfil-next-post">
                 
               </div>

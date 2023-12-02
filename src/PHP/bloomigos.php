@@ -1,3 +1,41 @@
+<?php
+session_start();
+// Conectar ao banco de dados (utilize suas credenciais)
+include('connect.php');
+$ID_usuario = $_SESSION['ID_usuario'];
+
+// Consulta para obter os 3 últimos amigos
+$queryUltimosAmigos = "SELECT u.ID_usuario, u.nome, u.sobrenome, u.usuario, u.foto_perfil
+FROM bloomizade b
+JOIN usuario u ON b.usuario_id_2 = u.ID_usuario
+WHERE b.usuario_id_1 = $ID_usuario
+ORDER BY b.data_criacao DESC";
+
+$resultUltimosAmigos = mysqli_query($conexao, $queryUltimosAmigos);
+
+// ---------------------------------------------------------------------------------------------
+
+// Consulta para obter informações do usuário
+$consultaUsuario = $conexao->query("SELECT * FROM usuario WHERE ID_usuario = $ID_usuario");
+
+// Verifica se o usuário existe
+if ($consultaUsuario->num_rows > 0) {
+$dadosUsuario = $consultaUsuario->fetch_assoc();
+
+// Consulta para obter postagens do usuário
+$consultaPostagens = $conexao->query("SELECT * FROM post WHERE ID_usuario = $ID_usuario LIMIT 1");
+
+// Resto do código para exibir informações do perfil
+} else {
+// Usuário não encontrado, redireciona para uma página de erro ou homepage
+header("Location: index.php"); // Altere para a página desejada
+exit();
+}
+
+// Fechar a conexão
+mysqli_close($conexao);
+?>
+
 <!doctype html>
 
 <html lang="en">
@@ -18,7 +56,7 @@
 
   <link rel="stylesheet" href="../../public/style.css">
 
-  <link rel="shortcut icon" href="/bloomie-website//src/assets/bluBloomie.png" />
+  <link rel="shortcut icon" href="../assets/bluBloomie.png" />
 
 
 
@@ -38,7 +76,7 @@
 
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
 
-    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
 
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
@@ -157,49 +195,37 @@
           </div>
           
         </div>
-        <h5 class="txtj">conexões dentro da Bloomie</h5>
-        <div class="d-flex justify-content-between align-items-center ">
-          <div class="d-flex align-items-center col-8 col-sm-6 col-md-6 mt-3 ">
-            <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
-            <div class="">
-              <p class=" mb-0 h5 text mg  " >nome do usuario jean gostoso</p>
-              <p id="" class="mb-0 text mg  " style=" color: #5AB5FF;">@nome do user</p>
-            </div>
-          </div>
-          <div class="d-flex   col-2 col-sm-6 col-md-6  justify-content-end ">
-            
-            <button class="btn btn-danger bt1 rounded-3 h6 col-sm-8 col-md-8  col-lg-5    textb mt-3">Desfazer Bloomizade</button>
-          </div>
-        </div>
-        <div class=" bg-primary col-12  mt-3 " style="height: 1px;"></div>
-        <div class="d-flex justify-content-between align-items-center ">
-          <div class="d-flex align-items-center col-8 col-sm-6 col-md-6 mt-3">
-            <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
-            <div class="">
-              <p class=" mb-0 h5 text mg  " >nome do usuario jean gostoso</p>
-              <p id="" class="mb-0 text mg  " style=" color: #5AB5FF;">@nome do user</p>
-            </div>
-          </div>
-          <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
-            
-            <button class="btn btn-danger bt1 rounded-3 h6 col-lg-5  col-md-8 col-2 textb mt-3">Desfazer Bloomizade</button>
-          </div>
-        </div>
-        <div class=" bg-primary col-12  mt-3 " style="height: 1px;"></div>
-        <div class="d-flex justify-content-between align-items-center ">
-          <div class="d-flex align-items-center col-8 col-sm-6 col-md-6 mt-3 ">
-            <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
-            <div class="">
-              <p class=" mb-0 h5 text mg  " >nome do usuario jean gostoso</p>
-              <p id="" class="mb-0 text mg  " style=" color: #5AB5FF;">@nome do user</p>
-            </div>
-          </div>
-          <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
-            
-            <button class="btn btn-danger bt1 rounded-3 h6 col-lg-5 col-md-8 col-10  textb mt-3">Desfazer Bloomizade</button>
-          </div>
-        </div>
-        <div class=" bg-primary col-12  mt-3 " style="height: 1px;"></div>
+        <h5 class="txtj">Conexões dentro da Bloomie</h5>
+        <?php
+
+          // Verifica se há resultados
+          if (mysqli_num_rows($resultUltimosAmigos) > 0) {
+              $rowCount = 0;
+              while ($row = mysqli_fetch_assoc($resultUltimosAmigos)) {
+                  // Exiba as informações da oportunidade pendente
+                  echo '
+                  <div class="d-flex justify-content-between align-items-center ">
+                  <div class="d-flex align-items-center col-8 col-sm-6 col-md-6 mt-3 ">
+                    <img src="'.$row['foto_perfil'].'" class=" rounded-circle col-4 " style="width: 50px; height: 50px; object-fit: cover">
+                    <div class="">
+                      <p class=" mb-0 h5 text mg">'.$row['nome'].' '.$row['sobrenome'].'</p>
+                      <p id="" class="mb-0 text mg  " style=" color: #5AB5FF;">@'.$row['usuario'].'</p>
+                    </div>
+                  </div>
+                  <div class="d-flex   col-2 col-sm-6 col-md-6  justify-content-end ">
+                    
+                  <button class="btn btn-danger bt1 rounded-3 h6 col-sm-8 col-md-8 col-lg-5 textb mt-3" onclick="atualizarStatus(' . $ID_usuario . ', ' . $row['ID_usuario'] . ', \'cancelar\')">Desfazer Bloomizade</button>
+                  </div>
+                </div>
+                <div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>
+                  ';
+                  $rowCount++;
+              }
+              } else {
+                  echo 'Nenhuma solicitação pendente.';
+              }
+          ?>
+
         <nav class="bottom-tab">
           <a
             href="../pages/homepage-postagens.html"
@@ -249,6 +275,40 @@
     <!-- place footer here -->
 
   </footer>
+
+  <script>
+    function atualizarStatus(usuario_id_2, usuario_id_1, acao) {
+    // Crie um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Configurar a solicitação AJAX
+    xhr.open('POST', 'atualizar_soli.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Configurar a função de retorno de chamada
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // A resposta do servidor está disponível aqui
+            console.log(xhr.responseText);
+
+            // Atualizar a interface do usuário conforme necessário
+            // (por exemplo, esconder o item, atualizar o status, etc.)
+
+            // Recarregar a página para refletir as alterações
+            location.reload();
+        }
+    };
+
+    // Preparar os dados a serem enviados
+    var dados = 'usuario_id_2=' + usuario_id_2 + '&usuario_id_1=' + usuario_id_1 + '&acao=' + acao;
+
+    // Enviar a solicitação AJAX com os dados
+    xhr.send(dados);
+}
+
+
+  </script>
+  
   <script src="./bottom_tab.js"></script>
   <!-- Bootstrap JavaScript Libraries -->
 

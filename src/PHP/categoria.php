@@ -8,11 +8,11 @@ $paginaAtualEstagio = isset($_GET['pagina_estagio']) ? $_GET['pagina_estagio'] :
 $offsetEstagio = ($paginaAtualEstagio - 1) * $porPagina;
 
 // Consulta para obter oportunidades Estágio com paginação
-$queryEstagio = "SELECT * FROM oportunidade WHERE categoria = 'Estágio' LIMIT $offsetEstagio, $porPagina";
+$queryEstagio = "SELECT * FROM oportunidade WHERE categoria = 'Estágios' LIMIT $offsetEstagio, $porPagina";
 $resultEstagio = mysqli_query($conexao, $queryEstagio);
 
 // Consulta para obter o número total de oportunidades Estágio
-$totalQueryEstagio = "SELECT COUNT(*) as total FROM oportunidade WHERE categoria = 'Estágio'";
+$totalQueryEstagio = "SELECT COUNT(*) as total FROM oportunidade WHERE categoria = 'Estágios'";
 $totalResultEstagio = mysqli_query($conexao, $totalQueryEstagio);
 $totalEstagio = mysqli_fetch_assoc($totalResultEstagio)['total'];
 
@@ -49,7 +49,7 @@ mysqli_close($conexao);
   </nav>
 
   <main>
-    <div class="row justify-content-start align-items-start g-0">
+  <div class="row justify-content-start align-items-start g-0">
       <div class="col-2 bg-primary sidebar-container">
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
@@ -63,19 +63,27 @@ mysqli_close($conexao);
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Dasboard</a>
+                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Home</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../pages/perfil.html" class="text-decoration-none text-white">Oportunidades</a>
+                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
-                  <a href="" class="text-decoration-none text-white">Postagens</a>
+                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-plant"></i>
+                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="" class="text-decoration-none text-white">Usuários</a>
+                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                </div>
+                <div class="col text-white sidebar-op">
+                  <i class="ph ph-question"></i>
+                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
                 </div>
               </div>
             </div>
@@ -86,70 +94,57 @@ mysqli_close($conexao);
         </div>
       </div>
 
-      <div class="col-10 d-flex justify-content-center d-flex flex-column perfil-pg"
-        style="margin-top: 5.5vw; margin-left: 20vw; width: 75vw;">
-        
-          <h2 class="mb-3 txtj text-primary">Usuários</h2>
-          <div class="input-group rounded" style="width:20vw;">
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-            <span class="input-group-text border-0" id="search-addon">
-              <i class="fas fa-search"></i>
-            </span>
+      <div class="col-8 pg-oportunidades">
+        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-12 conteudo">
+          <div class="col-12 justify-content-center align-items-center">
+            <div class="row-cols-1 justify-content-center align-items-center g-2">
+
+              <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
+                style="margin-top: 30px;">
+                <div class="col op-lista-top">
+                  <span
+                    style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 1vw;">
+                    <h2 style="margin: 0; color: #1185E3; display: flex; justify-content: center; align-items: center;">
+                      Estágios</h2>
+                    <p
+                      style="margin: 0; font-size: 15px; background-color: #1185E3; color: #fff; border-radius: 15px; padding: 0 15px; font-weight: 500;">
+                      Crescimento profissional</p>
+                  </span>
+                </div>
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                  <?php
+                    while ($oportunidade = mysqli_fetch_assoc($resultEstagio)) {
+                  
+                      echo '
+                      <div>
+                            <div class="row-cols-1 justify-content-center align-items-center g-2">
+                              <div class="col image-container">
+                                <img src="'. $oportunidade['imagem'].'" alt="" style="width: 12vw; height: 12vw; object-fit: cover;">
+                                <div class="overlay" style="color: #0C5D9E;" style="width: 12vw; height: 12vw;>'.$oportunidade['descricao'].' <span style="font-weight: 500; width: 12vw; height: 12vw;">Ler mais.</span></div>
+                              </div>
+                              <div class="col" style="margin-top: 10px;">
+                                <p style="font-weight: 500; font-size: 18px;">'. $oportunidade['titulo'] .'</p>
+                                <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$oportunidade['tempo_expirar'].'</p>
+                                <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$oportunidade['faixa_etaria'].'</p>
+                              </div>
+                              <div class="col">
+                              <a href="oportunidade.php?id='. $oportunidade['ID_oportunidade'] .'" class="btn btn-primary" style="width: 12vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                              </div>
+                            </div>
+                          </div>';
+                    }
+                  ?>
+                  <div class="col-1" style="position: absolute; right:0;">
+                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-md-12 d-flex justify-content-between ">
-          
+        </div>
       </div>
-
-    <!-- Navegação de página no topo do conteúdo -->
-    <nav aria-label="Page navigation example mb-3" style="margin-top:30px">
-        <ul class="pagination">
-        <?php
-            // Lógica para exibir os números da página para oportunidades de Estágios
-            $maxPaginas = 4; // Número máximo de páginas a serem exibidas
-            $inicio = max(1, $paginaAtualEstagio - floor($maxPaginas / 2));
-            $fim = min($inicio + $maxPaginas - 1, $numPaginasEstagio);
-
-            // Exibir o botão "<" se houver mais páginas antes para oportunidades de Estágio
-            if ($inicio > 1) {
-              echo '<li class="page-item">';
-              echo '<a class="page-link" href="?pagina_estagio=' . ($inicio - 1) . '">&laquo;</a>';
-              echo '</li>';
-            }
-
-            // Exibir os números da página para oportunidades de Estágio
-            for ($i = $inicio; $i <= $fim; $i++) {
-              echo '<li class="page-item ' . ($i == $paginaAtualEstagio ? 'active' : '') . '">';
-              echo '<a class="page-link" href="?pagina_estagio=' . $i . '">' . $i . '</a>';
-              echo '</li>';
-            }
-
-            // Exibir o botão ">" se houver mais páginas depois para oportunidades de Estágio
-            if ($fim < $numPaginasEstagio) {
-              echo '<li class="page-item">';
-              echo '<a class="page-link" href="?pagina_estagio=' . ($fim + 1) . '">&raquo;</a>';
-              echo '</li>';
-            }
-            ?>
-        </ul>
-    </nav>
-
-    <div class="border border-primary p-3 rounded-5 mb-5 feedExp">
-    <!-- Exibir oportunidades de Estágio -->
-    <?php
-          while ($oportunidade = mysqli_fetch_assoc($resultEstagio)) {
-            echo '
-            <div class="oportunidade-container">
-              <div class="oportunidade-foto">
-                <img src="' . $oportunidade['imagem'] . '" alt="">
-              </div>
-              <div class="oportunidade-info">
-                <h2>' . $oportunidade['titulo'] . '</h2>
-                <p>' . $oportunidade['descricao'] . '</p>
-                <a href="visualizar_oportunidade.php?id=' . $oportunidade['ID_oportunidade'] . '" class="btn btn-primary col-12">Acessar oportunidade</a>
-              </div>
-            </div>';
-          }
-          ?>
     </div>
             
   </main>

@@ -282,28 +282,28 @@ if (empty($_SESSION['personalidade'])) {
                   </span>
                 </div>
                 <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
-                <?php
-            while ($opor = $estagios->fetch_assoc()) {
-          
-              echo '
-              <div>
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="'. $opor['imagem'].'" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
-                      </div>
-                      <div class="col">
-                      <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                      </div>
-                    </div>
-                  </div>';
-          }
-          ?>
+                  <?php
+                    while ($opor = $estagios->fetch_assoc()) {
+                  
+                      echo '
+                      <div>
+                            <div class="row-cols-1 justify-content-center align-items-center g-2">
+                              <div class="col image-container">
+                                <img src="'. $opor['imagem'].'" alt="">
+                                <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
+                              </div>
+                              <div class="col" style="margin-top: 10px;">
+                                <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
+                                <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                                <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                              </div>
+                              <div class="col">
+                              <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                              </div>
+                            </div>
+                          </div>';
+                    }
+                  ?>
                   <div class="col-1" style="position: absolute; right:0;">
                     <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
                       <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>

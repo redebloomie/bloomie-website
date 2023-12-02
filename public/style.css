@@ -1075,7 +1075,6 @@ input[type="file"] {
 .destaques-top p:nth-child(2),
 .destaques-bloomigos p:nth-child(2) {
   font-size: 1.1vw;
-  white-space: nowrap;
 }
 
 .destaques-top p:nth-child(1),
