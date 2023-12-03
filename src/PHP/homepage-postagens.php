@@ -162,7 +162,7 @@ if (!empty($amigosIDs)) {
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css'>
 
   <link rel="stylesheet" href="../../public/style.css">
-  <link rel="shortcut icon" href="/src/assets/bluBloomie.png" />
+  <link rel="shortcut icon" href="../assets/bluBloomie.png" />
 
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
@@ -172,8 +172,7 @@ if (!empty($amigosIDs)) {
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"
-        style="margin: 0 15px;"></a>
+    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -183,7 +182,7 @@ if (!empty($amigosIDs)) {
             style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Postagens</button></a>
         </li>
         <li class="nav-item">
-          <a href="homepage-oportunidades.php"><button type="button" id="btnOportunidades" class="btn"
+          <a href="homepage-oportunidades-nm.php"><button type="button" id="btnOportunidades" class="btn"
             style="color: #5AB5FF; font-weight: 500;">Oportunidades</button></a>
         </li>
       </ul>
@@ -205,15 +204,15 @@ if (!empty($amigosIDs)) {
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
-                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-plant"></i>
@@ -221,11 +220,11 @@ if (!empty($amigosIDs)) {
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
-                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
                 </div>
               </div>
             </div>
@@ -288,9 +287,9 @@ if (!empty($amigosIDs)) {
                   <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
                       <div class="col">
                           <div class="postagem-user">
-                              <img src="' . $fotoPerfil . '" alt="Imagem do usuário">
+                              <img src="' . $saber['foto_perfil'] . '" alt="Imagem do usuário">
                               <span>
-                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfilUsuario.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
                                   <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
                               </span>
                               <form method="POST">
@@ -542,24 +541,32 @@ if (!empty($amigosIDs)) {
     </div>
 
     <!-- Adicione isso ao seu HTML -->
-      <div class="bottom-navigation">
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-house"></i>
+    <nav class="bottom-tab bottom-navigation">
+          <a
+            href="homepage-postagens.php"
+            class="text-decoration-none"
+          >
+            <i class="ph ph-house"></i>
+          </a>
+          <a href="perfil.php" class="text-decoration-none">
+            <i class="ph ph-user"></i>
+          </a>
+          <div class="bottom-tab-center">
+            <div class="bottom-tab-center-inner" id="bottomTabCenter">
+              <a href="../pages/postagemmobile.html">
+                <i class="ph ph-plus-circle" id="plusIcon"></i>
               </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <img src="../assets/bluBloomie.png" alt="" style="width: 5vw;">
-              </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-plus"></i>
-              </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-bell"></i>
-              </a>
-              <a href="../pages/perfil.html" class="text-decoration-none text-white">
-                <i class="ph ph-user"></i>
-              </a>
-              <!-- Adicione mais itens de navegação conforme necessário -->
-      </div>
+            </div>
+          </div>
+
+          <a href="notificacoesGeral.php" class="text-decoration-none">
+            <i class="ph ph-bell"></i>
+          </a>
+
+          <a href="../pages/configuracoes.html" class="text-decoration-none">
+            <i class="ph ph-gear"></i>
+          </a>
+        </nav>
   </main>
 
   <footer>
@@ -715,7 +722,7 @@ if (!empty($amigosIDs)) {
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
 
-  <script src="/public/script.js"></script>
+  <script src="../../public/script.js"></script>
 
 </body>
 

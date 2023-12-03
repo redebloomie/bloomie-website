@@ -69,7 +69,7 @@ if (empty($_SESSION['personalidade'])) {
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -105,15 +105,15 @@ if (empty($_SESSION['personalidade'])) {
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
-                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-plant"></i>
@@ -121,16 +121,16 @@ if (empty($_SESSION['personalidade'])) {
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
-                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
                 </div>
               </div>
             </div>
             <div class="col">
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>
@@ -233,7 +233,7 @@ if (empty($_SESSION['personalidade'])) {
                                                     <p style="color: #1289EA; font-size: 17px; margin: 0;">Tags relacionadas:</p>
                                                     <span class="span-row tags-rel"></span>
                                                 </div>
-                                                <a href="../pages/oportunidade.html" style="width: 100%;">
+                                                <a href="oportunidade.php?id=' . $oportunidadeMaisClicada['ID_oportunidade'] . '" style="width: 100%;">
                                                     <button style="padding: 2px 0 2px 0; margin-top: 10px;">Acessar oportunidade</button>
                                                 </a>
                                             </div>
@@ -615,24 +615,32 @@ if (empty($_SESSION['personalidade'])) {
     </div>
 
     <!-- Adicione isso ao seu HTML -->
-    <div class="bottom-navigation">
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-house"></i>
+    <nav class="bottom-tab bottom-navigation">
+          <a
+            href="homepage-oportunidades-nm.php"
+            class="text-decoration-none"
+          >
+            <i class="ph ph-house"></i>
+          </a>
+          <a href="perfil.php" class="text-decoration-none">
+            <i class="ph ph-user"></i>
+          </a>
+          <div class="bottom-tab-center">
+            <div class="bottom-tab-center-inner" id="bottomTabCenter">
+              <a href="enviarOportunidade.html">
+                <i class="ph ph-plus-circle" id="plusIcon"></i>
               </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <img src="../assets/bluBloomie.png" alt="" style="width: 5vw;">
-              </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-plus"></i>
-              </a>
-              <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-                <i class="ph ph-bell"></i>
-              </a>
-              <a href="../pages/perfil.html" class="text-decoration-none text-white">
-                <i class="ph ph-user"></i>
-              </a>
-              <!-- Adicione mais itens de navegação conforme necessário -->
-      </div>
+            </div>
+          </div>
+
+          <a href="notificacoesGeral.php" class="text-decoration-none">
+            <i class="ph ph-bell"></i>
+          </a>
+
+          <a href="configuracoes.html" class="text-decoration-none">
+            <i class="ph ph-gear"></i>
+          </a>
+        </nav>
   </main>
 
   <footer>
@@ -647,7 +655,7 @@ if (empty($_SESSION['personalidade'])) {
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
     </script>
 
-  <script src="/public/script.js"></script>
+  <script src="../../public/script.js"></script>
 
 </body>
 

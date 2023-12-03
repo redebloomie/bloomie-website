@@ -100,7 +100,7 @@ if ($consultaUsuario->num_rows > 0) {
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
   </nav>
 
   <main>
@@ -118,15 +118,15 @@ if ($consultaUsuario->num_rows > 0) {
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../PHP/homepage-postagens.php" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../pages/perfil.html" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
-                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-plant"></i>
@@ -134,16 +134,16 @@ if ($consultaUsuario->num_rows > 0) {
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
-                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
                 </div>
               </div>
             </div>
             <div class="col">
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>
@@ -252,7 +252,7 @@ if ($consultaUsuario->num_rows > 0) {
                               <div class="postagem-user">
                                   <img src="' . $dadosUsuario['foto_perfil'] . '" alt="Imagem do usuário">
                                   <span>
-                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfil.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfilUsuario.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
                                   </span>
                               </div>
                           </div>

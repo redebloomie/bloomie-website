@@ -18,7 +18,7 @@
 
   <link rel="stylesheet" href="../../public/style.css">
 
-  <link rel="shortcut icon" href="/src/assets/bluBloomie.png" />
+  <link rel="shortcut icon" href="../assets/bluBloomie.png" />
 
 
 
@@ -38,7 +38,7 @@
 
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
 
-    <a class="navbar-brand" href="#"><img src="/src/assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
 
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
@@ -87,7 +87,7 @@
 
                   <i class="ph ph-house"></i>
 
-                  <a href="" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
 
                 </div>
 
@@ -95,7 +95,7 @@
 
                   <i class="ph ph-user"></i>
 
-                  <a href="" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
 
                 </div>
 
@@ -103,7 +103,7 @@
 
                   <i class="ph ph-bell-ringing"></i>
 
-                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
 
                 </div>
 
@@ -111,7 +111,7 @@
 
                   <i class="ph ph-plant"></i>
 
-                  <a href="" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                  <a href="../pages/enviarOportunidades.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
 
                 </div>
 
@@ -119,7 +119,7 @@
 
                   <i class="ph ph-gear"></i>
 
-                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
 
                 </div>
 
@@ -127,7 +127,7 @@
 
                   <i class="ph ph-question"></i>
 
-                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
 
                 </div>
 
@@ -137,7 +137,7 @@
 
             <div class="col">
 
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
 
             </div>
 
@@ -152,13 +152,13 @@
         <div class="row">
           <ul class="nav nav-pills col-12 col-md-10 col-lg-9">
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link p-4 rounded-0 sombralink textlink" style="background-color: rgba(8, 158, 228, 0.3); " aria-current="page" href="./notificacoesGeral.html">Geral</a>
+              <a class="nav-link p-4 rounded-0 sombralink textlink" style="background-color: rgba(8, 158, 228, 0.3); " aria-current="page" href="notificacoesGeral.php">Geral</a>
             </li>
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link rounded-0 p-4 textlink" href="./notificacoesSolicitacao.html">Solicitação</a>
+              <a class="nav-link rounded-0 p-4 textlink" href="notificacoesSolicitacao.php">Solicitação</a>
             </li>
             <li class="nav-item col-4 col-md-4">
-              <a class="nav-link p-4 textlink" href="./notificacoesPendente.html">Pendente</a>
+              <a class="nav-link p-4 textlink" href="notificacoesPendente.php">Pendente</a>
             </li>
           </ul>
         </div>
@@ -224,23 +224,32 @@
         
       </section>
       
-      <div class="bottom-navigation">
-        <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-          <i class="ph ph-house"></i>
-        </a>
-        <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-          <img src="../assets/bluBloomie.png" alt="" style="width: 5vw;">
-        </a>
-        <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-          <i class="ph ph-plus"></i>
-        </a>
-        <a href="../pages/homepage-postagens.html" class="text-decoration-none text-white">
-          <i class="ph ph-bell"></i>
-        </a>
-        <a href="../pages/perfil.html" class="text-decoration-none text-white">
-          <i class="ph ph-user"></i>
-        </a>
-</div>
+      <nav class="bottom-tab bottom-navigation">
+          <a
+            href="homepage-postagens.php"
+            class="text-decoration-none"
+          >
+            <i class="ph ph-house"></i>
+          </a>
+          <a href="perfil.php" class="text-decoration-none">
+            <i class="ph ph-user"></i>
+          </a>
+          <div class="bottom-tab-center">
+            <div class="bottom-tab-center-inner" id="bottomTabCenter">
+              <a href="../pages/enviarOportunidade.html">
+                <i class="ph ph-plus-circle" id="plusIcon"></i>
+              </a>
+            </div>
+          </div>
+
+          <a href="notificacoesGeral.php" class="text-decoration-none">
+            <i class="ph ph-bell"></i>
+          </a>
+
+          <a href="../pages/configuracoes.html" class="text-decoration-none">
+            <i class="ph ph-gear"></i>
+          </a>
+        </nav>
 
   </main>
 
@@ -270,7 +279,7 @@
 
 
 
-  <script src="/public/script.js"></script>
+  <script src="../../public/script.js"></script>
 
 
 

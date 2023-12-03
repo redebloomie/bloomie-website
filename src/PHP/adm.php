@@ -108,12 +108,12 @@ $conexao->close();
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="adm.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
   </nav>
 
   <main>
     <div class="row justify-content-start align-items-start g-0">
-      <div class="col-2 bg-primary sidebar-container">
+    <div class="col-2 bg-primary sidebar-container">
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
             <div class="col">
@@ -126,24 +126,24 @@ $conexao->close();
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-house"></i>
-                  <a href="../PHP/adm.php" class="text-decoration-none text-white">Dasboard</a>
+                  <a href="adm.php" class="text-decoration-none text-white">Dasboard</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-user"></i>
-                  <a href="../PHP/adm_oportunidade.php" class="text-decoration-none text-white">Oportunidades</a>
+                  <a href="adm_oportunidade.php" class="text-decoration-none text-white">Oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-bell-ringing"></i>
-                  <a href="" class="text-decoration-none text-white">Postagens</a>
+                  <a href="adm_postagens.php" class="text-decoration-none text-white">Postagens</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="" class="text-decoration-none text-white">Usuários</a>
+                  <a href="adm_usuarios.php" class="text-decoration-none text-white">Usuários</a>
                 </div>
               </div>
             </div>
             <div class="col">
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>
@@ -373,7 +373,6 @@ $conexao->close();
   
   <script src="../pages/tags.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
 </body>
 
 </html> 

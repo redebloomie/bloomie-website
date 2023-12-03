@@ -76,7 +76,7 @@ mysqli_close($conexao);
 
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
 
-    <a class="navbar-brand" href="#"><img src="../assets/logoBloomie-blu.png" alt="" width="150px"></a>
+    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
 
     <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
       aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
@@ -125,7 +125,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-house"></i>
 
-                  <a href="" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
 
                 </div>
 
@@ -133,7 +133,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-user"></i>
 
-                  <a href="" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
 
                 </div>
 
@@ -141,7 +141,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-bell-ringing"></i>
 
-                  <a href="" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
 
                 </div>
 
@@ -149,7 +149,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-plant"></i>
 
-                  <a href="" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
 
                 </div>
 
@@ -157,7 +157,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-gear"></i>
 
-                  <a href="" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
 
                 </div>
 
@@ -165,7 +165,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-question"></i>
 
-                  <a href="" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.php" class="text-decoration-none text-white">Ajuda & suporte</a>
 
                 </div>
 
@@ -175,7 +175,7 @@ mysqli_close($conexao);
 
             <div class="col">
 
-              <a href="" class="text-decoration-none text-white">Sair</a>
+              <a href="sair.php" class="text-decoration-none text-white">Sair</a>
 
             </div>
 
@@ -226,44 +226,33 @@ mysqli_close($conexao);
               }
           ?>
 
-        <nav class="bottom-tab">
+        <nav class="bottom-tab bottom-navigation">
           <a
-            href="../pages/homepage-postagens.html"
+            href="homepage-postagens.php"
             class="text-decoration-none"
           >
             <i class="ph ph-house"></i>
           </a>
-          <a href="../pages/perfil.html" class="text-decoration-none">
+          <a href="perfil.php" class="text-decoration-none">
             <i class="ph ph-user"></i>
           </a>
           <div class="bottom-tab-center">
             <div class="bottom-tab-center-inner" id="bottomTabCenter">
-              <a href="./enviarOportunidade.html">
+              <a href="../pages/enviarOportunidade.html">
                 <i class="ph ph-plus-circle" id="plusIcon"></i>
               </a>
             </div>
           </div>
 
-          <a href="../PHP/not.php" class="text-decoration-none">
+          <a href="notificacoesGeral.php" class="text-decoration-none">
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="./configuracoes.html" class="text-decoration-none">
+          <a href="../pages/configuracoes.html" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>
-
-
-
-
       </section>
-
-
-
-
-
-
-
   </main>
 
 
@@ -309,7 +298,7 @@ mysqli_close($conexao);
 
   </script>
   
-  <script src="./bottom_tab.js"></script>
+  <script src="../pages/bottom_tab.js"></script>
   <!-- Bootstrap JavaScript Libraries -->
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -326,7 +315,7 @@ mysqli_close($conexao);
 
 
 
-  <script src="/public/script.js"></script>
+  <script src="../../public/script.js"></script>
 
 
 
