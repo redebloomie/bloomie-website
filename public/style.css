@@ -761,7 +761,6 @@ section {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 50vw;
 }
 
 .cadEmpresa-container .form-cadastro .txt2 {
@@ -3454,4 +3453,7 @@ input[type="file"] {
     font-size: 18px;
     text-align: left;
   }
+}
+.cb {
+  border-color: #1185e3;
 }
