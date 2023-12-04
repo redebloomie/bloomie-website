@@ -10,11 +10,11 @@ $paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendent
 $offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
 
 // Consulta para obter oportunidades pendentes com paginação
-$queryPendentes = "SELECT * FROM post LIMIT $offsetPendentes, $porPagina";
+$queryPendentes = "SELECT * FROM usuario LIMIT $offsetPendentes, $porPagina";
 $resultPendentes = mysqli_query($conexao, $queryPendentes);
 
 // Consulta para obter o número total de oportunidades pendentes
-$totalQueryPendentes = "SELECT COUNT(*) as total FROM post";
+$totalQueryPendentes = "SELECT COUNT(*) as total FROM usuario";
 $totalResultPendentes = mysqli_query($conexao, $totalQueryPendentes);
 $totalPendentes = mysqli_fetch_assoc($totalResultPendentes)['total'];
 
@@ -28,15 +28,12 @@ $paginaAtualExcluidos = isset($_GET['pagina_excluidos']) ? $_GET['pagina_excluid
 $offsetExcluidos = ($paginaAtualExcluidos - 1) * $porPagina;
 
 // Consulta para obter posts excluídos com todas as informações do usuário
-$queryPostsExcluidos = "SELECT pe.*, u.* FROM posts_excluidos pe
-                        JOIN usuario u ON pe.ID_usuario = u.ID_usuario
-                        ORDER BY pe.data_exclusao DESC
-                        LIMIT $offsetExcluidos, $porPagina";
+$queryPostsExcluidos = "SELECT * FROM contas_inativas ORDER BY data_inatividade DESC LIMIT $offsetExcluidos, $porPagina";
 
 $resultPostsExcluidos = mysqli_query($conexao, $queryPostsExcluidos);
 
 // Consulta para obter o número total de posts excluídos
-$totalQueryPostsExcluidos = "SELECT COUNT(*) as total FROM posts_excluidos";
+$totalQueryPostsExcluidos = "SELECT COUNT(*) as total FROM contas_inativas";
 $totalResultPostsExcluidos = mysqli_query($conexao, $totalQueryPostsExcluidos);
 $totalPostsExcluidos = mysqli_fetch_assoc($totalResultPostsExcluidos)['total'];
 
@@ -50,15 +47,12 @@ $paginaAtualBanidos = isset($_GET['pagina_banidos']) ? $_GET['pagina_banidos'] :
 $offsetBanidos = ($paginaAtualBanidos - 1) * $porPagina;
 
 // Consulta para obter posts excluídos com todas as informações do usuário
-$queryPostsBanidos = "SELECT pe.*, u.* FROM posts_banidos pe
-                        JOIN usuario u ON pe.ID_usuario = u.ID_usuario
-                        ORDER BY pe.data_banimento DESC
-                        LIMIT $offsetBanidos, $porPagina";
+$queryPostsBanidos = "SELECT * FROM contas_banidas ORDER BY data_banimento DESC LIMIT $offsetBanidos, $porPagina";
 
 $resultPostsBanidos = mysqli_query($conexao, $queryPostsBanidos);
 
 // Consulta para obter o número total de posts excluídos
-$totalQueryPostsBanidos = "SELECT COUNT(*) as total FROM posts_banidos";
+$totalQueryPostsBanidos = "SELECT COUNT(*) as total FROM contas_banidas";
 $totalResultPostsBanidos = mysqli_query($conexao, $totalQueryPostsBanidos);
 $totalPostsBanidos = mysqli_fetch_assoc($totalResultPostsBanidos)['total'];
 
@@ -169,7 +163,7 @@ mysqli_close($conexao);
 
       <section class="  container col-12 col-md-10 col-lg-10   " style="padding-top: 5rem; padding-left: 2rem;">
         <div class="d-flex mb-4 align-content-center ">
-            <h4 class="txtT">Postagens</h4>
+            <h4 class="txtT">Usuários</h4>
             <div class="dropdown mb-0 m-0 mx-3 ">
               <a class="btn  dropdown-toggle rounded-5 d-flex justify-content-center  " href="#" style="opacity: 100%; background-color: #88C2F1; height: 4vh;" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="txtT h6  ">Filtra por</span>
@@ -232,16 +226,14 @@ mysqli_close($conexao);
                     echo '
                     <div class="d-flex justify-content-between align-items-center ">
                     <div class="d-flex align-items-center col-8 col-sm-6 col-md-6  ">
-                      <div class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;"></div>
+                      <img src="'.$row['foto_perfil'].'" class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px; object-fit: cover">
                       <div class="usudata">
-                        <p class=" mb-0 h5 text mg">'. substr($row['texto'], 0, 20) . (strlen($row['texto']) > 20 ? '...' : '') .'</p>
-                        
+                        <p class=" mb-0 h5 text mg" >' . $row['nome'] . '</p>
+                        <p id="data" class="mb-0 text mg txtj h6  " style=" color: #5AB5FF;">@' . $row['usuario'] . '</p>
                       </div>
                     </div>
                     <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
-                      
-                      <a href="adm_banir_post.php?id=' . $row['ID_post'] . '" class="btn btn-danger bt1 rounded-4 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb" style="height: 4vh;">Banir</a>
-                      <a href="adm_excluir_post.php?id=' . $row['ID_post'] . '" class="btn btn-danger bt1 rounded-4 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb" style="height: 4vh;">Apagar</a>
+                      <a href="adm_banir_usuario.php?id=' . $row['ID_usuario'] . '" class="btn btn-danger bt1 rounded-4 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb" style="height: 4vh;">Banir</a>
                     </div>
                     </div>
                     
@@ -321,34 +313,32 @@ mysqli_close($conexao);
                     while ($row = mysqli_fetch_assoc($resultPostsBanidos)) {
                         // Exiba as informações da oportunidade pendente
                         echo '
-                        <div class="d-flex align-items-center col-6 col-md-10 mb-4">
-                            <img src="' . $row['foto_perfil'] . '" class="bg-black rounded-5 col-4" style="width: 50px; height: 50px;">
-                            <p class="mb-0 h5 text-primary" style="margin-left: 1vw;">' . $row['nome'] . '</p>
-                            <p class="mb-0 h6 text-primary" style="margin-left: 1vw; font-weight:400">@' . $row['usuario'] . '</p>
-                        </div>
-                        <div class="d-flex align-items-center col-6 col-md-12 mb-4">
-                            <p class="mb-0 h5 text-primary" style="margin: 0; font-weight:400; word-wrap: break-word; max-width: 100%;">"' . $row['texto'] . '"</p>
-                        </div>';
-                        
-                        // Verifique se há uma imagem no post
-                        if (!empty($row['imagem'])) {
-                            echo '
-                                <div class="d-flex align-items-center col-12 col-md-12 mb-4">
-                                    <div class="d-flex linha col-12">
-                                        <img class="txtj mb-0" style="height:15vw; width: 30vw; object-fit: cover; border-radius: 20px" src="' . $row['imagem'] . '">
-                                    </div>
-                                </div>
-                            ';
-                        }
-                        echo '<p class="txtj">Data de exclusão:</p>
-                        <div class="col-12 col-md-12 col-lg-3 mb-4">
-                            <p class="form-control rounded-4" id="" style="border-color: #1185e3;">' . $row['data_banimento'] . '</p>
-                        </div>
-                        <p class="txtj">Motivo:</p>
-                        <div class="form-group mb-5">
-                          
-                          <p class="form-control " id="" style="border-color: #1185e3; resize: none;"  rows="4">'.$row['motivo'].'</p>
-                        </div>
+                          <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="d-flex align-items-center col-8 col-sm-6 col-md-6  ">
+                              <img src="'.$row['foto_perfil'].'" class="bg-black rounded-5 col-4 " style="width: 50px; height: 50px;">
+                              <div class="usudata col-md-6">
+                                <p class=" mb-0 h5 text mg  " >'.$row['nome'].' '.$row['sobrenome'].'</p>
+                                <p id="data" class="mb-0 text mg txtj h6  " style=" color: #5AB5FF;">@'.$row['usuario'].'</p>
+                              </div>
+                            </div>
+                            <div class="d-flex   col-2 col-sm-2 col-md-6  justify-content-end ">
+                              
+                              <button class="btn btn-danger bt1 rounded-4 h6 col-lg-3 col-sm-2 col-md-3 col-2 textb  " style="height: 4vh;">Desbanir</button>
+                            </div>
+                          </div>
+                          <p class="txtj">Banido em:</p>
+                          <div class="col-12 col-md-12 col-lg-4 mb-4">
+                              <p class="form-control rounded-4" style="border-color: #1185e3;">'.$row['data_banimento'].'</p>
+                          </div>
+                          <p class="txtj">Motivo:</p>
+                          <div class="form-group mb-5">
+                            
+                            <p class="form-control" id="motivo" style="border-color: #1185e3; resize: none;"  rows="3">'.$row['motivo'].'</p>
+                          </div>
+                          <p class="txtj">ID_Adm:</p>
+                          <div class="col-12 col-md-12 col-lg-4 mb-4">
+                              <p class="form-control rounded-4" style="border-color: #1185e3;">'.$idUsuario.'</p>
+                          </div>
                         ';
                         // Adicione a linha separadora, exceto para a última oportunidade
                         if ($rowCount < mysqli_num_rows($resultPostsBanidos) - 1) {
@@ -365,7 +355,7 @@ mysqli_close($conexao);
             </div>
 
           <div class="d-flex mb-5">
-            <h4 class="txtT">Deletados</h4>
+            <h4 class="txtT">Inativos</h4>
             <div class="dropdown mb-0 m-0 mx-3 ">
               <a class="btn  dropdown-toggle rounded-5 d-flex justify-content-center  " href="#" style="opacity: 100%; background-color: #88C2F1; height: 4vh;" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="txtT h6 text-center ">Filtra por</span>
@@ -426,27 +416,14 @@ mysqli_close($conexao);
                         // Exiba as informações da oportunidade pendente
                         echo '
                         <div class="d-flex align-items-center col-6 col-md-10 mb-4">
-                            <img src="' . $row['foto_perfil'] . '" class="bg-black rounded-5 col-4" style="width: 50px; height: 50px;">
+                            <img src="' . $row['foto_perfil'] . '" class="bg-black rounded-5 col-4" style="width: 50px; height: 50px; object-fit: cover">
                             <p class="mb-0 h5 text-primary" style="margin-left: 1vw;">' . $row['nome'] . '</p>
                             <p class="mb-0 h6 text-primary" style="margin-left: 1vw; font-weight:400">@' . $row['usuario'] . '</p>
-                        </div>
-                        <div class="d-flex align-items-center col-6 col-md-12 mb-4">
-                            <p class="mb-0 h5 text-primary" style="margin: 0; font-weight:400; word-wrap: break-word; max-width: 100%;">"' . $row['texto'] . '"</p>
                         </div>';
                         
-                        // Verifique se há uma imagem no post
-                        if (!empty($row['imagem'])) {
-                            echo '
-                                <div class="d-flex align-items-center col-12 col-md-12 mb-4">
-                                    <div class="d-flex linha col-12">
-                                        <img class="txtj mb-0" style="height:15vw; width: 30vw; object-fit: cover; border-radius: 20px" src="' . $row['imagem'] . '">
-                                    </div>
-                                </div>
-                            ';
-                        }
                         echo '<p class="txtj">Data de exclusão:</p>
                         <div class="col-12 col-md-12 col-lg-3 mb-4">
-                            <p class="form-control rounded-4" id="" style="border-color: #1185e3;">' . $row['data_exclusao'] . '</p>
+                            <p class="form-control rounded-4" id="" style="border-color: #1185e3;">' . $row['data_inatividade'] . '</p>
                         </div>
                         <p class="txtj">Motivo:</p>
                         <div class="form-group mb-5">
@@ -493,22 +470,25 @@ mysqli_close($conexao);
   </footer>
 
   <script>
-    function atualizarStatus(ID_post) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'adm_excluirPost.php', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-              var responseData = JSON.parse(xhr.responseText);
-              console.log(responseData.response);
-              location.reload();
-          }
-      };
-      var dados = 'ID_post=' + ID_post;
-      xhr.send(dados);
-    }
+      function atualizarStatus(ID_usuario) {
+        var motivo = document.getElementById('motivo').value; // Obtenha o valor do motivo
 
-  </script>
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'adm_banirUsuario.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var responseData = JSON.parse(xhr.responseText);
+            console.log(responseData.response);
+            window.location.href = 'adm_usuarios.php';
+          }
+        };
+
+        // Inclua o motivo na requisição
+        var dados = 'ID_usuario=' + ID_usuario + '&motivo=' + encodeURIComponent(motivo);
+        xhr.send(dados);
+      }
+    </script>
 
   <!-- Bootstrap JavaScript Libraries -->
 

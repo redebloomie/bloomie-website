@@ -2,6 +2,8 @@
 session_start();
 include('connect.php');
 
+$idUsuario = $_SESSION['ID_usuario'];
+
 // Lógica para buscar a foto do perfil ou definir o valor padrão
 $fotoPerfil = ''; // Defina um valor padrão inicial
 
@@ -123,30 +125,39 @@ while ($row = mysqli_fetch_assoc($resultAmigos)) {
     $amigosIDs[] = $row['usuario_id_2'];
 }
 
-// Se houver amigos, liste os amigos de amigos
-if (!empty($amigosIDs)) {
-    $amigosIDsStr = implode(",", $amigosIDs);
+// Defina o número desejado de amigos de amigos a serem exibidos
+$numAmigosDeAmigosExibidos = 5;
 
-    $queryAmigosDeAmigos = "SELECT DISTINCT u.ID_usuario, u.nome, u.usuario
+// Verifique se há amigos de amigos suficientes para exibir
+if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
+    // Se há amigos de amigos suficientes, liste-os
+    $amigosIDsStr = implode(",", $amigosIDs);
+    $queryAmigosDeAmigos = "SELECT DISTINCT u.ID_usuario, u.nome, u.usuario, u.foto_perfil, u.sobrenome
                             FROM bloomizade b
                             JOIN usuario u ON b.usuario_id_2 = u.ID_usuario
                             WHERE b.usuario_id_1 IN ($amigosIDsStr)
                             AND b.usuario_id_2 != $idUsuario
-                            LIMIT $offsetPendentes, $porPagina";
-
-    $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
+                            LIMIT $numAmigosDeAmigosExibidos";
 } else {
-    // Se não houver amigos, liste usuários específicos
+    // Se não houver amigos de amigos suficientes, liste usuários específicos
+    $numUsuariosEspecificosExibidos = $numAmigosDeAmigosExibidos - count($amigosIDs);
     $usuariosEspecificos = [6, 32, 33, 34, 35]; // IDs dos usuários específicos
     $usuariosEspecificosStr = implode(",", $usuariosEspecificos);
 
     $queryUsuariosEspecificos = "SELECT ID_usuario, nome, usuario, foto_perfil, sobrenome
-                                 FROM usuario
-                                 WHERE ID_usuario IN ($usuariosEspecificosStr)
-                                 LIMIT $offsetPendentes, $porPagina";
+                                FROM usuario
+                                WHERE ID_usuario IN ($usuariosEspecificosStr)
+                                LIMIT $numUsuariosEspecificosExibidos";
 
-    $resultAmigosDeAmigos = mysqli_query($conexao, $queryUsuariosEspecificos);
+    $queryAmigosDeAmigos = "SELECT DISTINCT u.ID_usuario, u.nome, u.usuario, u.foto_perfil, u.sobrenome
+                            FROM bloomizade b
+                            JOIN usuario u ON b.usuario_id_2 = u.ID_usuario
+                            WHERE b.usuario_id_1 = $idUsuario
+                            AND b.usuario_id_2 != $idUsuario
+                            LIMIT $numAmigosDeAmigosExibidos";
 }
+
+$resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
 
 ?>
 
@@ -330,24 +341,23 @@ if (!empty($amigosIDs)) {
                       <div class="col-12 interacoes-post">
                           <div class="options-post">
                               <div class="rightside-op-post">
-                                  <span class="like-btn" data-post-id="' . $post['ID_post'] . '" data-user-id="' . $_SESSION['ID_usuario'] . '">
-                                      <i class="ph ph-heart"></i>
-                                      <div id="like">
-                                          <p>';
-          
-              // Verifica se o usuário já curtiu a postagem
-              $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
-          
-              if ($userLiked) {
-                  echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '">Gostei</a> | ';
-              } else {
-                  echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '">Gostar</a> | ';
-              }
-          
-              // Exibir a contagem de curtidas
-              echo $curtidas . ' gostaram</p>
-                                      </div>
-                                  </span>
+                              <span class="like-btn" data-post-id="' . $post['ID_post'] . '" data-user-id="' . $_SESSION['ID_usuario'] . '">
+                                <div id="like" style="display: flex; align-items: center; flex-direction: row; justify-content: center;">
+                                    <p style="margin: 0; display: flex; align-items: center; flex-direction: row; justify-content: center;">';
+
+                            // Verifica se o usuário já curtiu a postagem
+                            $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
+
+                            if ($userLiked) {
+                                echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                            } else {
+                                echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                            }
+
+                            // Exibir a contagem de curtidas
+                            echo $curtidas . '</p>
+                                </div>
+                            </span>
                                   <span>
                                       <i class="ph ph-chat-circle"></i>
                                       <p></p>
@@ -526,8 +536,8 @@ if (!empty($amigosIDs)) {
 
                             $rowCount++;
                         }
-                        } else {
-                            echo 'Nenhuma postagem disponível.';
+                        }else {
+                            echo 'Nenhum Bloomigo encontrado.';
                         }
                   ?>
                   </div>

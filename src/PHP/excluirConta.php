@@ -22,8 +22,8 @@ if (isset($_POST['submit'])) {
             $dadosUsuario = $consultaUsuario->fetch_assoc();
 
             // Prepare a segunda consulta SQL
-            $stmt = $conexao->prepare("INSERT INTO contas_inativas (ID_usuario, nome, sobrenome, usuario, senha, email, data_inatividade, motivo, estado, cidade, personalidade, data_nasc) 
-            VALUES (?, ?, ?, ?, ?, ?, NOW(), 'Exclusão de conta', ?, ?, ?, ?)");
+            $stmt = $conexao->prepare("INSERT INTO contas_inativas (nome, sobrenome, usuario, data_inatividade, motivo) 
+            VALUES (?, ?, ?, NOW(), 'Exclusão de conta')");
 
             if ($stmt === false) {
                 die('Erro de preparação da segunda consulta: ' . $conexao->error);
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
             }
 
             // Associe os parâmetros
-            $stmt->bind_param("isssssssss", $dadosUsuario['ID_usuario'], $dadosUsuario['nome'], $dadosUsuario['sobrenome'], $dadosUsuario['usuario'], $dadosUsuario['senha'], $dadosUsuario['email'], $dadosUsuario['estado'], $dadosUsuario['cidade'], $dadosUsuario['personalidade'], $dadosUsuario['data_nasc']);
+            $stmt->bind_param("sss", $dadosUsuario['nome'], $dadosUsuario['sobrenome'], $dadosUsuario['usuario']);
 
             // Execute a segunda consulta
             $stmt->execute();
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
             exit();
         } else {
             // Usuário não encontrado, redireciona para uma página de erro ou homepage
-            header("Location: index.php"); // Altere para a página desejada
+            header("Location: homepage-postagens.php"); // Altere para a página desejada
             exit();
         }
     }

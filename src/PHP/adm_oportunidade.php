@@ -172,10 +172,6 @@ mysqli_close($conexao);
               <span class="h1 txtT"><?php echo $totalPendentes; ?></span>
             </div>
             <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-secondary">Expiradas</p>
-              <span class="h1 txtT"><?php echo $totalExpiradas; ?></span>
-            </div>
-            <div class="border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
               <p class="txtj text-success">Aceitas</p>
               <span class="h1 txtT"><?php echo $totalAceitas; ?></span>
             </div>
@@ -184,7 +180,7 @@ mysqli_close($conexao);
               <span class="h1 txtT"><?php echo $totalNegadas; ?></span>
             </div>
             <div class="mb-4 border border-primary col-md-2 rounded-4 text-center d-flex flex-column justify-content-center align-items-center" style="height: 30vh;">
-              <p class="txtj text-black">Desativadas</p>
+              <p class="txtj text-secondary">Inativas</p>
               <span class="h1 txtT"><?php echo $totalInativas; ?></span>
             </div>
       </div>
@@ -258,76 +254,6 @@ if (mysqli_num_rows($resultPendentes) > 0) {
     ?>
     </div>
 
-      
-      <h5 class="mb-3 txtj ">Expiradas</h5>
-
-    <!-- Navegação de página no topo do conteúdo -->
-    <nav aria-label="Page navigation example mb-3">
-        <ul class="pagination">
-        <?php
-        // Lógica para exibir os números da página
-        $maxPaginas = 4; // Número máximo de páginas a serem exibidas
-        $inicio = max(1, $paginaAtualExpiradas - floor($maxPaginas / 2));
-        $fim = min($inicio + $maxPaginas - 1, $numPaginasExpiradas);
-
-        // Exibir o botão "<" se houver mais páginas antes
-        if ($inicio > 1) {
-            echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($inicio - 1) . '">&laquo;</a>';
-            echo '</li>';
-        }
-
-        // Exibir os números da página
-        for ($i = $inicio; $i <= $fim; $i++) {
-            echo '<li class="page-item ' . ($i == $paginaAtualExpiradas ? 'active' : '') . '">';
-            echo '<a class="page-link" href="?pagina=' . $i . '">' . $i . '</a>';
-            echo '</li>';
-        }
-
-        // Exibir o botão ">" se houver mais páginas depois
-        if ($fim < $numPaginasExpiradas) {
-            echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($fim + 1) . '">&raquo;</a>';
-            echo '</li>';
-        }
-        ?>
-        </ul>
-    </nav>
-
-    <div class="border border-primary p-3 rounded-5 mb-5 feedExp">
-    <?php
-// Conectar ao banco de dados (utilize suas credenciais)
-include('connect.php');
-
-// Verifica se há resultados
-if (mysqli_num_rows($resultExpiradas) > 0) {
-    $rowCount = 0;
-    while ($row = mysqli_fetch_assoc($resultExpiradas)) {
-        // Exiba as informações da oportunidade pendente
-        echo '<div class="d-flex justify-content-between align-items-center">';
-        echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
-        echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
-        echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
-        echo '</a>';
-        echo '</div>';
-        echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
-        echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'revalidar\')">Reativar</button>';
-        echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'desativar\')">Desativar</button>';
-        echo '</div>';
-        echo '</div>';
-        // Adicione a linha separadora, exceto para a última oportunidade
-        if ($rowCount < mysqli_num_rows($resultExpiradas) - 1) {
-            echo '<div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>';
-        }
-
-        $rowCount++;
-    }
-    } else {
-        echo 'Nenhuma oportunidade pendente.';
-    }
-    ?>
-    </div>
       <h5 class="mb-3 txtj ">Aceitas</h5>
 
     <!-- Navegação de página no topo do conteúdo -->
@@ -342,21 +268,21 @@ if (mysqli_num_rows($resultExpiradas) > 0) {
         // Exibir o botão "<" se houver mais páginas antes
         if ($inicio > 1) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($inicio - 1) . '">&laquo;</a>';
+            echo '<a class="page-link" href="?pagina_aceitas=' . ($inicio - 1) . '">&laquo;</a>';
             echo '</li>';
         }
 
         // Exibir os números da página
         for ($i = $inicio; $i <= $fim; $i++) {
             echo '<li class="page-item ' . ($i == $paginaAtualAceitas ? 'active' : '') . '">';
-            echo '<a class="page-link" href="?pagina=' . $i . '">' . $i . '</a>';
+            echo '<a class="page-link" href="?pagina_aceitas=' . $i . '">' . $i . '</a>';
             echo '</li>';
         }
 
         // Exibir o botão ">" se houver mais páginas depois
         if ($fim < $numPaginasAceitas) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($fim + 1) . '">&raquo;</a>';
+            echo '<a class="page-link" href="?pagina_aceitas=' . ($fim + 1) . '">&raquo;</a>';
             echo '</li>';
         }
         ?>
@@ -375,7 +301,7 @@ if (mysqli_num_rows($resultAceitas) > 0) {
         // Exiba as informações da oportunidade pendente
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+        echo '<a href="detalhes_oportunidadeDesativar.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
         echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</a>';
@@ -411,21 +337,21 @@ if (mysqli_num_rows($resultAceitas) > 0) {
         // Exibir o botão "<" se houver mais páginas antes
         if ($inicio > 1) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($inicio - 1) . '">&laquo;</a>';
+            echo '<a class="page-link" href="?pagina_negadas=' . ($inicio - 1) . '">&laquo;</a>';
             echo '</li>';
         }
 
         // Exibir os números da página
         for ($i = $inicio; $i <= $fim; $i++) {
             echo '<li class="page-item ' . ($i == $paginaAtualNegadas ? 'active' : '') . '">';
-            echo '<a class="page-link" href="?pagina=' . $i . '">' . $i . '</a>';
+            echo '<a class="page-link" href="?pagina_negadas=' . $i . '">' . $i . '</a>';
             echo '</li>';
         }
 
         // Exibir o botão ">" se houver mais páginas depois
         if ($fim < $numPaginasNegadas) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($fim + 1) . '">&raquo;</a>';
+            echo '<a class="page-link" href="?pagina_negadas=' . ($fim + 1) . '">&raquo;</a>';
             echo '</li>';
         }
         ?>
@@ -444,7 +370,7 @@ if (mysqli_num_rows($resultNegadas) > 0) {
         // Exiba as informações da oportunidade pendente
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+        echo '<a href="detalhes_oportunidadeRevalidar.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
         echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</a>';
@@ -466,7 +392,7 @@ if (mysqli_num_rows($resultNegadas) > 0) {
     }
     ?>
     </div>
-      <h5 class="mb-3 txtj ">Desativadas</h5>
+      <h5 class="mb-3 txtj ">Expiradas</h5>
 
     <!-- Navegação de página no topo do conteúdo -->
     <nav aria-label="Page navigation example mb-3">
@@ -480,21 +406,21 @@ if (mysqli_num_rows($resultNegadas) > 0) {
         // Exibir o botão "<" se houver mais páginas antes
         if ($inicio > 1) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($inicio - 1) . '">&laquo;</a>';
+            echo '<a class="page-link" href="?pagina_inativas=' . ($inicio - 1) . '">&laquo;</a>';
             echo '</li>';
         }
 
         // Exibir os números da página
         for ($i = $inicio; $i <= $fim; $i++) {
             echo '<li class="page-item ' . ($i == $paginaAtualInativas ? 'active' : '') . '">';
-            echo '<a class="page-link" href="?pagina=' . $i . '">' . $i . '</a>';
+            echo '<a class="page-link" href="?pagina_inativas=' . $i . '">' . $i . '</a>';
             echo '</li>';
         }
 
         // Exibir o botão ">" se houver mais páginas depois
         if ($fim < $numPaginasInativas) {
             echo '<li class="page-item">';
-            echo '<a class="page-link" href="?pagina=' . ($fim + 1) . '">&raquo;</a>';
+            echo '<a class="page-link" href="?pagina_inativas=' . ($fim + 1) . '">&raquo;</a>';
             echo '</li>';
         }
         ?>
@@ -513,7 +439,7 @@ if (mysqli_num_rows($resultInativas) > 0) {
         // Exiba as informações da oportunidade pendente
         echo '<div class="d-flex justify-content-between align-items-center">';
         echo '<div class="d-flex align-items-center col-6">';
-        echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidades_inativas'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+        echo '<a href="detalhes_oportunidadeReativar.php?id=' . $row['ID_oportunidades_inativas'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
         echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
         echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
         echo '</a>';

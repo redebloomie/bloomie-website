@@ -129,15 +129,15 @@ $conexao->close();
                   <a href="adm.php" class="text-decoration-none text-white">Dasboard</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-user"></i>
+                  <i class="ph ph-plant"></i>
                   <a href="adm_oportunidade.php" class="text-decoration-none text-white">Oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-bell-ringing"></i>
+                  <i class="ph ph-article"></i>
                   <a href="adm_postagens.php" class="text-decoration-none text-white">Postagens</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-gear"></i>
+                  <i class="ph ph-user"></i>
                   <a href="adm_usuarios.php" class="text-decoration-none text-white">Usuários</a>
                 </div>
               </div>
@@ -155,8 +155,8 @@ $conexao->close();
           <h2 class="mb-3">Visão Geral</h2>
           <div class="row justify-content-between">
             <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
-              style="height: 18vh;">
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
+              style="height: 18vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <div><i class="ph ph-user" style="font-size: 5vw;" alt=""></i></div>
               <div>
                 <p class="m-0">Usuários</p>
                 <span class="h1"><?php echo $totalUsuarios; ?></span>
@@ -164,8 +164,8 @@ $conexao->close();
           
             </div>
             <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
-              style="height: 18vh;">
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
+              style="height: 18vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <div><i class="ph ph-plant" style="font-size: 5vw;" alt=""></i></div>
               <div>
                 <p class="m-0">Oportunidades</p>
                 <span class="h1"><?php echo $totalOportunidades; ?></span>
@@ -173,8 +173,8 @@ $conexao->close();
           
             </div>
             <div class="bg-primary col-md-3 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
-              style="height: 18vh;">
-              <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;" alt=""></div>
+              style="height: 18vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <div><i class="ph ph-article" style="font-size: 5vw;" alt=""></i></div>
               <div>
                 <p class="m-0">Postagens</p>
                 <span class="h1"><?php echo $totalPosts; ?></span>
@@ -188,11 +188,11 @@ $conexao->close();
           <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
               <p class="h4 txtj">Taxa de crescimento</p>
               <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
-                  <input type="date" id="start_date" name="start_date" required style="width:100px;">
-                  <p style="margin: 0;">-</p>
-                  <input type="date" id="end_date" name="end_date" required style="width:100px;">
+                  <input type="date" id="start_date" class="rounded-4 form-control border-primary" name="start_date" required style="width:100px;">
+                  <p style="margin: 0;"><i class="ph ph-minus text-primary"></i></p>
+                  <input type="date" class="rounded-4 form-control border-primary" id="end_date" name="end_date" required style="width:100px;">
 
-                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+                  <button type="submit" class="btn btn-primary" style="margin-left:10px;">Filtrar</button>
               </form>
           </span>
 
@@ -203,7 +203,7 @@ $conexao->close();
               <p class="h4 txtj">Base Filtrada</p>
               <!-- Seu conteúdo aqui -->
               <div class="mt-auto text-center"> 
-                  <input type="date" class="rounded-4 " style="height: 2rem;">
+                  <input type="date" class="rounded-4 form-control border-primary" style="height: 2rem;">
                   
               </div>
           </div>
@@ -216,11 +216,11 @@ $conexao->close();
           <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
               <p class="h4 txtj">Taxa de crescimento</p>
               <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
-                  <input type="date" id="start_dateP" name="start_dateP" required style="width:100px;">
-                  <p style="margin: 0;">-</p>
-                  <input type="date" id="end_dateP" name="end_dateP" required style="width:100px;">
+                  <input type="date" id="start_dateP" class="rounded-4 form-control border-primary" name="start_dateP" required style="width:100px;">
+                  <p style="margin: 0;"><i class="ph ph-minus text-primary"></i></p>
+                  <input type="date" id="end_dateP" class="rounded-4 form-control border-primary" name="end_dateP" required style="width:100px;">
 
-                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+                  <button type="submit" class="btn btn-primary" style="margin-left:10px;">Filtrar</button>
               </form>
           </span>
 
@@ -252,11 +252,11 @@ $conexao->close();
             <span class="col-12" style="display:flex;flex-direction:row;justify-content:space-between;width:100%">
               <p class="h4 txtj">Taxa de crescimento</p>
               <form method="GET" action="" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">
-                  <input type="date" id="start_dateO" name="start_dateO" required style="width:100px;">
-                  <p style="margin: 0;">-</p>
-                  <input type="date" id="end_dateO" name="end_dateO" required style="width:100px;">
+                  <input type="date" id="start_dateO" class="rounded-4 form-control border-primary" name="start_dateO" required style="width:100px;">
+                  <p style="margin: 0;"><i class="ph ph-minus text-primary"></i></p>
+                  <input type="date" id="end_dateO" class="rounded-4 form-control border-primary" name="end_dateO" required style="width:100px;">
 
-                  <button type="submit" style="margin-left:10px;">Filtrar</button>
+                  <button type="submit" class="btn btn-primary" style="margin-left:10px;">Filtrar</button>
               </form>
           </span>
 
