@@ -265,9 +265,11 @@
                   }
                   ?>
                   <div class="bloomigo-perfil">
+                      <a href="bloomigos.php">
                       <p style="color: #0B528C; height: 100%; display: flex; justify-content: center; align-items: center">
                           <i class="ph ph-caret-right" style="font-size: 3vw;"></i>
                       </p>
+                      </a>
                   </div>
                 </span>
             </div>

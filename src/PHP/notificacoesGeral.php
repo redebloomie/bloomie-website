@@ -111,7 +111,7 @@
 
                   <i class="ph ph-plant"></i>
 
-                  <a href="../pages/enviarOportunidades.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
 
                 </div>
 
