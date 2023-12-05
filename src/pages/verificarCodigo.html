@@ -87,14 +87,14 @@
     </nav>
   </div>
 
-  <section id="cadastro">
-    <div class="cadastro-container">
+  <section id="cadastro" class="d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4 p-2 mt-5 txtT">
       <div class="form-cadastro">
         <h2 class="text-center" style="font-weight: 700;">Código de Verificação</h2>
         <h3 class="text-center" style="font-weight: 400;">Insira o código de verificação de 6 dígitos recebido no seu e-mail.</h3>
         <form method="POST" action="../PHP/verificarCodigo.php" class="row g-3">
           <div class="col-md-12">
-            <input type="text" name="codigo" class="form-control" id="inputEmail4" required>
+            <input type="text" name="codigo" class="form-control rounded-4 cb" id="inputEmail4" required>
           </div>
           <div class="col-md-12 text-center btn-lg">
             <input type="submit" value="Enviar" class="btn btn-primary" style="color: #fff;"></input>
