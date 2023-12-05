@@ -140,19 +140,19 @@
             <div id="pergunta-container" style="font-weight: 600; margin-top: 5vw;">
                 <p id="pergunta" style="color: #1185E3; font-size: 20px;"></p>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-a" value="Dominância"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-a" value="dominante"> <label for="resposta"
                         id="l-resposta-a" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-b" value="Influência"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-b" value="influencia"> <label for="resposta"
                         id="l-resposta-b" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-c" value="Estabilidade"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-c" value="estavel"> <label for="resposta"
                         id="l-resposta-c" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-d" value="Conformidade"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-d" value="conforme"> <label for="resposta"
                         id="l-resposta-d" style="font-size: 18px;"></label>
                 </span>
             </div>
@@ -207,8 +207,7 @@
                 </div>
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
-                    <button
-                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                    <button onclick="location.href='../php/homepage-oportunidades-nm.php'" style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px; border: none;">Salvar
                         resultado</button>
                     <a href="testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
@@ -376,7 +375,7 @@
                 <div class="pers-voltar"
                     style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 3vw;">
                     <button id="salvar-resultado"
-                        style="text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
+                        style="border: none;text-decoration: none; width: 60%; text-align: center; background-color: #1185E3; padding: 5px 8vw; color: #fff; font-size: 20px; font-weight: 600; border-radius: 10px;">Salvar
                         resultado</button>
                     <a href="testeDISC.html" style="margin: 20px;">Não tem certeza sobre o resultado? Refazer
                         teste.</a>
@@ -508,10 +507,10 @@
 
 
             const respostas = {
-                Dominância: 0,
-                Influência: 0,
-                Estabilidade: 0,
-                Conformidade: 0
+                dominante: 0,
+                influente: 0,
+                estavel: 0,
+                conforme: 0
             };
 
             let perguntaAtual = 0;
@@ -641,13 +640,13 @@
                 personalidadeCElement.style.display = "none";
 
                 // Exibe apenas a div da personalidade do usuário
-                if (personalidadeDominante === 'Dominância') {
+                if (personalidadeDominante === 'dominante') {
                     personalidadeDElement.style.display = "block";
-                } else if (personalidadeDominante === 'Influência') {
+                } else if (personalidadeDominante === 'influente') {
                     personalidadeIElement.style.display = "block";
-                } else if (personalidadeDominante === 'Estabilidade') {
+                } else if (personalidadeDominante === 'estavel') {
                     personalidadeSElement.style.display = "block";
-                } else if (personalidadeDominante === 'Conformidade') {
+                } else if (personalidadeDominante === 'conforme') {
                     personalidadeCElement.style.display = "block";
                 }
             }

@@ -38,9 +38,9 @@ if (isset($_POST['submit']) && !empty($_POST['login']) && !empty($_POST['senha']
          $stmtEstudante->close();
  
          if (empty($personalidade)) {
-             header('Location: ../pages/homepage-oportunidades-nm.html');
+             header('Location: homepage-oportunidades-nm.php');
          } else {
-             header('Location: ../PHP/homepage-postagens.php');
+             header('Location: homepage-postagens.php');
          }
     } else {
         // Credenciais inválidas

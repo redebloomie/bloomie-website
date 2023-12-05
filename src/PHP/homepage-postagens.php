@@ -128,6 +128,9 @@ while ($row = mysqli_fetch_assoc($resultAmigos)) {
 // Defina o número desejado de amigos de amigos a serem exibidos
 $numAmigosDeAmigosExibidos = 5;
 
+// Inicialize a lista de amigos de amigos
+$amigosDeAmigos = [];
+
 // Verifique se há amigos de amigos suficientes para exibir
 if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
     // Se há amigos de amigos suficientes, liste-os
@@ -138,26 +141,34 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                             WHERE b.usuario_id_1 IN ($amigosIDsStr)
                             AND b.usuario_id_2 != $idUsuario
                             LIMIT $numAmigosDeAmigosExibidos";
+
+    $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
+
+    // Adicione os amigos de amigos à lista
+    while ($rowAmigoDeAmigo = mysqli_fetch_assoc($resultAmigosDeAmigos)) {
+        $amigosDeAmigos[] = $rowAmigoDeAmigo;
+    }
 } else {
     // Se não houver amigos de amigos suficientes, liste usuários específicos
     $numUsuariosEspecificosExibidos = $numAmigosDeAmigosExibidos - count($amigosIDs);
-    $usuariosEspecificos = [6, 32, 33, 34, 35]; // IDs dos usuários específicos
-    $usuariosEspecificosStr = implode(",", $usuariosEspecificos);
 
-    $queryUsuariosEspecificos = "SELECT ID_usuario, nome, usuario, foto_perfil, sobrenome
-                                FROM usuario
-                                WHERE ID_usuario IN ($usuariosEspecificosStr)
-                                LIMIT $numUsuariosEspecificosExibidos";
+    if ($numUsuariosEspecificosExibidos > 0) {
+        $usuariosEspecificos = [6, 32, 33, 34, 35]; // IDs dos usuários específicos
+        $usuariosEspecificosStr = implode(",", $usuariosEspecificos);
 
-    $queryAmigosDeAmigos = "SELECT DISTINCT u.ID_usuario, u.nome, u.usuario, u.foto_perfil, u.sobrenome
-                            FROM bloomizade b
-                            JOIN usuario u ON b.usuario_id_2 = u.ID_usuario
-                            WHERE b.usuario_id_1 = $idUsuario
-                            AND b.usuario_id_2 != $idUsuario
-                            LIMIT $numAmigosDeAmigosExibidos";
+        $queryUsuariosEspecificos = "SELECT ID_usuario, nome, usuario, foto_perfil, sobrenome
+                                    FROM usuario
+                                    WHERE ID_usuario IN ($usuariosEspecificosStr)
+                                    LIMIT $numUsuariosEspecificosExibidos";
+
+        $resultUsuariosEspecificos = mysqli_query($conexao, $queryUsuariosEspecificos);
+
+        // Adicione os usuários específicos à lista de amigos de amigos
+        while ($rowEspecifico = mysqli_fetch_assoc($resultUsuariosEspecificos)) {
+            $amigosDeAmigos[] = $rowEspecifico;
+        }
+    }
 }
-
-$resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
 
 ?>
 
@@ -182,11 +193,9 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
 </head>
 
 <body id="homepage">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-white">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-white" id="nav-principal">
     <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
-      aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
+    <div class="botoes-nav">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
           <a href="homepage-postagens.php"><button type="button" id="btnPostagens" class="btn"
@@ -201,8 +210,8 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
   </nav>
 
   <main>
-    <div class="row justify-content-start align-items-start g-0">
-      <div class="col-2 bg-primary sidebar-container">
+    <div class="row g-0" id="feed-all-container" style="display: flex; flex-direction: row; justify-content: start; align-items: start;">
+      <div class="col-md-2 col-sm-0 d-sm-none d-md-flex bg-primary sidebar-container">
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
             <div class="col">
@@ -246,9 +255,9 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
         </div>
       </div>
 
-      <div class="col-8 d-flex justify-content-center pg-postagens" style="margin-top: 5.5vw;">
+      <div class="col-md-8 col-sm-10 d-flex justify-content-center pg-postagens" id="feed-all-container1" style="position: absolute; top: 5rem;">
         <div id="feed-postagens" class="row-cols-1 justify-content-center align-items-center g-0 col-12">
-          <div class="col-12 d-flex justify-content-center">
+          <div class="col-md-12 col-sm-0 d-sm-none d-md-flex justify-content-center" id="postar">
             <form action="../PHP/post.php" method="post" class="col-10 form-post" enctype="multipart/form-data" id="formPost">
               <div class="col-12 row-cols-1">
                 <div class="col form-msg-post">
@@ -294,7 +303,7 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
               $curtidas = $saber_curtidas->num_rows;
           
               echo '
-              <div class="col-12 d-flex justify-content-center post-container" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
+              <div class="col-12 d-flex justify-content-center post-container mb-3" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
                   <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
                       <div class="col">
                           <div class="postagem-user">
@@ -317,15 +326,15 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
                               if (!$postDoProprioUsuario) {
                                   if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'aceito') {
                                       echo '
-                                      <label for="remover"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <label for="remover" style="position: absolute; right: 20px; top: 20px; cursor: pointer"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
                                       <input type="submit" id="remover" name="remover" value="Remover"  style="display: none">';
                                   } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'pendente') {
                                       echo '
-                                      <label for="cancel"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i> Pendente</label>
+                                      <label for="cancel" style="position: absolute; right: 20px; top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 18px; color: #45abff"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i> Pendente</label>
                                       <input type="submit" id="cancel" name="cancel" value="Cancelar"  style="display: none">';
                                   } else {
                                       echo '
-                                      <label for="add"><i class="ph ph-user-plus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <label for="add" style="position: absolute; right: 20px; top: 20px; cursor: pointer";><i class="ph ph-user-plus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
                                       <input type="submit" id="add" name="add" value="Seguir"  style="display: none">';
                                   }
                               }
@@ -433,8 +442,8 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
       </div>
 
       
-      <div class="col-2 rightsidebar p-0 pg-postagens-leftSidebar ">
-        <div id="sidebar-postagens" class="row-cols-1 justify-content-center align-items-center rightsidebar-group">
+      <div class="col-2 rightsidebar p-0 pg-postagens-leftSidebar d-sm-none d-md-flex ms-auto">
+        <div id="sidebar-postagens" class="row-cols-1 justify-content-center align-items-center rightsidebar-group d-sm-none d-md-flex ms-auto">
           <div class="col rounded text-center">
             <div class="container rightsidebar-container-1">
             <?php
@@ -515,31 +524,31 @@ $resultAmigosDeAmigos = mysqli_query($conexao, $queryAmigosDeAmigos);
                   <div class="rows-cols-1 justify-content-center align-items-center g-2">
                   <?php
 
-                    // Verifica se há resultados
-                    if (mysqli_num_rows($resultAmigosDeAmigos) > 0) {
-                        $rowCount = 0;
-                        while ($row = mysqli_fetch_assoc($resultAmigosDeAmigos)) {
-                            // Exiba as informações da oportunidade pendente
-                            echo '
-                            <div class="col destaques-bloomigos-user">
-                              <span style="display:flex; flex-direction: row;">
-                                <img src="'.$row['foto_perfil'].'" alt=""
-                                  style="border-radius: 100%; width: 3vw; height: 3vw; object-fit: cover;">
-                                <span style="display: flex; flex-direction: column; text-align: start;">
-                                  <p style="font-weight: 500;">'.$row['nome'].' '.$row['sobrenome'].'</p>
-                                  <p style="font-size: 1vw;">@'.$row['usuario'].'</p>
-                                </span>
+                  // Verifica se há resultados em $amigosDeAmigos
+                  if (!empty($amigosDeAmigos)) {
+                      $rowCount = 0;
+                      foreach ($amigosDeAmigos as $row) {
+                          // Exiba as informações do amigo de amigo
+                          echo '
+                          <div class="col destaques-bloomigos-user">
+                            <span style="display:flex; flex-direction: row;">
+                              <img src="'.$row['foto_perfil'].'" alt=""
+                                style="border-radius: 100%; width: 3vw; height: 3vw; object-fit: cover;">
+                              <span style="display: flex; flex-direction: column; text-align: start;">
+                                <p style="font-weight: 500;">'.$row['nome'].' '.$row['sobrenome'].'</p>
+                                <p style="font-size: 1vw;">@'.$row['usuario'].'</p>
                               </span>
-                            </div>
-                            
-                            ';
+                            </span>
+                          </div>
+                          ';
 
-                            $rowCount++;
-                        }
-                        }else {
-                            echo 'Nenhum Bloomigo encontrado.';
-                        }
+                          $rowCount++;
+                      }
+                  } else {
+                      echo 'Nenhum Bloomigo encontrado.';
+                  }
                   ?>
+
                   </div>
                 </div>
               </div>

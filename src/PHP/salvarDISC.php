@@ -17,7 +17,7 @@ if (isset($_SESSION['ID_usuario'])) {
     $stmt->bind_param("ss", $data->personalidade, $idUsuario);
 
     if ($stmt->execute()) {
-        echo "Resultado da personalidade atualizado com sucesso!";
+        header('Location: homepage-oportunidades-nm.php');
     } else {
         echo "Erro ao atualizar o resultado da personalidade: " . $stmt->error;
     }

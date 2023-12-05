@@ -68,10 +68,9 @@ if (empty($_SESSION['personalidade'])) {
 </head>
 
 <body id="homepage">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-white">
+  <nav class="navbar navbar-expand-sm navbar-dark bg-white" id="nav-principal">
     <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
-      aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="botoes-nav">
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
@@ -91,8 +90,8 @@ if (empty($_SESSION['personalidade'])) {
   </nav>
 
   <main>
-    <div class="row justify-content-start align-items-start g-0">
-      <div class="col-2 bg-primary sidebar-container">
+  <div class="row g-0" id="feed-all-container" style="display: flex; flex-direction: row; justify-content: start; align-items: start;">
+      <div class="col-md-2 col-sm-0 d-sm-none d-md-flex bg-primary sidebar-container">
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
             <div class="col">
@@ -136,8 +135,8 @@ if (empty($_SESSION['personalidade'])) {
         </div>
       </div>
 
-      <div class="col-8 pg-oportunidades">
-        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-12 conteudo">
+      <div class="col-md-8 col-sm-10 d-flex justify-content-center pg-postagens pg-oportunidades" id="feed-all-container1o" style="">
+        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-10 conteudo">
           <div class="col-12 justify-content-center align-items-center">
             <div class="row-cols-1 justify-content-center align-items-center g-2">
               <div class="col row-cols-1 justify-content-center align-items-center g-2">
@@ -168,7 +167,7 @@ if (empty($_SESSION['personalidade'])) {
                                     <h2>Ops, não conseguimos recomendar nada!<br>Faça nosso Teste DISC e desbloqueie suas recomendações.</h2>
                                 </div>
                                 <div class="col-12">
-                                    <div class="oportunidade-container-expand" style="height: 20vw; margin-top: 30px;">
+                                    <div class="oportunidade-container-expand col-sm-12" style="margin-top: 30px;">
                                         <div class="oportunidade-expand-foto">
                                             <img src="../assets/blu-disc.png" alt="" style="height: 18vw;">
                                         </div>
@@ -176,7 +175,7 @@ if (empty($_SESSION['personalidade'])) {
                                             <h2 style="font-size: 25px; margin: 0;">Realize nosso Teste DISC e receba oportunidades personalizadas.</h2>
                                             <p style="margin: 0; font-size: 20px; font-weight: 400;">Descubra seu perfil e acesse o que há de melhor pra você. <span style="font-weight: 500;">Faça agora!</span></p>
                                             <a href="../pages/testeDISC.html" style="width: 100%;">
-                                                <button style="padding: 2px 0 2px 0; margin-top: 10px;">Realizar Teste DISC</button>
+                                                <button style="padding: 2px 0 2px 0;">Realizar Teste DISC</button>
                                             </a>
                                         </div>
                                     </div>
@@ -185,8 +184,8 @@ if (empty($_SESSION['personalidade'])) {
                                 // O usuário tem personalidade
                                 // Exibir a mensagem e o filtro
                                 echo '
-                                <div class="col top-oportunidades">
-                                    <h2>Tem oportunidade quentinha por aqui, Ana!</h2>
+                                <div class="col-sm-12 col-md-12 top-oportunidades">
+                                    <h2>Tem oportunidade quentinha por aqui!</h2>
                                     <span>
                                         <p style="font-size: 18px;">Recomendações com base no seu perfil:</p>
                                         <select class="" name="" id="">
@@ -217,24 +216,20 @@ if (empty($_SESSION['personalidade'])) {
                                     // Exibir a oportunidade mais clicada
                                     echo '
                                     <div class="col-12">
-                                        <div class="oportunidade-container-expand" style="height: 20vw; margin-top: 30px; justify-content: start;">
+                                        <div class="oportunidade-container-expand col-sm-12" style="margin-top: 30px; justify-content: start; height: max-content;">
                                             <div class="oportunidade-expand-foto">
                                                 <p class="tipo-oportunidade" style="margin: 5px;">' . $oportunidadeMaisClicada['categoria'] . '</p>
                                                 <img src="' . $oportunidadeMaisClicada['imagem'] . '" alt="" style="height: 18vw;">
                                             </div>
                                             <div class="oportunidade-expand-info">
-                                                <h2 style="font-size: 20px; margin: 0;">' . $oportunidadeMaisClicada['titulo'] . '</h2>
+                                                <h2 class="mb-1" style="font-size: 20px; margin: 0;">' . $oportunidadeMaisClicada['titulo'] . '</h2>
                                                 <span class="oportunidade-datas span-row">
-                                                    <p style="margin: 0;"><span style="color: #1289EA; font-size: 17px;">Prazo:</span> ' . $oportunidadeMaisClicada['tempo_expirar'] . '
+                                                    <p class="mb-1 " style="margin: 0;"><span style="color: #1289EA; font-size: 17px;">Prazo:</span> ' . $oportunidadeMaisClicada['tempo_expirar'] . '
                                                     </p>
                                                 </span>
-                                                <p style="margin: 0; font-size: 18px; font-weight: 400;">' . $oportunidadeMaisClicada['descricao'] . ' <span style="font-weight: 500;">Ler mais.</span></p>
-                                                <div class="oportunidades-expand-tags">
-                                                    <p style="color: #1289EA; font-size: 17px; margin: 0;">Tags relacionadas:</p>
-                                                    <span class="span-row tags-rel"></span>
-                                                </div>
+                                                <p class="mb-1" style="margin: 0; font-size: 18px; font-weight: 400;">' . $oportunidadeMaisClicada['descricao'] . ' <span style="font-weight: 500;">Ler mais.</span></p>
                                                 <a href="oportunidade.php?id=' . $oportunidadeMaisClicada['ID_oportunidade'] . '" style="width: 100%;">
-                                                    <button style="padding: 2px 0 2px 0; margin-top: 10px;">Acessar oportunidade</button>
+                                                    <button style="">Acessar oportunidade</button>
                                                 </a>
                                             </div>
                                         </div>
@@ -243,7 +238,7 @@ if (empty($_SESSION['personalidade'])) {
                                     // Se não houver oportunidade mais clicada, exiba uma mensagem alternativa
                                     echo '
                                     <div class="col-12">
-                                        <div class="oportunidade-container-expand" style="height: 20vw; margin-top: 30px;">
+                                        <div class="oportunidade-container-expand col-sm-12" style="margin-top: 30px;">
                                             <p>Nenhuma oportunidade encontrada na última semana.</p>
                                         </div>
                                     </div>';
@@ -489,9 +484,8 @@ if (empty($_SESSION['personalidade'])) {
           </div>
         </div>
       </div>
-      <div class="col-2 rightsidebar p-0 pg-oportunidades-leftSidebar">
-        <div id="sidebar-oportunidades"
-          class="row-cols-1 justify-content-center align-items-center rightsidebar-group conteudo">
+      <div class="col-2 rightsidebar p-0 pg-postagens-leftSidebar d-sm-none d-md-flex ms-auto">
+        <div id="sidebar-postagens" class="row-cols-1 justify-content-center align-items-center rightsidebar-group d-sm-none d-md-flex ms-auto">
           <div class="col rounded text-center">
             <div class="container rightsidebar-container-1">
             <?php

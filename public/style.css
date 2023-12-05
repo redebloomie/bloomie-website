@@ -898,7 +898,7 @@ input[type="file"] {
   border: solid 0.5vw #0d6efd;
   border-radius: 0 1vw 1vw 0;
   position: fixed;
-  margin-top: 5.5vw;
+  margin-top: 5rem;
 }
 
 .sidebar {
@@ -1607,14 +1607,13 @@ input[type="file"] {
   background-color: #5ab5ff34;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   gap: 2vw;
   width: 60vw;
   padding: 1vw;
   border-radius: 20px;
   border: 2px #abd9ff solid;
-  height: 25vw;
 }
 
 .oportunidade-container-expand img {
@@ -1639,8 +1638,9 @@ input[type="file"] {
 .oportunidade-expand-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: start;
+  gap: 20px;
   height: 100%;
 }
 
@@ -3076,18 +3076,16 @@ input[type="file"] {
     margin-left: 14em;
   }
 }
-@media (max-width: 768px) {
-  .admleft {
-    margin-left: 0em;
-  }
-  .linha {
-    display: flex;
-    flex-direction: column;
-  }
-}
 @media (max-width: 320px) {
   .admleft {
     margin-left: 0;
+  }
+
+  #nav-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 @media (min-width: 1440px) {
@@ -3155,8 +3153,40 @@ input[type="file"] {
 .admleft {
   margin-bottom: 80px; /* Ajuste conforme necessário para evitar sobreposição com o Bottom Tab */
 }
+
+#feed-all-container {
+  display: flex;
+  flex-direction: start;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+}
+
+#feed-all-container1o {
+  display: flex;
+  flex-direction: start;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+}
+
 /* responsividade-homepage-oportunidades*/
 @media only screen and (max-width: 768px) {
+  #nav-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .botoes-nav ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .pg-oportunidades {
     margin-left: 18.5vw;
     margin-top: 5.5vw;
@@ -3191,8 +3221,38 @@ input[type="file"] {
   .pg-postagens {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 2vw;
-    margin-left: 16vw;
+    margin:4rem 0 0 0;
+    width: 100%;
+  }
+
+  #feed-all-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #feed-all-container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rightsidebar {
+    visibility: hidden;
+  }
+
+  #sidebar-postagens {
+    visibility: hidden;
+  }
+
+  #feed {
+    margin: 0;
   }
 
   .oportunidade-container-expand {
@@ -3202,7 +3262,7 @@ input[type="file"] {
     justify-content: start;
     align-items: center;
     gap: 2vw;
-    width: 60vw;
+    width: 100%;
     padding: 1vw;
     border-radius: 20px;
     border: 2px #abd9ff solid;
@@ -3304,8 +3364,46 @@ input[type="file"] {
     font-size: 18px;
     text-align: left;
   }
+
+  #postar {
+    display: none;
+  }
+
+  .admleft {
+    margin-left: 0em;
+  }
+  .linha {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #feed-all-container1o {
+    display: flex;
+    flex-direction: start;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    position: absolute; top: 5rem; margin-left: 0;
+  }
 }
+
 @media only screen and (max-width: 425px) {
+  #nav-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .navbar {
+    gap: 0;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
   .pg-oportunidades {
     margin-left: 18.5vw;
     margin-top: 5.5vw;
@@ -3337,11 +3435,8 @@ input[type="file"] {
     font-size: 22px;
   }
 
-  .pg-postagens {
-    display: flex;
-    flex-direction: column;
-    gap: 2vw;
-    margin-left: 16vw;
+  #postar {
+    display: none;
   }
 
   .oportunidade-container-expand {
