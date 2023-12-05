@@ -4,6 +4,10 @@
 <head>
     <title>Title</title>
     <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -120,10 +124,11 @@
             </div>
         </div>
 
-        <div class="col-6 disc-op-container"
-            style="display: flex; flex-direction: column; align-items: start; margin-left: 30vw; justify-content: start; position: relative; ">
+        <section class="col-12 col-md-12 col-lg-12  d-flex flex-column align-items-center  p-2 txtT  " style="height: 110vh; margin-top: 5rem;"> 
+            <div class="col-12 col-md-6 col-lg-6 "
+            style="display: flex; flex-direction: column;  ">
             <!-- Progresso -->
-            <div id="progress-bar" style="margin-bottom: 2vw;">
+            <div id="progress-bar" style="margin-bottom: 2vw;" class="">
                 <div class="step done">1</div>
                 <div class="step">2</div>
                 <div class="step">3</div>
@@ -164,7 +169,7 @@
             <div class="personalidade" id="personalidade-d" style="width: 100%;">
                 <div class="pers-nome-info"
                     style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-                    <div class="pers-nome"
+                    <div class="pers-nome col-12"
                         style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                         <img src="../assets/blu-personalidade1.png" alt="" style="">
                         <h2 style="color: #00A939; font-weight: 700; margin-top: -20px; font-size: 25px;">Dominância (D)
@@ -383,6 +388,7 @@
                 </div>
             </div>
         </div>
+        </section>
 
         <nav class="bottom-tab bottom-navigation">
             <a
