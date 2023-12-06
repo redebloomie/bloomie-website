@@ -937,7 +937,13 @@ input[type="file"] {
   margin-left: 0.5vw;
   font-size: 1.3vw;
 }
-
+.searchbar i {
+  background-color:#0d6efd;
+  color: white;
+  font-weight: 500;
+  font-size: 1.3vw;
+  border:0;
+}
 .searchbar input::placeholder {
   color: white;
 }
