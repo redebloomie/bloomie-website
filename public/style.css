@@ -942,10 +942,12 @@ input[type="file"] {
   color: white;
 }
 
-.searchbar i {
+.searchbar button {
+  background-color:#0d6efd;
   color: white;
   font-weight: 500;
   font-size: 1.3vw;
+  border:0;
 }
 
 .sidebar-op i {
