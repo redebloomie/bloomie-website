@@ -2,22 +2,98 @@
 // Conectar ao banco de dados (utilize suas credenciais)
 include('connect.php');
 
-// Configurações de paginação para oportunidades Estágio
-$porPagina = 9; // 3x3
-$paginaAtualEstagio = isset($_GET['pagina_estagio']) ? $_GET['pagina_estagio'] : 1;
-$offsetEstagio = ($paginaAtualEstagio - 1) * $porPagina;
+// Configurações de paginação para oportunidades pendentes
+$porPagina = 4;
+$paginaAtualPendentes = isset($_GET['pagina_pendentes']) ? $_GET['pagina_pendentes'] : 1;
+$offsetPendentes = ($paginaAtualPendentes - 1) * $porPagina;
 
-// Consulta para obter oportunidades Estágio com paginação
-$queryEstagio = "SELECT * FROM oportunidade WHERE categoria = 'Estágios' LIMIT $offsetEstagio, $porPagina";
-$resultEstagio = mysqli_query($conexao, $queryEstagio);
+// Consulta para obter oportunidades pendentes com paginação
+$queryPendentes = "SELECT * FROM oportunidade WHERE status_opor = 'pendente' LIMIT $offsetPendentes, $porPagina";
+$resultPendentes = mysqli_query($conexao, $queryPendentes);
 
-// Consulta para obter o número total de oportunidades Estágio
-$totalQueryEstagio = "SELECT COUNT(*) as total FROM oportunidade WHERE categoria = 'Estágios'";
-$totalResultEstagio = mysqli_query($conexao, $totalQueryEstagio);
-$totalEstagio = mysqli_fetch_assoc($totalResultEstagio)['total'];
+// Consulta para obter o número total de oportunidades pendentes
+$totalQueryPendentes = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'pendente'";
+$totalResultPendentes = mysqli_query($conexao, $totalQueryPendentes);
+$totalPendentes = mysqli_fetch_assoc($totalResultPendentes)['total'];
 
-// Calcular o número total de páginas para oportunidades Estágio
-$numPaginasEstagio = ceil($totalEstagio / $porPagina);
+// Calcular o número total de páginas para oportunidades pendentes
+$numPaginasPendentes = ceil($totalPendentes / $porPagina);
+
+// --------------------------------------------------------------------------------------------------
+
+// Configurações de paginação para oportunidades expiradas
+$porPagina = 4;
+$paginaAtualExpiradas = isset($_GET['pagina_expiradas']) ? $_GET['pagina_expiradas'] : 1;
+$offsetExpiradas = ($paginaAtualExpiradas - 1) * $porPagina;
+
+// Consulta para obter oportunidades expiradas com paginação
+$queryExpiradas = "SELECT * FROM oportunidade WHERE status_opor = 'expirada' LIMIT $offsetExpiradas, $porPagina";
+$resultExpiradas = mysqli_query($conexao, $queryExpiradas);
+
+// Consulta para obter o número total de oportunidades expiradas
+$totalQueryExpiradas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'expirada'";
+$totalResultExpiradas = mysqli_query($conexao, $totalQueryExpiradas);
+$totalExpiradas = mysqli_fetch_assoc($totalResultExpiradas)['total'];
+
+// Calcular o número total de páginas para oportunidades expiradas
+$numPaginasExpiradas = ceil($totalExpiradas / $porPagina);
+
+// ---------------------------------------------------------------------------------------------------
+
+// Configurações de paginação para oportunidades Aceitas
+$porPagina = 4;
+$paginaAtualAceitas = isset($_GET['pagina_Aceitas']) ? $_GET['pagina_Aceitas'] : 1;
+$offsetAceitas = ($paginaAtualAceitas - 1) * $porPagina;
+
+// Consulta para obter oportunidades Aceitas com paginação
+$queryAceitas = "SELECT * FROM oportunidade WHERE status_opor = 'aceita' LIMIT $offsetAceitas, $porPagina";
+$resultAceitas = mysqli_query($conexao, $queryAceitas);
+
+// Consulta para obter o número total de oportunidades Aceitas
+$totalQueryAceitas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'aceita'";
+$totalResultAceitas = mysqli_query($conexao, $totalQueryAceitas);
+$totalAceitas = mysqli_fetch_assoc($totalResultAceitas)['total'];
+
+// Calcular o número total de páginas para oportunidades Aceitas
+$numPaginasAceitas = ceil($totalAceitas / $porPagina);
+
+// ---------------------------------------------------------------------------------------------
+
+// Configurações de paginação para oportunidades Negadas
+$porPagina = 4;
+$paginaAtualNegadas = isset($_GET['pagina_negadas']) ? $_GET['pagina_negadas'] : 1;
+$offsetNegadas = ($paginaAtualNegadas - 1) * $porPagina;
+
+// Consulta para obter oportunidades Negadas com paginação
+$queryNegadas = "SELECT * FROM oportunidade WHERE status_opor = 'negada' LIMIT $offsetNegadas, $porPagina";
+$resultNegadas = mysqli_query($conexao, $queryNegadas);
+
+// Consulta para obter o número total de oportunidades Negadas
+$totalQueryNegadas = "SELECT COUNT(*) as total FROM oportunidade WHERE status_opor = 'negada'";
+$totalResultNegadas = mysqli_query($conexao, $totalQueryNegadas);
+$totalNegadas = mysqli_fetch_assoc($totalResultNegadas)['total'];
+
+// Calcular o número total de páginas para oportunidades Negadas
+$numPaginasNegadas = ceil($totalNegadas / $porPagina);
+
+// ----------------------------------------------------------------------------------------------
+
+// Configurações de paginação para oportunidades Inativas
+$porPagina = 4;
+$paginaAtualInativas = isset($_GET['pagina_inativas']) ? $_GET['pagina_inativas'] : 1;
+$offsetInativas = ($paginaAtualInativas - 1) * $porPagina;
+
+// Consulta para obter oportunidades Inativas com paginação
+$queryInativas = "SELECT * FROM oportunidades_inativas LIMIT $offsetInativas, $porPagina";
+$resultInativas = mysqli_query($conexao, $queryInativas);
+
+// Consulta para obter o número total de oportunidades Inativas
+$totalQueryInativas = "SELECT COUNT(*) as total FROM oportunidades_inativas";
+$totalResultInativas = mysqli_query($conexao, $totalQueryInativas);
+$totalInativas = mysqli_fetch_assoc($totalResultInativas)['total'];
+
+// Calcular o número total de páginas para oportunidades Inativas
+$numPaginasInativas = ceil($totalInativas / $porPagina);
 
 // Fechar a conexão
 mysqli_close($conexao);
@@ -45,15 +121,15 @@ mysqli_close($conexao);
 
 <body id="homepage">
   <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
+    <a class="navbar-brand" href="adm.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
   </nav>
 
   <main>
-  <div class="row justify-content-start align-items-start g-0">
+    <div class="row justify-content-start align-items-start g-0">
       <div class="col-2 bg-primary sidebar-container">
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
-            <div class="col">
+          <div class="col">
               <span class="searchbar rounded-4">
                 <i class="ph ph-magnifying-glass"></i>
                 <input type="text" name="" id="" placeholder="Buscar...">
@@ -79,7 +155,7 @@ mysqli_close($conexao);
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="../pages/configuracoes.php" class="text-decoration-none text-white">Configurações</a>
+                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
@@ -87,65 +163,84 @@ mysqli_close($conexao);
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col text-white" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 5px;">
+              <i class="ph ph-sign-out" style="font-size: 20px"></i>
               <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-8 pg-oportunidades">
-        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-12 conteudo">
-          <div class="col-12 justify-content-center align-items-center">
-            <div class="row-cols-1 justify-content-center align-items-center g-2">
+      <h5 class="mb-3 txtj ">Estágios</h5>
 
-              <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
-                style="margin-top: 30px;">
-                <div class="col op-lista-top">
-                  <span
-                    style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 1vw;">
-                    <h2 style="margin: 0; color: #1185E3; display: flex; justify-content: center; align-items: center;">
-                      Estágios</h2>
-                    <p
-                      style="margin: 0; font-size: 15px; background-color: #1185E3; color: #fff; border-radius: 15px; padding: 0 15px; font-weight: 500;">
-                      Crescimento profissional</p>
-                  </span>
-                </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
-                  <?php
-                    while ($oportunidade = mysqli_fetch_assoc($resultEstagio)) {
-                  
-                      echo '
-                      <div>
-                            <div class="row-cols-1 justify-content-center align-items-center g-2">
-                              <div class="col image-container">
-                                <img src="'. $oportunidade['imagem'].'" alt="" style="width: 12vw; height: 12vw; object-fit: cover;">
-                                <div class="overlay" style="color: #0C5D9E;" style="width: 12vw; height: 12vw;>'.$oportunidade['descricao'].' <span style="font-weight: 500; width: 12vw; height: 12vw;">Ler mais.</span></div>
-                              </div>
-                              <div class="col" style="margin-top: 10px;">
-                                <p style="font-weight: 500; font-size: 18px;">'. $oportunidade['titulo'] .'</p>
-                                <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$oportunidade['tempo_expirar'].'</p>
-                                <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$oportunidade['faixa_etaria'].'</p>
-                              </div>
-                              <div class="col">
-                              <a href="oportunidade.php?id='. $oportunidade['ID_oportunidade'] .'" class="btn btn-primary" style="width: 12vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                              </div>
-                            </div>
-                          </div>';
-                    }
-                  ?>
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Navegação de página no topo do conteúdo -->
+    <nav aria-label="Page navigation example mb-3">
+        <ul class="pagination">
+        <?php
+        // Lógica para exibir os números da página para oportunidades pendentes
+        $maxPaginas = 4; // Número máximo de páginas a serem exibidas
+        $inicio = max(1, $paginaAtualPendentes - floor($maxPaginas / 2));
+        $fim = min($inicio + $maxPaginas - 1, $numPaginasPendentes);
+
+        // Exibir o botão "<" se houver mais páginas antes para oportunidades pendentes
+        if ($inicio > 1) {
+            echo '<li class="page-item">';
+            echo '<a class="page-link" href="?pagina_pendentes=' . ($inicio - 1) . '">&laquo;</a>';
+            echo '</li>';
+        }
+
+        // Exibir os números da página para oportunidades pendentes
+        for ($i = $inicio; $i <= $fim; $i++) {
+            echo '<li class="page-item ' . ($i == $paginaAtualPendentes ? 'active' : '') . '">';
+            echo '<a class="page-link" href="?pagina_pendentes=' . $i . '">' . $i . '</a>';
+            echo '</li>';
+        }
+
+        // Exibir o botão ">" se houver mais páginas depois para oportunidades pendentes
+        if ($fim < $numPaginasPendentes) {
+            echo '<li class="page-item">';
+            echo '<a class="page-link" href="?pagina_pendentes=' . ($fim + 1) . '">&raquo;</a>';
+            echo '</li>';
+        }
+        ?>
+        </ul>
+    </nav>
+
+    <div class="border border-primary p-3 rounded-5 mb-5 feedExp">
+      <?php
+        // Conectar ao banco de dados (utilize suas credenciais)
+        include('connect.php');
+
+        // Verifica se há resultados
+        if (mysqli_num_rows($resultPendentes) > 0) {
+            $rowCount = 0;
+            while ($row = mysqli_fetch_assoc($resultPendentes)) {
+                // Exiba as informações da oportunidade pendente
+                echo '<div class="d-flex justify-content-between align-items-center">';
+                echo '<div class="d-flex align-items-center col-6">';
+                echo '<a href="detalhes_oportunidade.php?id=' . $row['ID_oportunidade'] . '" class="link-oportunidade" style="display:flex;flex-direction:row;justify-content:center;align-items:center;">';
+                echo '<img src="' . $row['imagem'] . '" class="bg-black rounded-5 col-4 " style="width: 4vw; height: 4vw; object-fit:cover;">';
+                echo '<p class="mb-0 h5 text mg">' . $row['titulo'] . '</p>';
+                echo '</a>';
+                echo '</div>';
+                echo '<div class="d-flex p-1 col-6 col-sm-4 col-md-6 justify-content-end">';
+                echo '<button class="btn btn-success bt1 rounded-3 h6 col-lg-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'aceita\')">Aceitar</button>';
+                echo '<button class="btn btn-danger bt1 rounded-3 h6 col-lg-2 col-sm-2 col-md-3 col-4 textb" onclick="atualizarStatus(' . $row['ID_oportunidade'] . ', \'negada\')">Negar</button>';
+                echo '</div>';
+                echo '</div>';
+                // Adicione a linha separadora, exceto para a última oportunidade
+                if ($rowCount < mysqli_num_rows($resultPendentes) - 1) {
+                    echo '<div class="bg-primary col-12 mt-3 mb-3" style="height: 1px;"></div>';
+                }
+
+                $rowCount++;
+            }
+            } else {
+                echo 'Nenhuma oportunidade pendente.';
+            }
+        ?>
     </div>
+  
             
   </main>
 

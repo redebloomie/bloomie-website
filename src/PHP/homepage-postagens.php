@@ -301,6 +301,8 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
               $id_post = $post['ID_post'];
               $saber_curtidas = mysqli_query($conexao, "SELECT * FROM curtidas WHERE ID_post = $id_post");
               $curtidas = $saber_curtidas->num_rows;
+              $saber_comentarios = mysqli_query($conexao, "SELECT * FROM comentarios WHERE ID_post = $id_post");
+              $comentarios = $saber_comentarios->num_rows;
           
               echo '
               <div class="col-12 d-flex justify-content-center post-container mb-3" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
@@ -354,23 +356,25 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                                 <div id="like" style="display: flex; align-items: center; flex-direction: row; justify-content: center;">
                                     <p style="margin: 0; display: flex; align-items: center; flex-direction: row; justify-content: center;">';
 
-                            // Verifica se o usuário já curtiu a postagem
-                            $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
+                                    // Verifica se o usuário já curtiu a postagem
+                                    $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
 
-                            if ($userLiked) {
-                                echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
-                            } else {
-                                echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
-                            }
+                                    if ($userLiked) {
+                                        echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                                    } else {
+                                        echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                                    }
 
-                            // Exibir a contagem de curtidas
-                            echo $curtidas . '</p>
+                                    // Exibir a contagem de curtidas
+                                    echo $curtidas . '</p>
                                 </div>
+                              </span>
+                                <span class="comment-btn" onclick="toggleCommentBox(\'commentBox-' . $post['ID_post'] . '\')">
+                                <i class="ph ph-chat-circle"></i>
+                                <p>'; echo $comentarios;
+                                echo '</p>
                             </span>
-                                  <span>
-                                      <i class="ph ph-chat-circle"></i>
-                                      <p></p>
-                                  </span>
+                      
                                   <span>
                                       <i class="ph ph-link-simple-horizontal"></i>
                                   </span>
@@ -379,6 +383,13 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                                   <i class="ph ph-warning"></i>
                               </div>
                           </div>
+                      </div>
+                      <div id="commentBox-' . $post['ID_post'] . '" style="display: none;">
+                            <!-- Caixa de texto para comentários -->
+                            <textarea class="form-control" rows="3" placeholder="Digite seu comentário"></textarea>
+                            <button class="btn btn-primary mt-2" onclick="postComment(' . $post['ID_post'] . ')">
+                                Comentar
+                            </button>
                       </div>
                   </div>
               </div>';
@@ -636,6 +647,59 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
     removeImageButton.style.display = 'none';
 });
 
+    function toggleCommentBox(commentBoxId) {
+        var commentBox = document.getElementById(commentBoxId);
+        if (commentBox.style.display === 'none') {
+            commentBox.style.display = 'block';
+        } else {
+            commentBox.style.display = 'none';
+        }
+    }
+
+    function postComment(postId) {
+      var commentBox = document.getElementById('commentBox-' + postId);
+      var commentText = commentBox.querySelector('textarea').value;
+
+      // Verificar se o comentário não está vazio
+      if (commentText.trim() === '') {
+          alert('Por favor, insira um comentário.');
+          return;
+      }
+
+      // Criar um objeto XMLHttpRequest
+      var xhr = new XMLHttpRequest();
+
+      // Configurar a solicitação POST assíncrona
+      xhr.open('POST', 'comentarios.php', true);
+
+      // Configurar o cabeçalho da solicitação
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+      // Definir a função de retorno de chamada para tratar a resposta do servidor
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              // Lógica para lidar com a resposta do servidor
+              var response = JSON.parse(xhr.responseText);
+              if (response.success) {
+                  // Comentário enviado com sucesso, realizar ações adicionais se necessário
+                  alert('Comentário enviado com sucesso!');
+                  commentBox.style.display='none';
+                  // Você pode adicionar mais lógica aqui, como atualizar a exibição de comentários na página
+              } else {
+                  // Tratar erros, se houver
+                  alert('Erro ao enviar o comentário. Por favor, tente novamente.');
+              }
+          }
+      };
+
+      // Montar os dados a serem enviados (postId e commentText)
+      var data = 'postId=' + postId + '&commentText=' + encodeURIComponent(commentText);
+
+      // Enviar a solicitação
+      xhr.send(data);
+    }
+
+
 
     $(document).ready(function () {
         // Manipulador de envio do formulário
@@ -688,45 +752,60 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
 
             // Exemplo: Adicionando a postagem ao início do feed
             var feedElement = $('#feed');
+
+            // Construir a string HTML
             var novoPostHTML = `
-            <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item">
-    <div class="col">
-        <div class="postagem-user">
-        <img src="<?php echo $fotoPerfil; ?>" alt="Imagem do usuário">
-            <span>
-                <p style="font-weight: 700; font-size: 18px;">${post.usuario}</p>
-                <p style="color: #45abff;">${post.data_publicacao}</p>
-            </span>
-        </div>
-    </div>
-    <div class="col">
-        <p style="font-size: 18px;">${post.texto} ${post.texto.length > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : ''}</p>
-    </div>
-    ${post.caminhoImagem ? `<div class="col img-post"><img src="${post.caminhoImagem}" alt=""></div>` : ''}
-    <div class="col-12 interacoes-post">
-        <div class="options-post">
-            <div class="rightside-op-post">
-                <span>
-                    <i class="ph ph-heart"></i>
-                    <p></p>
-                </span>
-                <span>
-                    <i class="ph ph-chat-circle"></i>
-                    <p></p>
-                </span>
-                <span>
-                    <i class="ph ph-link-simple-horizontal"></i>
-                </span>
-            </div>
-            <div class="leftside-op-post">
-                <i class="ph ph-warning"></i>
-            </div>
-        </div>
-    </div>
-    </div>
-`; // Substitua pelo HTML real
+                <div class="row-cols-1 justify-content-center align-items-center col-10 p-3 post-container-item">
+                    <div class="col">
+                        <div class="postagem-user">
+                            <img src="<?php echo $fotoPerfil; ?>" alt="Imagem do usuário">
+                            <span>
+                                <p style="font-weight: 700; font-size: 18px;">${post.usuario}</p>
+                                <p style="color: #45abff;">${post.data_publicacao}</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <p style="font-size: 18px;">${post.texto} ${post.texto.length > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : ''}</p>
+                    </div>
+                    ${post.caminhoImagem ? `<div class="col img-post"><img src="${post.caminhoImagem}" alt=""></div>` : ''}
+                    <div class="col-12 interacoes-post">
+                        <div class="options-post">
+                            <div class="rightside-op-post">
+                                <p style="margin: 0; display: flex; align-items: center; flex-direction: row; justify-content: center;">
+                                    <a href="homepage-postagens.php?${post.userLiked ? 'unlike' : 'like'}=${post.ID_post}" style="display: flex; align-items: center;">
+                                        <i class="ph ph-heart" style="margin-right: 5px;"></i>
+                                    </a>
+                                    <?php echo $curtidas; ?>
+                                </p>
+                                <span class="comment-btn" onclick="toggleCommentBox('commentBox-${post.ID_post}')">
+                                    <i class="ph ph-chat-circle"></i>
+                                    <p><?php echo $comentarios; ?></p>
+                                </span>
+                      
+                                  <span>
+                                      <i class="ph ph-link-simple-horizontal"></i>
+                                  </span>
+                              </div>
+                              <div class="leftside-op-post">
+                                  <i class="ph ph-warning"></i>
+                              </div>
+                          </div>
+                      </div>
+                      <div id="commentBox-${post.ID_post}" style="display: none;">
+                          <!-- Caixa de texto para comentários -->
+                          <textarea class="form-control" rows="3" placeholder="Digite seu comentário"></textarea>
+                          <button class="btn btn-primary mt-2" onclick="postComment(${post.ID_post})">
+                              Comentar
+                          </button>
+                      </div>
+                </div>`;
+
+            // Substitua pelo HTML real
             feedElement.prepend(novoPostHTML);
         }
+
+
     
 
     

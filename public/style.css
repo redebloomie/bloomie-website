@@ -1609,8 +1609,6 @@ input[type="file"] {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 2vw;
-  width: 60vw;
   padding: 1vw;
   border-radius: 20px;
   border: 2px #abd9ff solid;
@@ -3168,6 +3166,7 @@ input[type="file"] {
   flex-direction: row;
   align-items: start;
   justify-content: center;
+  margin-top: 5rem;
 }
 
 /* responsividade-homepage-oportunidades*/

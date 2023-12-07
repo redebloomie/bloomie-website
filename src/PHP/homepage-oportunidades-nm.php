@@ -128,15 +128,16 @@ if (empty($_SESSION['personalidade'])) {
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col text-white" style="display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 5px;">
+              <i class="ph ph-sign-out" style="font-size: 20px"></i>
               <a href="sair.php" class="text-decoration-none text-white">Sair</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-8 col-sm-10 d-flex justify-content-center pg-postagens pg-oportunidades" id="feed-all-container1o" style="">
-        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-10 conteudo">
+      <div class="col-md-10 col-10 col-sm-10 d-flex justify-content-center pg-postagens pg-oportunidades ms-auto me-auto" id="feed-all-container1o" style="">
+        <div id="feed-oportunidades" class="row-cols-1 justify-content-center align-items-center g-0 col-md-12 col-10 conteudo">
           <div class="col-12 justify-content-center align-items-center">
             <div class="row-cols-1 justify-content-center align-items-center g-2">
               <div class="col row-cols-1 justify-content-center align-items-center g-2">
@@ -184,16 +185,10 @@ if (empty($_SESSION['personalidade'])) {
                                 // O usuário tem personalidade
                                 // Exibir a mensagem e o filtro
                                 echo '
-                                <div class="col-sm-12 col-md-12 top-oportunidades">
+                                <div class="col-sm-12 col-md-10 top-oportunidades">
                                     <h2>Tem oportunidade quentinha por aqui!</h2>
                                     <span>
                                         <p style="font-size: 18px;">Recomendações com base no seu perfil:</p>
-                                        <select class="" name="" id="">
-                                            <option selected>Filtrar por</option>
-                                            <option value="">New Delhi</option>
-                                            <option value="">Istanbul</option>
-                                            <option value="">Jakarta</option>
-                                        </select>
                                     </span>
                                 </div>';
 
@@ -215,21 +210,22 @@ if (empty($_SESSION['personalidade'])) {
 
                                     // Exibir a oportunidade mais clicada
                                     echo '
-                                    <div class="col-12">
-                                        <div class="oportunidade-container-expand col-sm-12" style="margin-top: 30px; justify-content: start; height: max-content;">
-                                            <div class="oportunidade-expand-foto">
+                                    <div class="col-10">
+                                        <div class="oportunidade-container-expand col-md-12 col-sm-12 p-2" style="margin-top: 30px; justify-content: start; align-items: center; height: max-content; gap: 5px;">
+                                            <div class="oportunidade-expand-foto col-4">
                                                 <p class="tipo-oportunidade" style="margin: 5px;">' . $oportunidadeMaisClicada['categoria'] . '</p>
-                                                <img src="' . $oportunidadeMaisClicada['imagem'] . '" alt="" style="height: 18vw;">
+                                                <img src="' . $oportunidadeMaisClicada['imagem'] . '" alt="" style="height: 40vh; width: 90%;">
                                             </div>
-                                            <div class="oportunidade-expand-info">
-                                                <h2 class="mb-1" style="font-size: 20px; margin: 0;">' . $oportunidadeMaisClicada['titulo'] . '</h2>
+                                            <div class="oportunidade-expand-info col-8">
+                                                <h2 class="" style="font-size: 25px; margin: 0;">' . $oportunidadeMaisClicada['titulo'] . '</h2>
                                                 <span class="oportunidade-datas span-row">
-                                                    <p class="mb-1 " style="margin: 0;"><span style="color: #1289EA; font-size: 17px;">Prazo:</span> ' . $oportunidadeMaisClicada['tempo_expirar'] . '
-                                                    </p>
+                                                    <p class="" style="margin: 0;"><span style="color: #1289EA; font-size: 18px;">Prazo:</span> ' . $oportunidadeMaisClicada['tempo_expirar'] . '</p>
+                                                    <p class="" style="margin: 0;"><span style="color: #1289EA; font-size: 18px;">Faixa etária:</span> ' . $oportunidadeMaisClicada['faixa_etaria'] . '</p>
                                                 </span>
-                                                <p class="mb-1" style="margin: 0; font-size: 18px; font-weight: 400;">' . $oportunidadeMaisClicada['descricao'] . ' <span style="font-weight: 500;">Ler mais.</span></p>
-                                                <a href="oportunidade.php?id=' . $oportunidadeMaisClicada['ID_oportunidade'] . '" style="width: 100%;">
-                                                    <button style="">Acessar oportunidade</button>
+                                                <p class="" style="margin: 0; font-size: 15px; font-weight: 400; word-wrap: break-word; max-width: 100%;">'. substr($oportunidadeMaisClicada['descricao'], 0, 100) . (strlen($oportunidadeMaisClicada['descricao']) > 100 ? '...' : '') .' <span style="font-weight: 500;">Ler mais.</span></p>
+                                                <p class="mb-1" style="margin: 0; font-size: 15px; font-weight: 400; word-wrap: break-word; max-width: 100%;background-color: #F2C934; color: #0C5D9E; font-weight: 500; border-radius: 15px; padding: 0 15px;">'.$oportunidadeMaisClicada['tipo'].'</p>
+                                                <a href="oportunidade.php?id=' . $oportunidadeMaisClicada['ID_oportunidade'] . '" class="btn btn-primary col-11 rounded-3 bold">
+                                                    Acessar oportunidades
                                                 </a>
                                             </div>
                                         </div>
@@ -285,7 +281,7 @@ if (empty($_SESSION['personalidade'])) {
                             <div class="row-cols-1 justify-content-center align-items-center g-2">
                               <div class="col image-container">
                                 <img src="'. $opor['imagem'].'" alt="">
-                                <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
+                                <div class="overlay" style="color: #0C5D9E;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? '...' : '') .' <span style="font-weight: 500;">Ler mais.</span></div>
                               </div>
                               <div class="col" style="margin-top: 10px;">
                                 <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
@@ -516,12 +512,12 @@ if (empty($_SESSION['personalidade'])) {
                 </div>
                 <div class="col text-start destaques-post">
                   <span style="display:flex; flex-direction: collumn;" class="destaques-post-user">
-                    <p style="margin: 0; font-weight: 600; font-size: 18px;"><?php echo $destaque['titulo']; ?></p>
+                    <p style="margin: 0; font-weight: 600; font-size: 18px;"><a href="oportunidade.php?id=<?php echo $destaque['ID_oportunidade']; ?>" style="text-decoration: none; color: #1185E3;"><?php echo $destaque['titulo']; ?></a></p>
                     <p style="margin: 0;"><span style="color: #1185E3; font-weight: 500;">Prazo: </span><?php echo $destaque['tempo_expirar']; ?></p>
                     <p style="margin: 0;"><span style="color: #1185E3; font-weight: 500;">Faixa Etária: </span><?php echo $destaque['faixa_etaria']; ?></p>
                   </span>
                   <div style="display:flex; flex-direction: column;" class="destaques-post-text">
-                    <p><?php echo $destaque['descricao']; ?></p>
+                    <p><?php echo substr($destaque['descricao'], 0, 50) . (strlen($destaque['descricao']) > 50 ? '...' : ''); ?></p>
                     <span class="destaques-post-tags">
                       <p style="background-color: #F2C934;">#educação</p>
                       <p style="background-color: #5AB5FF;">#redesocial</p>
@@ -557,47 +553,41 @@ if (empty($_SESSION['personalidade'])) {
                   <p style="color: #DBAC01; font-weight: 500;">Oportunidades sugeridas pela florzinha azul.</p>
                 </div>
                 <div class="col">
-                  <div class="rows-cols-1 justify-content-center align-items-center g-2">
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Oportunidade 1</p>
-                          <p style="font-size: 1vw;">Saiba mais.</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Oportunidade 2</p>
-                          <p style="font-size: 1vw;">Saiba mais.</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Oportunidade 3</p>
-                          <p style="font-size: 1vw;">Saiba mais.</p>
-                        </span>
-                      </span>
-                    </div>
-                    <div class="col destaques-bloomigos-user">
-                      <span style="display:flex; flex-direction: row;">
-                        <img src="https://source.unsplash.com/random" alt=""
-                          style="border-radius: 100%; width: 3vw; height: 3vw;">
-                        <span style="display: flex; flex-direction: column; text-align: start;">
-                          <p style="font-weight: 500;">Oportunidade 4</p>
-                          <p style="font-size: 1vw;">Saiba mais.</p>
-                        </span>
-                      </span>
-                    </div>
+                  <div class="rows-cols-1 justify-content-center align-items-center g-1">
+                  <?php
+                    include('connect.php');
+
+                    // Consulta SQL para obter as 5 oportunidades mais clicadas
+                    $query = "SELECT o.*, COUNT(a.ID_acesso) AS total_cliques
+                    FROM oportunidade o
+                    LEFT JOIN acessos_oportunidade a ON o.ID_oportunidade = a.ID_oportunidade
+                    GROUP BY o.ID_oportunidade
+                    LIMIT 5";
+                    $result = mysqli_query($conexao, $query);
+
+                    // Exibir as oportunidades
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '
+                        <a href="oportunidade.php?id=' . $row['ID_oportunidade'] . '" style="text-decoration: none;">
+                        <div class="col destaques-bloomigos-user">
+                            <span style="display:flex; flex-direction: row;">
+                                <img src="' . $row['imagem'] . '" alt="Imagem da Oportunidade" style="border-radius: 100%; width: 3vw; height: 3vw;">
+                                <span style="display: flex; flex-direction: column; text-align: start;">
+                                    <p style="font-weight: 500;">' . $row['titulo'] . '</p>
+                                    <p style="font-size: 1vw;">Saiba mais</p>
+                                </span>
+                            </span>
+                        </div>
+                        </a>';
+                    }
+
+                    if (!$result) {
+                      die("Erro na consulta SQL: " . mysqli_error($conexao));
+                  }
+
+                    // Fechar a conexão
+                    mysqli_close($conexao);
+                  ?>
                   </div>
                 </div>
               </div>

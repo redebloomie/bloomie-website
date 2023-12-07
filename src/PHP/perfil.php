@@ -19,6 +19,7 @@
           $usuario = $row['usuario'];
           $sobrenome = $row['sobrenome'];
           $fotoPerfil = $row['foto_perfil'];
+          $interesses = $row['interesses'];
           $sobre = $row['sobre'];
           $personalidade = $row['personalidade'];
       }
@@ -281,15 +282,8 @@
                 <h2>Interesses</h2>
                 <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
-              <p style="margin-top: 10px;">Ainda não há nada por aqui. Para preencher, escreva 1 interesse e clique em +
-                para adicionar ao perfil.</p>
-              <div class="content">
-                <ul id="tagUl"></ul>
-                <input id="tagInput" type="text" />
-              </div>
-
+              <input type="text" name="sobre" id="sobre" class="editavel col-12" contenteditable="false" value="<?php echo $interesses; ?>" placeholder="Ainda não há nada por aqui." style="color: #5AB5FF; background:none;">
             </div>
-
             <div class="perfil-left-item" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
               <span style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 10px;">
                 <h2>Posts</h2>

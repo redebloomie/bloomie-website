@@ -217,6 +217,7 @@
                       class="form-control rounded-4 cb"
                       name="titulo"
                       id="titulo"
+                      required
                     />
                   </div>
 
@@ -226,6 +227,7 @@
                       name="categoria"
                       class="col-md-12 col-12 form-control rounded-4 cb"
                       style="color: #1185e3"
+                      required
                     >
                       <option value="Estágios">Estágios</option>
                       <option value="Aprendizados">Aprendizado</option>
@@ -243,6 +245,7 @@
                       name="tipo"
                       class="col-12 col-md-12 form-control rounded-4 cb"
                       style="color: #1185e3"
+                      required
                     >
                       <option value="Competições">Competições</option>
                       <option value="Bolsas de Estudo">Bolsas de Estudo</option>
@@ -336,7 +339,7 @@
                     />
                   </div>
                   <div class="col-md-6 col-sm-6">
-                    <p>vencimento</p>
+                    <p>Vencimento</p>
                     <input
                       class="col-md-12 col-12 col-sm-12 form-control rounded-4 cb"
                       type="date"
@@ -353,6 +356,7 @@
                       id="faixa_etaria"
                       name="faixa_etaria"
                       style="color: #1185e3"
+                      required
                     >
                       <option value="13 a 15 anos">13 a 15 anos</option>
                       <option value="15 a 18 anos">15 a 18 anos</option>
@@ -368,6 +372,7 @@
                       id="escolaridade"
                       name="escolaridade"
                       style="color: #1185e3"
+                      required
                     >
                       <option>Ensino fundamental incompleto</option>
                       <option>Ensino fundamental completo</option>
@@ -396,6 +401,7 @@
                       class="form-control rounded-4 cb"
                       name="link"
                       id="link"
+                      required
                     />
                   </div>
 
@@ -405,9 +411,10 @@
                       class="col-md-12 col-12 form-control rounded-4 cb"
                       id="tipo_personalidade"
                       name="tipo_personalidade"
+                      required
                     >
                       <option value="" class="optPers"></option>
-                      <option value="Dominância" class="optPers">
+                      <option value="dominante" class="optPers">
                         Dominante
                       </option>
                       <option value="influente" class="optPers">
@@ -586,6 +593,8 @@
                               font-weight: 500;
                               padding: 2px 15px;
                               border-radius: 10px;
+                              position: absolute;
+                              z-index: 9;
                             "
                             >Enviar Imagem</label
                           >
@@ -602,8 +611,9 @@
                             src="#"
                             alt="Pré-visualização da imagem"
                             style="
-                              width: 200px;
-                              height: 200px;
+                              width: 100%;
+                              height: 100%;
+                              border-radius: 2vw;
                               object-fit: cover;
                               position: relative;
                             "
@@ -753,7 +763,7 @@
           previewImage.src = URL.createObjectURL(file);
           removeImageButton.style.display = "block";
           previewImage.style.display = "block";
-          uploadImagemL.style.display = "none";
+          uploadImagemL.style.visibility = "hidden";
         } else {
           previewImage.src = ""; // Define o src como vazio
           previewImage.style.display = "none";
@@ -767,7 +777,7 @@
         previewImage.style.display = "none";
         uploadImagem.value = ""; // Limpa o valor do campo de arquivo
         removeImageButton.style.display = "none";
-        uploadImagemL.style.display = "block";
+        uploadImagemL.style.visibility = "visible";
       });
 
       textArea.addEventListener("click", () => {

@@ -472,19 +472,7 @@ mysqli_close($conexao);
         
             
       </section>
-      
-      
-
-
-
-
-
-
   </main>
-
-
-
-
 
   <footer>
 
