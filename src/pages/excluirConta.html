@@ -1,125 +1,205 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <title>Title</title>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
 
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css'>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css"
+    />
 
-  <link rel="stylesheet" href="../../public/style.css">
-  <link rel="shortcut icon" href="../assets/bluBloomie.png" />
+    <link rel="stylesheet" href="../../public/style.css" />
+    <link rel="shortcut icon" href="../assets/bluBloomie.png" />
 
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script src="https://kit.fontawesome.com/fec6e5d711.js" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script
+      src="https://kit.fontawesome.com/fec6e5d711.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
 
-</head>
+  <body id="homepage">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-white">
+      <a class="navbar-brand" href="../PHP/homepage-postagens.php"
+        ><img
+          src="../assets/logoBloomie-blu.png"
+          alt=""
+          width="150px"
+          style="margin-left: 20px"
+      /></a>
+    </nav>
 
-<body id="homepage">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-white">
-    <a class="navbar-brand" href="../PHP/homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
-  </nav>
-
-  <main>
-    <div class="row justify-content-start align-items-start g-0">
-      <div class="col-2 bg-primary sidebar-container">
-        <div class="container text-center sidebar">
-          <div class="row row-cols-1 justify-content-around align-items-center g-5">
-            <div class="col">
-              <span class="searchbar rounded-4">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" name="" id="" placeholder="Buscar...">
-              </span>
-            </div>
-            <div class="col">
-              <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-house"></i>
-                  <a href="../PHP/homepage-postagens.php" class="text-decoration-none text-white">Home</a>
-                </div>
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-user"></i>
-                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
-                </div>
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-bell-ringing"></i>
-                  <a href="../PHP/notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
-                </div>
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-plant"></i>
-                  <a href="enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
-                </div>
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-gear"></i>
-                  <a href="configuracoes.html" class="text-decoration-none text-white">Configurações</a>
-                </div>
-                <div class="col text-white sidebar-op">
-                  <i class="ph ph-question"></i>
-                  <a href="Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
+    <main>
+      <div class="row justify-content-start align-items-start g-0">
+        <div class="col-2 bg-primary sidebar-container">
+          <div class="container text-center sidebar">
+            <div
+              class="row row-cols-1 justify-content-around align-items-center g-5"
+            >
+              <div class="col">
+                <span class="searchbar rounded-4">
+                  <i class="ph ph-magnifying-glass"></i>
+                  <input type="text" name="" id="" placeholder="Buscar..." />
+                </span>
+              </div>
+              <div class="col">
+                <div
+                  class="row row-cols-1 justify-content-start align-items-center g-3 text-start"
+                >
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-house"></i>
+                    <a
+                      href="../PHP/homepage-postagens.php"
+                      class="text-decoration-none text-white"
+                      >Home</a
+                    >
+                  </div>
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-user"></i>
+                    <a
+                      href="../PHP/perfil.php"
+                      class="text-decoration-none text-white"
+                      >Perfil</a
+                    >
+                  </div>
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-bell-ringing"></i>
+                    <a
+                      href="../PHP/notificacoesGeral.php"
+                      class="text-decoration-none text-white"
+                      >Notificações</a
+                    >
+                  </div>
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-plant"></i>
+                    <a
+                      href="enviarOportunidade.html"
+                      class="text-decoration-none text-white"
+                      >Enviar<br />oportunidades</a
+                    >
+                  </div>
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-gear"></i>
+                    <a
+                      href="configuracoes.html"
+                      class="text-decoration-none text-white"
+                      >Configurações</a
+                    >
+                  </div>
+                  <div class="col text-white sidebar-op">
+                    <i class="ph ph-question"></i>
+                    <a
+                      href="Ajuda_e_Suporte.html"
+                      class="text-decoration-none text-white"
+                      >Ajuda & suporte</a
+                    >
+                  </div>
                 </div>
               </div>
+              <div class="col">
+                <a
+                  href="../PHP/sair.php"
+                  class="text-decoration-none text-white"
+                  >Sair</a
+                >
+              </div>
             </div>
-            <div class="col">
-              <a href="../PHP/sair.php" class="text-decoration-none text-white">Sair</a>
-            </div>
+          </div>
+        </div>
+
+        <div
+          class="d-flex justify-content-center align-items-center col-12 vh-100"
+        >
+          <div
+            class="col-12 col-sm-8 col-md-6 col-lg-6 p-2 txtT"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <img
+              src="../assets/bluBloomie.png"
+              class="img-fluid"
+              alt=""
+              style="width: 150px; height: auto"
+            />
+            <h1 class="col-12 text-center h2">
+              Esta ação trará um vazio virtual.<br />
+              Você quer apagar sua conta?
+            </h1>
+            <p style="" class="col-12 text-center h6">
+              Ao clicar no botão abaixo, sua conta na Bloomie será <br />
+              <span style="color: #ff0e0e">excluída permanentemente</span>. Seus
+              Bloomigos, postagens,<br />
+              oportunidades e outras interações serão apagados. Você<br />
+              tem certeza?
+            </p>
+            <a
+              href="excluirConta-confirmacao.html"
+              class="btn btn-danger rounded-4 col-10 col-sm-8 col-md-8 col-lg-6"
+              style="background-color: #ff0e0e"
+              >Continuar</a
+            >
+            <a
+              href="../PHP/homepage-postagens.php"
+              class="btn btn-primary rounded-4 col-10 col-sm-8 col-md-8 col-lg-6 mt-3"
+              style=""
+              >Cancelar</a
+            >
           </div>
         </div>
       </div>
 
-      <div class="col-10 justify-content-center disc-op-container" style="margin: 5.5vw 0 0 15vw;">
-        <div class="disc-container" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-          <img src="../assets/bluBloomie.png" alt="" style="width: 10vw;">
-          <h1>Esta ação trará um vazio virtual.<br> 
-            Você quer apagar sua conta?</h1>
-          <p style="font-weight: 600;">Ao clicar no botão abaixo, sua conta na Bloomie será <span style="color: #FF0E0E;">excluída permanentemente</span>. Seus Bloomigos, postagens, oportunidades e outras interações serão apagados. Você tem certeza?</p>
-          <a href="excluirConta-confirmacao.html" class="btn btn-danger rounded-4" style="background-color: #FF0E0E; width: 10vw;">Continuar</a>
-          <a href="../PHP/homepage-postagens.php" class="btn btn-primary rounded-4" style="width: 10vw;">Cancelar</a>
+      <nav class="bottom-tab bottom-navigation">
+        <a href="../PHP/homepage-postagens.php" class="text-decoration-none">
+          <i class="ph ph-house"></i>
+        </a>
+        <a href="../PHP/perfil.php" class="text-decoration-none">
+          <i class="ph ph-user"></i>
+        </a>
+        <div class="bottom-tab-center">
+          <div class="bottom-tab-center-inner" id="bottomTabCenter">
+            <a href="enviarOportunidade.html">
+              <i class="ph ph-plus-circle" id="plusIcon"></i>
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <nav class="bottom-tab bottom-navigation">
-      <a
-        href="../PHP/homepage-postagens.php"
-        class="text-decoration-none"
-      >
-        <i class="ph ph-house"></i>
-      </a>
-      <a href="../PHP/perfil.php" class="text-decoration-none">
-        <i class="ph ph-user"></i>
-      </a>
-      <div class="bottom-tab-center">
-        <div class="bottom-tab-center-inner" id="bottomTabCenter">
-          <a href="enviarOportunidade.html">
-            <i class="ph ph-plus-circle" id="plusIcon"></i>
-          </a>
-        </div>
-      </div>
+        <a href="../PHP/notificacoesGeral.php" class="text-decoration-none">
+          <i class="ph ph-bell"></i>
+        </a>
 
-      <a href="../PHP/notificacoesGeral.php" class="text-decoration-none">
-        <i class="ph ph-bell"></i>
-      </a>
+        <a href="configuracoes.html" class="text-decoration-none">
+          <i class="ph ph-gear"></i>
+        </a>
+      </nav>
+    </main>
 
-      <a href="configuracoes.html" class="text-decoration-none">
-        <i class="ph ph-gear"></i>
-      </a>
-    </nav>
-  </main>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Bootstrap JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-    </script>
-
-  <script src="../../public/script.js"></script>
-
-</body>
-
+    <script src="../../public/script.js"></script>
+  </body>
 </html>

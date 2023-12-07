@@ -215,10 +215,9 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
         <div class="container text-center sidebar">
           <div class="row row-cols-1 justify-content-around align-items-center g-5">
             <div class="col">
-              <span class="searchbar rounded-4">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" name="" id="" placeholder="Buscar...">
-              </span>
+            <span class="searchbar rounded-4">
+                <button class="ph ph-magnifying-glass" id="button_busca" onclick="fazerBusca()"></button>
+                <input type="text" name="barra_busca" id="barra_busca" placeholder="Buscar...">
             </div>
             <div class="col">
               <div class="row row-cols-1 justify-content-start align-items-center g-3 text-start">
@@ -294,6 +293,10 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
           </div>
           
           <?php
+          if(!empty($_GET['busca'])){
+            $data = $_GET['busca'];
+            $pubs = $conexao->query("SELECT ID_post, ID_usuario, usuario, texto, imagem, data_publicacao FROM post WHERE texto LIKE '%$data%' ORDER BY data_publicacao DESC");
+
             while ($post = $pubs->fetch_assoc()) {
               $ID_usuario = $post['ID_usuario'];
               $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $ID_usuario");
@@ -394,7 +397,97 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                   </div>
               </div>';
           }
-        
+        }else if(empty($_GET['busca'])){
+            while ($post = $pubs->fetch_assoc()) {
+              $ID_usuario = $post['ID_usuario'];
+              $saberr = mysqli_query($conexao, "SELECT * FROM usuario WHERE ID_usuario = $ID_usuario");
+              $saber = $saberr->fetch_assoc();
+              $id_post = $post['ID_post'];
+              $saber_curtidas = mysqli_query($conexao, "SELECT * FROM curtidas WHERE ID_post = $id_post");
+              $curtidas = $saber_curtidas->num_rows;
+          
+              echo '
+              <div class="col-12 d-flex justify-content-center post-container mb-3" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
+                  <div class="row-cols-1 justify-content-center align-items-center col-10  p-3 post-container-item" style="position: relative;">
+                      <div class="col">
+                          <div class="postagem-user">
+                              <img src="' . $saber['foto_perfil'] . '" alt="Imagem do usuário">
+                              <span>
+                                  <p style="font-weight: 700; font-size: 18px;"><a href="perfilUsuario.php?idUsuario=' . $post['ID_usuario'] . '">' . $post['usuario'] . '</a></p>
+                                  <p style="color: #45abff;">'. $post['data_publicacao'] . '</p>
+                              </span>
+                              <form method="POST">
+                              <input type="hidden" name="idPostUser" value="' . $post['ID_usuario'] . '">';
+                              
+                              $idPostUser = $post['ID_usuario'];
+                              $amigos = mysqli_query($conexao, "SELECT * FROM bloomizade WHERE usuario_id_1 = $ID_usuario OR usuario_id_2 = $idPostUser");
+                              $amigoss = mysqli_fetch_assoc($amigos);
+
+                              // Verifica se o post é do próprio usuário
+                              $postDoProprioUsuario = $post['ID_usuario'] == $_SESSION['ID_usuario'];
+
+                              // Exibe os botões apenas se o post não for do próprio usuário
+                              if (!$postDoProprioUsuario) {
+                                  if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'aceito') {
+                                      echo '
+                                      <label for="remover" style="position: absolute; right: 20px; top: 20px; cursor: pointer"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <input type="submit" id="remover" name="remover" value="Remover"  style="display: none">';
+                                  } else if (mysqli_num_rows($amigos) >= 1 AND $amigoss['status_soli'] == 'pendente') {
+                                      echo '
+                                      <label for="cancel" style="position: absolute; right: 20px; top: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 18px; color: #45abff"><i class="ph ph-user-minus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i> Pendente</label>
+                                      <input type="submit" id="cancel" name="cancel" value="Cancelar"  style="display: none">';
+                                  } else {
+                                      echo '
+                                      <label for="add" style="position: absolute; right: 20px; top: 20px; cursor: pointer";><i class="ph ph-user-plus" style="color: #45abff; font-weight: 600; font-size: 40px;"></i></label>
+                                      <input type="submit" id="add" name="add" value="Seguir"  style="display: none">';
+                                  }
+                              }
+
+                        echo'
+                        </form>
+                        </div>
+                      </div>
+                      <div class="col">
+                          <p style="font-size: 18px;">' . $post['texto'] . ' ' . (strlen($post['texto']) > 100 ? '<span style="font-weight: 500;">Ler mais.</span>' : '') . '</p>
+                      </div>
+                      ' . ($post['imagem'] ? '<div class="col img-post"><img src="' . $post['imagem'] . '" alt=""></div>' : '') . '
+                      <div class="col-12 interacoes-post">
+                          <div class="options-post">
+                              <div class="rightside-op-post">
+                              <span class="like-btn" data-post-id="' . $post['ID_post'] . '" data-user-id="' . $_SESSION['ID_usuario'] . '">
+                                <div id="like" style="display: flex; align-items: center; flex-direction: row; justify-content: center;">
+                                    <p style="margin: 0; display: flex; align-items: center; flex-direction: row; justify-content: center;">';
+
+                            // Verifica se o usuário já curtiu a postagem
+                            $userLiked = hasUserLikedPost($conexao, $post['ID_post'], $_SESSION['ID_usuario']);
+
+                            if ($userLiked) {
+                                echo '<a href="homepage-postagens.php?unlike=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                            } else {
+                                echo '<a href="homepage-postagens.php?like=' . $post['ID_post'] . '" style="display: flex; align-items: center;"><i class="ph ph-heart" style="margin-right: 5px;"></i></a>';
+                            }
+
+                            // Exibir a contagem de curtidas
+                            echo $curtidas . '</p>
+                                </div>
+                            </span>
+                                  <span>
+                                      <i class="ph ph-chat-circle"></i>
+                                      <p></p>
+                                  </span>
+                                  <span>
+                                      <i class="ph ph-link-simple-horizontal"></i>
+                                  </span>
+                              </div>
+                              <div class="leftside-op-post">
+                                  <i class="ph ph-warning"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>';
+          }
+        }
             if (isset($_GET['like'])) {
                 like();
             }
@@ -810,6 +903,19 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
 
     
     });
+
+
+var busca = document.getElementById('barra_busca');
+
+busca.addEventListener("keydown", function(event){
+if(event.key === "Enter"){
+  fazerBusca();
+}
+});
+
+function fazerBusca(){
+  window.location = "homepage-postagens.php?busca="+ busca.value;
+}
 </script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

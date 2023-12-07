@@ -1,26 +1,28 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           5.7.33 - MySQL Community Server (GPL)
+-- Versão do servidor:           8.0.30 - MySQL Community Server - GPL
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              11.2.0.6213
+-- HeidiSQL Versão:              12.1.0.6537
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
 -- Copiando estrutura do banco de dados para bloomie_db
-CREATE DATABASE IF NOT EXISTS `bloomie_db` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE IF NOT EXISTS `bloomie_db` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `bloomie_db`;
 
 -- Copiando estrutura para tabela bloomie_db.acessos_oportunidade
 CREATE TABLE IF NOT EXISTS `acessos_oportunidade` (
-  `ID_acesso` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_oportunidade` int(11) DEFAULT NULL,
+  `ID_acesso` int NOT NULL AUTO_INCREMENT,
+  `ID_oportunidade` int DEFAULT NULL,
   `data_acesso` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID_acesso`),
   KEY `ID_oportunidade` (`ID_oportunidade`),
@@ -28,24 +30,20 @@ CREATE TABLE IF NOT EXISTS `acessos_oportunidade` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bloomie_db.acessos_oportunidade: ~2 rows (aproximadamente)
-/*!40000 ALTER TABLE `acessos_oportunidade` DISABLE KEYS */;
 INSERT INTO `acessos_oportunidade` (`ID_acesso`, `ID_oportunidade`, `data_acesso`) VALUES
-	(1, 6, '2023-11-27 23:16:00'),
-	(2, 6, '2023-11-27 23:19:46');
-/*!40000 ALTER TABLE `acessos_oportunidade` ENABLE KEYS */;
+	(1, 6, '2023-11-28 02:16:00'),
+	(2, 6, '2023-11-28 02:19:46');
 
 -- Copiando estrutura para tabela bloomie_db.adm
 CREATE TABLE IF NOT EXISTS `adm` (
-  `ID_adm` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
+  `ID_adm` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
   PRIMARY KEY (`ID_adm`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `ID_usuario` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.adm: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `adm` DISABLE KEYS */;
-/*!40000 ALTER TABLE `adm` ENABLE KEYS */;
 
 -- Copiando estrutura para evento bloomie_db.Atualizar status oportunidade
 DELIMITER //
@@ -58,25 +56,23 @@ DELIMITER ;
 
 -- Copiando estrutura para tabela bloomie_db.banimento
 CREATE TABLE IF NOT EXISTS `banimento` (
-  `ID_banimento` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
+  `ID_banimento` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
   `data_banimento` datetime NOT NULL,
-  `motivo` varchar(150) CHARACTER SET utf8 NOT NULL,
+  `motivo` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`ID_banimento`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `FK_banimento_usuario` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.banimento: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `banimento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `banimento` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.bloomizade
 CREATE TABLE IF NOT EXISTS `bloomizade` (
-  `ID_bloomizade` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario_id_1` int(11) DEFAULT NULL,
-  `usuario_id_2` int(11) DEFAULT NULL,
-  `status` enum('pendente','aceito') DEFAULT 'pendente',
+  `ID_bloomizade` int NOT NULL AUTO_INCREMENT,
+  `usuario_id_1` int DEFAULT NULL,
+  `usuario_id_2` int DEFAULT NULL,
+  `status_soli` enum('pendente','aceito') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT 'pendente',
   `data_criacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID_bloomizade`),
   KEY `usuario_id_1` (`usuario_id_1`),
@@ -86,53 +82,47 @@ CREATE TABLE IF NOT EXISTS `bloomizade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela bloomie_db.bloomizade: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `bloomizade` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bloomizade` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.comentarios
 CREATE TABLE IF NOT EXISTS `comentarios` (
-  `ID_comentario` int(11) NOT NULL,
-  `ID_usuario` int(11) DEFAULT NULL,
-  `comentario` varchar(2000) CHARACTER SET utf8 DEFAULT NULL,
+  `ID_comentario` int NOT NULL,
+  `ID_usuario` int DEFAULT NULL,
+  `comentario` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`ID_comentario`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `comentarios` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.comentarios: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.contas_inativas
 CREATE TABLE IF NOT EXISTS `contas_inativas` (
-  `ID_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(256) CHARACTER SET utf8 NOT NULL,
-  `nome` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `senha` varchar(128) CHARACTER SET utf8 NOT NULL,
-  `sobrenome` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `estado` char(2) CHARACTER SET utf8 NOT NULL,
-  `cidade` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `personalidade` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `ID_usuario` int NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `nome` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `senha` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `sobrenome` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `estado` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `cidade` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `personalidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `data_nasc` date NOT NULL,
   `data_inatividade` datetime NOT NULL,
-  `motivo` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `motivo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`ID_usuario`),
   UNIQUE KEY `usuario` (`usuario`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.contas_inativas: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `contas_inativas` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.contas_inativas: ~1 rows (aproximadamente)
 INSERT INTO `contas_inativas` (`ID_usuario`, `usuario`, `email`, `nome`, `senha`, `sobrenome`, `estado`, `cidade`, `personalidade`, `data_nasc`, `data_inatividade`, `motivo`) VALUES
 	(15, 'testeexcluir', 'testeexcluir@gmail.com', 'teste', '$2y$10$orMUegO8vW8C5i9lM.pAy.MXdZv6fO9iK6gakgI/am8ZXKGY.rqgi', 'excluir', 'BA', 'Abaíra', NULL, '1969-12-31', '2023-11-19 02:59:14', 'Exclusão de conta');
-/*!40000 ALTER TABLE `contas_inativas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.curtidas
 CREATE TABLE IF NOT EXISTS `curtidas` (
-  `ID_curtida` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) DEFAULT NULL,
-  `ID_post` int(11) DEFAULT NULL,
+  `ID_curtida` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int DEFAULT NULL,
+  `ID_post` int DEFAULT NULL,
   `data_curtida` datetime DEFAULT NULL,
   PRIMARY KEY (`ID_curtida`),
   KEY `ID_usuario` (`ID_usuario`),
@@ -141,66 +131,59 @@ CREATE TABLE IF NOT EXISTS `curtidas` (
   CONSTRAINT `curtidas_ibfk_2` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID_post`)
 ) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela bloomie_db.curtidas: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `curtidas` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.curtidas: ~1 rows (aproximadamente)
 INSERT INTO `curtidas` (`ID_curtida`, `ID_usuario`, `ID_post`, `data_curtida`) VALUES
 	(64, 6, 106, '2023-11-26 00:00:00');
-/*!40000 ALTER TABLE `curtidas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.empresa
 CREATE TABLE IF NOT EXISTS `empresa` (
-  `ID_empresa` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_empresa` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `setor_empresa` varchar(250) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `email_empresa` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
+  `ID_empresa` int NOT NULL AUTO_INCREMENT,
+  `nome_empresa` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
+  `setor_empresa` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
+  `email_empresa` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`ID_empresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.empresa: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.mentor
 CREATE TABLE IF NOT EXISTS `mentor` (
-  `ID_mentor` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_mentor` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `sobrenome_mentor` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `email_mentor` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
-  `setor_mentor` varchar(256) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `ID_mentor` int NOT NULL AUTO_INCREMENT,
+  `nome_mentor` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `sobrenome_mentor` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `email_mentor` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `setor_mentor` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`ID_mentor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.mentor: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `mentor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mentor` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.oportunidade
 CREATE TABLE IF NOT EXISTS `oportunidade` (
-  `ID_oportunidade` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
+  `ID_oportunidade` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
   `data_publicacao` datetime NOT NULL,
-  `categoria` varchar(150) CHARACTER SET utf8 NOT NULL,
-  `descricao` varchar(500) CHARACTER SET utf8 NOT NULL,
-  `imagem` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `tipo_personalidade` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `titulo` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `status_opor` varchar(25) CHARACTER SET utf8 NOT NULL,
+  `categoria` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `descricao` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `imagem` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tipo_personalidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `titulo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `status_opor` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `tempo_expirar` date NOT NULL,
-  `tipo` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `tipo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `inicio` date NOT NULL,
-  `link` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `tags` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `cidade` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `estado` char(2) CHARACTER SET utf8 NOT NULL,
-  `escolaridade` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `faixa_etaria` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `link` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tags` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `cidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `estado` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `escolaridade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `faixa_etaria` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`ID_oportunidade`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `usuario_oportunidade` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.oportunidade: ~29 rows (aproximadamente)
-/*!40000 ALTER TABLE `oportunidade` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.oportunidade: ~36 rows (aproximadamente)
 INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, `categoria`, `descricao`, `imagem`, `tipo_personalidade`, `titulo`, `status_opor`, `tempo_expirar`, `tipo`, `inicio`, `link`, `tags`, `cidade`, `estado`, `escolaridade`, `faixa_etaria`) VALUES
 	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
 	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'negada', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
@@ -229,58 +212,60 @@ INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, 
 	(31, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(33, 21, '2023-11-19 19:09:06', 'teste', 'teste', 'teste', 'teste', 'teste', '', '2023-11-19', NULL, '2023-11-19', 'teste', NULL, 'teste', 'PR', 'teste', NULL),
-	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
-	(36, 6, '2023-11-28 20:22:39', 'Aprendizados', 'Descrição da oportunidade', '../img/20231024_152203.jpg', 'influente', 'teste', 'pendente', '2023-11-30', 'Workshop', '2023-11-01', 'bloomie.com', NULL, 'Abaiara', 'CE', 'Ensino médio incompleto', '15 a 18 anos');
-/*!40000 ALTER TABLE `oportunidade` ENABLE KEYS */;
+	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'expirada', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'expirada', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
+	(36, 6, '2023-11-28 20:22:39', 'Aprendizados', 'Descrição da oportunidade', '../img/20231024_152203.jpg', 'influente', 'teste', 'expirada', '2023-11-30', 'Workshop', '2023-11-01', 'bloomie.com', NULL, 'Abaiara', 'CE', 'Ensino médio incompleto', '15 a 18 anos'),
+	(37, 32, '2023-12-06 11:41:21', 'Aprendizados', 'Neste curso introdutório de Excel serão abordados temas, como formatação de planilhas e de gráficos, classificação de dados e aplicação de fórmulas e funções.  Se você precisa dar os primeiros passos no uso de uma ferramenta de auxílio à execução de trabalhos que envolvam cálculos matemáticos, este é o curso certo!', '../img/WhatsApp Image 2023-12-06 at 10.17.01.jpeg', 'conforme', 'Microsoft Excel 2016 - Básico - Fundação Bradesco', 'pendente', '2024-01-04', 'Cursos Online', '2023-12-06', 'https://www.ev.org.br/cursos/comunicacao-e-expressao', NULL, 'São Paulo', 'SP', 'Livre', '15 a 18 anos'),
+	(39, 32, '2023-12-06 11:52:00', 'Aprendizados', 'Aprenda a utilizar a Língua Brasileira de Sinais (Libras) e garanta o atendimento e o tratamento adequado às pessoas com deficiência auditiva. A Lei nº 10.436/2002 legitima a Libras como idioma advindo das Comunidades Surdas Brasileiras e obriga o poder público em geral a adotar formas institucionalizadas de apoiar o uso e a difusão dessa língua como meio de comunicação.', '../img/WhatsApp Image 2023-12-06 at 10.44.59.jpeg', 'estavel', 'Introdução à Libras', 'pendente', '2024-01-25', 'Desenvolvimento de Idiomas', '2023-12-06', 'https://www.escolavirtual.gov.br/curso/11', NULL, 'São Paulo', 'SP', 'Livre', '15 a 18 anos'),
+	(41, 32, '2023-12-06 20:20:29', 'Aprendizados', 'Em nosso Curso de Informática Básica, você estudará, em quatro módulos, os conceitos fundamentais para quem está iniciando no assunto. Caso sinta dificuldade na compreensão de qualquer tema, a EducaWeb disponibiliza um suporte educacional através de um tutor acadêmico. Você poderá entrar em contato com ele, sempre que houver alguma dúvida, evitando, desta forma, que haja prejuízo na sua aprendizagem em relação ao assunto abordado durante o curso', '../img/WhatsApp Image 2023-12-06 at 10.59.58.jpeg', 'conforme', 'Curso de informática Básica Online - EducaWeb', 'pendente', '2024-01-06', 'Cursos Online', '2023-12-06', 'https://cursoseducaweb.com.br/curso-de-informatica-basica', NULL, 'São Paulo', 'SP', 'Livre', 'Livre'),
+	(42, 32, '2023-12-06 20:50:17', 'Estágios', 'A Universidade da Califórnia em Los Angeles (UCLA) está recrutando estudantes internacionais para um summer job nos EUA no seu Instituto de Matemática Pura e Aplicada. As inscrições abrem na segunda semana de novembro e devem ser enviadas até 5 de fevereiro', '../assets/bluBloomie.png', 'conforme', 'Summer job nos EUA da UCLA ', 'pendente', '2024-02-05', 'Estudo no Exterior', '2023-12-06', 'partiuintercambio.org/bolsas-de-estudo/summer-job-nos-eua-ucla/', NULL, 'Amajari', 'RR', 'Ensino médio completo', '18+'),
+	(43, 32, '2023-12-06 20:54:04', 'Concursos e competições', 'A comunicação está em nosso dia a dia, seja ela verbal (que é aquela que acontece por meio da linguagem escrita ou falada) ou não verbal (que são os gestos, a expressão facial e corporal, as imagens, os símbolos, etc.).  Neste curso, você vai relembrar vários temas que já aprendeu ao longo de sua jornada estudantil.', '../img/WhatsApp Image 2023-12-06 at 10.27.52.jpeg', 'influente', 'Comunicação e Expressão - Fundação Bradesco', 'pendente', '2024-01-04', 'Desenvolvimento de Habilidades', '2023-12-06', 'https://www.ev.org.br/cursos/comunicacao-e-expressao', NULL, 'Abadia dos Dourados', 'MG', 'Livre', 'Livre'),
+	(44, 32, '2023-12-06 20:58:31', 'Voluntariado', 'Em nosso Curso de Informática Básica, você estudará, em quatro módulos, os conceitos fundamentais para quem está iniciando no assunto. Caso sinta dificuldade na compreensão de qualquer tema, a EducaWeb disponibiliza um suporte educacional através de um tutor acadêmico. Você poderá entrar em contato com ele, sempre que houver alguma dúvida, evitando, desta forma, que haja prejuízo na sua aprendizagem em relação ao assunto abordado durante o curso', '../img/WhatsApp Image 2023-12-06 at 10.59.58.jpeg', 'conforme', 'Curso de informática Básica Online - EducaWeb', 'pendente', '2024-02-26', 'Cursos Online', '2023-12-06', 'https://cursoseducaweb.com.br/curso-de-informatica-basica', NULL, 'Abreu e Lima', 'PE', 'Livre', 'Livre');
 
 -- Copiando estrutura para tabela bloomie_db.oportunidades_inativas
 CREATE TABLE IF NOT EXISTS `oportunidades_inativas` (
-  `ID_oportunidades_inativas` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
+  `ID_oportunidades_inativas` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
   `data_publicacao` datetime NOT NULL,
-  `categoria` varchar(150) CHARACTER SET utf8 NOT NULL,
-  `descricao` varchar(500) CHARACTER SET utf8 NOT NULL,
-  `imagem` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
-  `tipo_personalidade` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `titulo` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `status_opor` varchar(25) CHARACTER SET utf8 NOT NULL,
+  `categoria` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `descricao` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `imagem` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `tipo_personalidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `titulo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `status_opor` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `tempo_expirar` datetime NOT NULL,
-  `tipo` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `tipo` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `inicio` datetime NOT NULL,
-  `link` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `tags` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `cidade` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `estado` char(2) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `escolaridade` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `link` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tags` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `cidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0',
+  `estado` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0',
+  `escolaridade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`ID_oportunidades_inativas`),
   KEY `fk_usuario` (`ID_usuario`),
   CONSTRAINT `fk_usuario` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela bloomie_db.oportunidades_inativas: ~4 rows (aproximadamente)
-/*!40000 ALTER TABLE `oportunidades_inativas` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.oportunidades_inativas: ~3 rows (aproximadamente)
 INSERT INTO `oportunidades_inativas` (`ID_oportunidades_inativas`, `ID_usuario`, `data_publicacao`, `categoria`, `descricao`, `imagem`, `tipo_personalidade`, `titulo`, `status_opor`, `tempo_expirar`, `tipo`, `inicio`, `link`, `tags`, `cidade`, `estado`, `escolaridade`) VALUES
 	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01 00:00:00', NULL, '2023-10-03 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto'),
 	(5, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01 00:00:00', NULL, '2023-10-03 00:00:00', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto'),
 	(6, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'inativa', '2023-11-29 00:00:00', NULL, '2023-11-08 00:00:00', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto');
-/*!40000 ALTER TABLE `oportunidades_inativas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.post
 CREATE TABLE IF NOT EXISTS `post` (
-  `ID_post` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
-  `usuario` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `ID_post` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
+  `usuario` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `data_publicacao` datetime NOT NULL,
-  `imagem` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
-  `texto` varchar(3000) CHARACTER SET utf8 NOT NULL,
+  `imagem` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `texto` varchar(3000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`ID_post`),
   KEY `ID_autor` (`ID_usuario`),
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.post: ~115 rows (aproximadamente)
-/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.post: ~145 rows (aproximadamente)
 INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imagem`, `texto`) VALUES
 	(1, 6, '', '2023-11-10 22:20:25', '../img/blu-disc.png', 'Oiiii'),
 	(2, 6, '', '2023-11-10 22:37:35', '../img/', 'oiiiihjsvadha'),
@@ -425,66 +410,61 @@ INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imag
 	(147, 6, 'winnie.s', '2023-11-28 18:36:36', '', ''),
 	(148, 6, 'winnie.s', '2023-11-28 18:36:41', '', ''),
 	(149, 6, 'winnie.s', '2023-11-28 18:36:46', '', 'oiiii'),
-	(150, 6, 'winnie.s', '2023-11-28 19:45:12', '', 'oi gentye');
-/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+	(150, 6, 'winnie.s', '2023-11-28 19:45:12', '', 'oi gentye'),
+	(151, 32, 'murie', '2023-12-06 20:15:41', '', 'oi eu sou o murillo\r\n');
 
 -- Copiando estrutura para tabela bloomie_db.posts_banidos
 CREATE TABLE IF NOT EXISTS `posts_banidos` (
-  `ID_posts_banidos` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_usuario` int(11) NOT NULL,
-  `ID_ADM` int(11) NOT NULL,
+  `ID_posts_banidos` int NOT NULL AUTO_INCREMENT,
+  `ID_usuario` int NOT NULL,
+  `ID_ADM` int NOT NULL,
   PRIMARY KEY (`ID_posts_banidos`),
   KEY `ID_usuario` (`ID_usuario`),
   KEY `ID_ADM` (`ID_ADM`),
   CONSTRAINT `adm_post_banido` FOREIGN KEY (`ID_ADM`) REFERENCES `adm` (`ID_adm`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `usuario_post_banido` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.posts_banidos: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `posts_banidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `posts_banidos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.post_excluidos
 CREATE TABLE IF NOT EXISTS `post_excluidos` (
-  `ID_posts_excluidos` int(11) NOT NULL,
-  `ID_post` int(11) NOT NULL,
-  `ID_usuario` int(11) NOT NULL,
+  `ID_posts_excluidos` int NOT NULL,
+  `ID_post` int NOT NULL,
+  `ID_usuario` int NOT NULL,
   `data_exclusao` datetime NOT NULL,
   PRIMARY KEY (`ID_posts_excluidos`),
   KEY `ID_post` (`ID_post`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `post_excluido` FOREIGN KEY (`ID_post`) REFERENCES `post` (`ID_post`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `usuario_post_excluido` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- Copiando dados para a tabela bloomie_db.post_excluidos: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `post_excluidos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_excluidos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela bloomie_db.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
-  `ID_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(256) CHARACTER SET utf8 NOT NULL,
-  `nome` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `senha` varchar(128) CHARACTER SET utf8 NOT NULL,
-  `sobrenome` varchar(32) CHARACTER SET utf8 NOT NULL,
-  `estado` char(2) CHARACTER SET utf8 NOT NULL,
-  `cidade` varchar(64) CHARACTER SET utf8 NOT NULL,
-  `tipo` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
-  `foto_perfil` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
-  `sobre` varchar(2600) CHARACTER SET utf8 DEFAULT NULL,
-  `instituicao` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
-  `personalidade` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `ID_usuario` int NOT NULL AUTO_INCREMENT,
+  `usuario` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `email` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `nome` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `senha` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `sobrenome` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `estado` char(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `cidade` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `tipo` varchar(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `foto_perfil` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `sobre` varchar(2600) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `instituicao` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `personalidade` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `data_nasc` date DEFAULT NULL,
   `data_criacao` datetime NOT NULL,
   PRIMARY KEY (`ID_usuario`),
   UNIQUE KEY `usuario` (`usuario`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.usuario: ~19 rows (aproximadamente)
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+-- Copiando dados para a tabela bloomie_db.usuario: ~23 rows (aproximadamente)
 INSERT INTO `usuario` (`ID_usuario`, `usuario`, `email`, `nome`, `senha`, `sobrenome`, `estado`, `cidade`, `tipo`, `foto_perfil`, `sobre`, `instituicao`, `personalidade`, `data_nasc`, `data_criacao`) VALUES
 	(5, 'winnie', 'winnie@gmail.com', '', 'winnie', '', '', '', '', '', '', NULL, '', '2023-11-10', '2023-10-01 18:23:08'),
 	(6, 'winnie.s', 'winniestefany303@gmail.com', 'winnie', '$2y$10$Q/jV4/5ljj/ZV4.GBXBlhen9UCK8c7Ar7/h.xXnpA8EIq6AyegwAu', 'silva', 'SP', 'SÃ£o Paulo', '', '../img/blu-disc.png', '', NULL, 'influente', '2023-11-12', '2023-11-02 18:23:21'),
@@ -507,9 +487,10 @@ INSERT INTO `usuario` (`ID_usuario`, `usuario`, `email`, `nome`, `senha`, `sobre
 	(28, 's', 'assesdf@gmail.com', 's', 'd', 'd', 'd', 'Abaiara', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-11-18 03:25:18'),
 	(29, 'c', 'c', 'rgzsddzg', 'd', 'd', 'd', 'Abaiara', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-11-22 03:25:18'),
 	(30, 'w', 'assedwdf@gmail.com', 'rgzsddzg', 'd', 'd', 'd', 'Abaiara', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-11-20 03:25:18'),
-	(31, 'r', 'assedw4df@gmail.com', 'rgzsddzg', 'd', 'd', 'd', 'Abaiara', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-11-21 03:25:18');
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+	(31, 'r', 'assedw4df@gmail.com', 'rgzsddzg', 'd', 'd', 'd', 'Abaiara', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-11-21 03:25:18'),
+	(32, 'murie', 'murilloalmeida@gmail.com', 'murillo ', '$2y$10$YeMRR.yazE5jRzsIOXLQMuwbvmmT2HUWSTv8W4gyXTGOkKr4xyMS6', 'alves', 'PE', 'Araripina', NULL, '../assets/bluBloomie.png', NULL, NULL, NULL, '1969-12-31', '2023-12-06 11:22:44');
 
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
