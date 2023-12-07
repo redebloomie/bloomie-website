@@ -181,9 +181,9 @@ CREATE TABLE IF NOT EXISTS `oportunidade` (
   PRIMARY KEY (`ID_oportunidade`),
   KEY `ID_usuario` (`ID_usuario`),
   CONSTRAINT `usuario_oportunidade` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.oportunidade: ~34 rows (aproximadamente)
+-- Copiando dados para a tabela bloomie_db.oportunidade: ~36 rows (aproximadamente)
 INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, `categoria`, `descricao`, `imagem`, `tipo_personalidade`, `titulo`, `status_opor`, `tempo_expirar`, `tipo`, `inicio`, `link`, `tags`, `cidade`, `estado`, `escolaridade`, `faixa_etaria`) VALUES
 	(4, 21, '2023-10-29 02:57:02', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'inativa', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
 	(5, 11, '2023-10-29 02:57:38', 'teste', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'negada', '2023-11-01', NULL, '2023-10-03', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
@@ -212,13 +212,15 @@ INSERT INTO `oportunidade` (`ID_oportunidade`, `ID_usuario`, `data_publicacao`, 
 	(31, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(32, 6, '2023-11-19 17:49:13', 'Aprendizados', 'Descrição da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'aceita', '2023-11-29', NULL, '2023-11-08', 'bloomie.com', NULL, 'Água Branca', 'AL', 'Ensino médio incompleto', NULL),
 	(33, 21, '2023-11-19 19:09:06', 'teste', 'teste', 'teste', 'teste', 'teste', '', '2023-11-19', NULL, '2023-11-19', 'teste', NULL, 'teste', 'PR', 'teste', NULL),
-	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'pendente', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
-	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'pendente', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
-	(36, 6, '2023-11-28 20:22:39', 'Aprendizados', 'Descrição da oportunidade', '../img/20231024_152203.jpg', 'influente', 'teste', 'pendente', '2023-11-30', 'Workshop', '2023-11-01', 'bloomie.com', NULL, 'Abaiara', 'CE', 'Ensino médio incompleto', '15 a 18 anos'),
+	(34, 16, '2023-10-29 03:00:13', 'Estágios', 'DescriÃ§Ã£o da oportunidade', '../img/image 5.png', 'dominante', 'Oportunidade', 'expirada', '2023-10-13', NULL, '2023-10-11', 'bloomie.com', NULL, 'Ãgua Branca', 'PB', 'Ensino fundamental incompleto', NULL),
+	(35, 6, '2023-11-19 16:27:17', 'Bolsas de estudo', 'Descrição da oportunidade', '../img/image 5.png', 'influente', 'Oportunidade', 'expirada', '2023-11-15', NULL, '2023-11-29', 'bloomie.com', NULL, 'Abreulândia', 'TO', 'Ensino fundamental incompleto', NULL),
+	(36, 6, '2023-11-28 20:22:39', 'Aprendizados', 'Descrição da oportunidade', '../img/20231024_152203.jpg', 'influente', 'teste', 'expirada', '2023-11-30', 'Workshop', '2023-11-01', 'bloomie.com', NULL, 'Abaiara', 'CE', 'Ensino médio incompleto', '15 a 18 anos'),
 	(37, 32, '2023-12-06 11:41:21', 'Aprendizados', 'Neste curso introdutório de Excel serão abordados temas, como formatação de planilhas e de gráficos, classificação de dados e aplicação de fórmulas e funções.  Se você precisa dar os primeiros passos no uso de uma ferramenta de auxílio à execução de trabalhos que envolvam cálculos matemáticos, este é o curso certo!', '../img/WhatsApp Image 2023-12-06 at 10.17.01.jpeg', 'conforme', 'Microsoft Excel 2016 - Básico - Fundação Bradesco', 'pendente', '2024-01-04', 'Cursos Online', '2023-12-06', 'https://www.ev.org.br/cursos/comunicacao-e-expressao', NULL, 'São Paulo', 'SP', 'Livre', '15 a 18 anos'),
-	(38, 32, '2023-12-06 11:48:44', 'Aprendizados', 'A comunicação está em nosso dia a dia, seja ela verbal (que é aquela que acontece por meio da linguagem escrita ou falada) ou não verbal (que são os gestos, a expressão facial e corporal, as imagens, os símbolos, etc.).  Neste curso, você vai relembrar vários temas que já aprendeu ao longo de sua jornada estudantil.', '../img/WhatsApp Image 2023-12-06 at 10.27.50.jpeg', 'influente', 'Comunicação e Expressão - Fundação Bradesco', 'pendente', '2024-01-04', 'Desenvolvimento Pessoal', '2023-12-06', 'https://www.ev.org.br/cursos/comunicacao-e-expressao', NULL, 'São Paulo', 'SP', 'Livre', '15 a 18 anos'),
 	(39, 32, '2023-12-06 11:52:00', 'Aprendizados', 'Aprenda a utilizar a Língua Brasileira de Sinais (Libras) e garanta o atendimento e o tratamento adequado às pessoas com deficiência auditiva. A Lei nº 10.436/2002 legitima a Libras como idioma advindo das Comunidades Surdas Brasileiras e obriga o poder público em geral a adotar formas institucionalizadas de apoiar o uso e a difusão dessa língua como meio de comunicação.', '../img/WhatsApp Image 2023-12-06 at 10.44.59.jpeg', 'estavel', 'Introdução à Libras', 'pendente', '2024-01-25', 'Desenvolvimento de Idiomas', '2023-12-06', 'https://www.escolavirtual.gov.br/curso/11', NULL, 'São Paulo', 'SP', 'Livre', '15 a 18 anos'),
-	(40, 32, '2023-12-06 12:01:42', 'Aprendizados', ' Este curso aprofunda os fundamentos da ciência da computação em termos de variáveis, condicionais, loops e funções usando a sintaxe de programação do Python. Aprenda como aplicar esta linguagem para resolver vários problemas e usar seus frameworks / bibliotecas / pacotes para diferentes contextos. ', '../img/WhatsApp Image 2023-12-06 at 10.55.12.jpeg', 'Dominância', 'Aprendendo com Python', 'pendente', '2023-12-26', 'Cursos Online', '2023-12-06', 'https://www.escolavirtual.gov.br/curso/629', NULL, 'São Paulo', 'SP', 'Livre', 'Livre');
+	(41, 32, '2023-12-06 20:20:29', 'Aprendizados', 'Em nosso Curso de Informática Básica, você estudará, em quatro módulos, os conceitos fundamentais para quem está iniciando no assunto. Caso sinta dificuldade na compreensão de qualquer tema, a EducaWeb disponibiliza um suporte educacional através de um tutor acadêmico. Você poderá entrar em contato com ele, sempre que houver alguma dúvida, evitando, desta forma, que haja prejuízo na sua aprendizagem em relação ao assunto abordado durante o curso', '../img/WhatsApp Image 2023-12-06 at 10.59.58.jpeg', 'conforme', 'Curso de informática Básica Online - EducaWeb', 'pendente', '2024-01-06', 'Cursos Online', '2023-12-06', 'https://cursoseducaweb.com.br/curso-de-informatica-basica', NULL, 'São Paulo', 'SP', 'Livre', 'Livre'),
+	(42, 32, '2023-12-06 20:50:17', 'Estágios', 'A Universidade da Califórnia em Los Angeles (UCLA) está recrutando estudantes internacionais para um summer job nos EUA no seu Instituto de Matemática Pura e Aplicada. As inscrições abrem na segunda semana de novembro e devem ser enviadas até 5 de fevereiro', '../assets/bluBloomie.png', 'conforme', 'Summer job nos EUA da UCLA ', 'pendente', '2024-02-05', 'Estudo no Exterior', '2023-12-06', 'partiuintercambio.org/bolsas-de-estudo/summer-job-nos-eua-ucla/', NULL, 'Amajari', 'RR', 'Ensino médio completo', '18+'),
+	(43, 32, '2023-12-06 20:54:04', 'Concursos e competições', 'A comunicação está em nosso dia a dia, seja ela verbal (que é aquela que acontece por meio da linguagem escrita ou falada) ou não verbal (que são os gestos, a expressão facial e corporal, as imagens, os símbolos, etc.).  Neste curso, você vai relembrar vários temas que já aprendeu ao longo de sua jornada estudantil.', '../img/WhatsApp Image 2023-12-06 at 10.27.52.jpeg', 'influente', 'Comunicação e Expressão - Fundação Bradesco', 'pendente', '2024-01-04', 'Desenvolvimento de Habilidades', '2023-12-06', 'https://www.ev.org.br/cursos/comunicacao-e-expressao', NULL, 'Abadia dos Dourados', 'MG', 'Livre', 'Livre'),
+	(44, 32, '2023-12-06 20:58:31', 'Voluntariado', 'Em nosso Curso de Informática Básica, você estudará, em quatro módulos, os conceitos fundamentais para quem está iniciando no assunto. Caso sinta dificuldade na compreensão de qualquer tema, a EducaWeb disponibiliza um suporte educacional através de um tutor acadêmico. Você poderá entrar em contato com ele, sempre que houver alguma dúvida, evitando, desta forma, que haja prejuízo na sua aprendizagem em relação ao assunto abordado durante o curso', '../img/WhatsApp Image 2023-12-06 at 10.59.58.jpeg', 'conforme', 'Curso de informática Básica Online - EducaWeb', 'pendente', '2024-02-26', 'Cursos Online', '2023-12-06', 'https://cursoseducaweb.com.br/curso-de-informatica-basica', NULL, 'Abreu e Lima', 'PE', 'Livre', 'Livre');
 
 -- Copiando estrutura para tabela bloomie_db.oportunidades_inativas
 CREATE TABLE IF NOT EXISTS `oportunidades_inativas` (
@@ -261,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`ID_post`),
   KEY `ID_autor` (`ID_usuario`),
   CONSTRAINT `autor_post` FOREIGN KEY (`ID_usuario`) REFERENCES `usuario` (`ID_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
--- Copiando dados para a tabela bloomie_db.post: ~144 rows (aproximadamente)
+-- Copiando dados para a tabela bloomie_db.post: ~145 rows (aproximadamente)
 INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imagem`, `texto`) VALUES
 	(1, 6, '', '2023-11-10 22:20:25', '../img/blu-disc.png', 'Oiiii'),
 	(2, 6, '', '2023-11-10 22:37:35', '../img/', 'oiiiihjsvadha'),
@@ -408,7 +410,8 @@ INSERT INTO `post` (`ID_post`, `ID_usuario`, `usuario`, `data_publicacao`, `imag
 	(147, 6, 'winnie.s', '2023-11-28 18:36:36', '', ''),
 	(148, 6, 'winnie.s', '2023-11-28 18:36:41', '', ''),
 	(149, 6, 'winnie.s', '2023-11-28 18:36:46', '', 'oiiii'),
-	(150, 6, 'winnie.s', '2023-11-28 19:45:12', '', 'oi gentye');
+	(150, 6, 'winnie.s', '2023-11-28 19:45:12', '', 'oi gentye'),
+	(151, 32, 'murie', '2023-12-06 20:15:41', '', 'oi eu sou o murillo\r\n');
 
 -- Copiando estrutura para tabela bloomie_db.posts_banidos
 CREATE TABLE IF NOT EXISTS `posts_banidos` (
