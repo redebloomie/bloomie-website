@@ -13,7 +13,7 @@ if (!isset($_SESSION['ID_usuario'])) {
 // Verifica se o usuário é o administrador
 if ($_SESSION['ID_usuario'] !== '33') {
     // Se não for o administrador, redireciona para uma página de erro ou outra página adequada
-    header('Location: ../../public/index.html');
+    header('Location: ../../index.html');
     exit();
 }
 

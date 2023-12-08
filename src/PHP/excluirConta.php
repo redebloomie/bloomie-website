@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
             session_destroy();
 
             // Redirecione para a página inicial ou de confirmação
-            header("Location: ../../public/index.html");
+            header("Location: ../../index.html");
             exit();
         } else {
             // Usuário não encontrado, redireciona para uma página de erro ou homepage

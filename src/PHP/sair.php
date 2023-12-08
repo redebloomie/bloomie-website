@@ -6,6 +6,6 @@ session_start();
 session_destroy();
 
 // Redirecione para a página inicial (altere 'index.php' para o caminho desejado)
-header("Location: ../../public/index.html");
+header("Location: ../../index.html");
 exit(); // Certifique-se de sair após redirecionar
 ?>

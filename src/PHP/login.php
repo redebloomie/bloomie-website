@@ -45,7 +45,7 @@ if (isset($_POST['submit']) && !empty($_POST['login']) && !empty($_POST['senha']
     } else {
         // Credenciais inválidas
         unset($_SESSION['usuario']);
-        header('Location: ../../public/index.html');
+        header('Location: ../../index.html');
     }
 }
 
