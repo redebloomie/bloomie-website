@@ -4,7 +4,7 @@
 
 <head>
 
-  <title>Notificações Geral</title>
+  <title>Notificações gerais</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -119,7 +119,7 @@
 
                   <i class="ph ph-gear"></i>
 
-                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
 
                 </div>
 
@@ -246,7 +246,7 @@
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="../pages/configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>

@@ -40,7 +40,7 @@ mysqli_close($conexao);
 
 <head>
 
-  <title>Notificações Solicitação</title>
+  <title>Notificações de solicitação</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
@@ -156,7 +156,7 @@ mysqli_close($conexao);
 
                   <i class="ph ph-gear"></i>
 
-                  <a href="../pages/configuracoes.php" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
 
                 </div>
 
@@ -261,7 +261,7 @@ mysqli_close($conexao);
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="../pages/configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>

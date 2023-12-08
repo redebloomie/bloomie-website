@@ -27,19 +27,19 @@ if (empty($_SESSION['personalidade'])) {
     $tipo_personalidade = $_SESSION['personalidade'];
 
     // Estágio
-    $estagios = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Estágios' AND personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+    $estagios = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Estágios' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
 
     // Aprendizado
-    $aprendizado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Aprendizados' AND ersonalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+    $aprendizado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Aprendizados' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
 
     // Bolsas de Estudo
-    $bolsas_estudo = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Bolsas de Estudo' AND personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+    $bolsas_estudo = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Bolsas de Estudo' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
 
     // Concursos e Competições
-    $concursos_competicoes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Concursos e Competições' AND personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+    $concursos_competicoes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Concursos e Competições' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
 
     // Voluntariado
-    $voluntariado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Voluntariado' AND personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
+    $voluntariado = $conexao->query("SELECT * FROM oportunidade WHERE categoria = 'Voluntariado' AND tipo_personalidade = '$tipo_personalidade' ORDER BY data_publicacao DESC LIMIT $limit");
 }
 
 // Restante do seu código para exibir as oportunidades
@@ -51,7 +51,7 @@ if (empty($_SESSION['personalidade'])) {
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Homepage - Oportunidades</title>
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -68,22 +68,17 @@ if (empty($_SESSION['personalidade'])) {
 </head>
 
 <body id="homepage">
-  <nav class="navbar navbar-expand-sm navbar-dark bg-white" id="nav-principal">
+<nav class="navbar navbar-expand-sm navbar-dark bg-white" id="nav-principal" style="display:flex;">
     <a class="navbar-brand" href="homepage-postagens.php"><img src="../assets/logoBloomie-blu.png" alt="" width="150px" style="margin-left: 20px;"></a>
     <div class="botoes-nav">
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav me-auto mt-2 mt-lg-0" style="display: flex; flex-direction: row; gap: 10px;">
         <li class="nav-item">
-          <a href="homepage-postagens.php">
-            <button type="button" id="btnPostagens" class="btn"
-            style="color: #5AB5FF; font-weight: 500;">Postagens</button>
-          </a>
+          <a href="homepage-postagens.php"><button type="button" id="btnPostagens" class="btn"
+            style="color: #5AB5FF; font-weight: 500; font-weight: 500;">Postagens</button></a>
         </li>
         <li class="nav-item">
-          <a href="homepage-oportunidades-nm.php">
-            <button type="button" id="btnOportunidades" class="btn"
-            style="background-color: #0C5D9E; color: #fff; font-weight: 500; border-radius: 15px; width: 150px;">Oportunidades</button>
-          </a>
+          <a href="homepage-oportunidades-nm.php"><button type="button" id="btnOportunidades" class="btn"
+            style="background-color: #0C5D9E; color: #fff; border-radius: 15px; width: 150px;">Oportunidades</button></a>
         </li>
       </ul>
     </div>
@@ -93,7 +88,7 @@ if (empty($_SESSION['personalidade'])) {
   <div class="row g-0" id="feed-all-container" style="display: flex; flex-direction: row; justify-content: start; align-items: start;">
       <div class="col-md-2 col-sm-0 d-sm-none d-md-flex bg-primary sidebar-container">
         <div class="container text-center sidebar">
-          <div class="row row-cols-1 justify-content-around align-items-center g-5">
+          <div class="row row-cols-1 d-flex justify-content-around align-items-center g-5">
             <div class="col">
               <span class="searchbar rounded-4">
                 <i class="ph ph-magnifying-glass"></i>
@@ -120,7 +115,7 @@ if (empty($_SESSION['personalidade'])) {
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
@@ -164,23 +159,23 @@ if (empty($_SESSION['personalidade'])) {
                                 // O usuário não tem personalidade
                                 // Exibir a mensagem e link para o teste DISC
                                 echo '
-                                <div class="col top-oportunidades">
-                                    <h2>Ops, não conseguimos recomendar nada!<br>Faça nosso Teste DISC e desbloqueie suas recomendações.</h2>
-                                </div>
-                                <div class="col-12">
-                                    <div class="oportunidade-container-expand col-sm-12" style="margin-top: 30px;">
-                                        <div class="oportunidade-expand-foto">
-                                            <img src="../assets/blu-disc.png" alt="" style="height: 18vw;">
-                                        </div>
-                                        <div class="oportunidade-expand-info" style="display: flex; flex-direction: column; justify-content: center; gap: 20px;">
-                                            <h2 style="font-size: 25px; margin: 0;">Realize nosso Teste DISC e receba oportunidades personalizadas.</h2>
-                                            <p style="margin: 0; font-size: 20px; font-weight: 400;">Descubra seu perfil e acesse o que há de melhor pra você. <span style="font-weight: 500;">Faça agora!</span></p>
-                                            <a href="../pages/testeDISC.html" style="width: 100%;">
-                                                <button style="padding: 2px 0 2px 0;">Realizar Teste DISC</button>
-                                            </a>
-                                        </div>
+                                    <div class="col-12 col-sm-10 col-md-10 col-lg-10">
+                                    <div class="col top-oportunidades">
+                                        <h2>Ops, não conseguimos recomendar nada!<br>Faça nosso Teste DISC e desbloqueie suas recomendações.</h2>
                                     </div>
-                                </div>';
+                                        <div class="oportunidade-container-expand col-md-12 col-sm-12 p-2" style="margin-top: 30px; justify-content: start; align-items: center; height: max-content; gap: 5px;">
+                                            <div class="oportunidade-expand-foto col-4">
+                                                <img src="../assets/blu-disc.png" alt="" style="height: 40vh; width: 90%;">
+                                            </div>
+                                            <div class="oportunidade-expand-info col-8">
+                                                <h2 class="" style="margin: 0;">Realize nosso Teste DISC e receba oportunidades personalizadas.</h2>
+                                                <p class="" style="margin: 0; font-size: 15px; font-weight: 400; word-wrap: break-word; max-width: 100%;">Descubra seu perfil e acesse o que há de melhor pra você.</p>
+                                                <a href="../pages/testeDISC.html" class="btn btn-primary col-11 rounded-3 bold">
+                                                    Realizar Teste DISC
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>';
                             } else {
                                 // O usuário tem personalidade
                                 // Exibir a mensagem e o filtro
@@ -196,7 +191,7 @@ if (empty($_SESSION['personalidade'])) {
                                 $queryOportunidadeMaisClicada = "SELECT o.*, COUNT(a.ID_acesso) as total_cliques 
                                                                 FROM oportunidade o
                                                                 LEFT JOIN acessos_oportunidade a ON o.ID_oportunidade = a.ID_oportunidade
-                                                                WHERE a.data_acesso >= CURDATE() - INTERVAL 1 WEEK
+                                                                WHERE o.tipo_personalidade = $tipoPersonalidade AND a.data_acesso >= CURDATE() - INTERVAL 1 WEEK
                                                                 GROUP BY o.ID_oportunidade
                                                                 ORDER BY total_cliques DESC
                                                                 LIMIT 1";
@@ -272,35 +267,41 @@ if (empty($_SESSION['personalidade'])) {
                       Crescimento profissional</p>
                   </span>
                 </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; position: relative; gap: 2vw;">
                   <?php
-                    while ($opor = $estagios->fetch_assoc()) {
-                  
+                  while ($opor = $estagios->fetch_assoc()) {
                       echo '
                       <div>
-                            <div class="row-cols-1 justify-content-center align-items-center g-2">
+                          <div class="row-cols-1 justify-content-center align-items-center g-2">
                               <div class="col image-container">
-                                <img src="'. $opor['imagem'].'" alt="">
-                                <div class="overlay" style="color: #0C5D9E;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? '...' : '') .' <span style="font-weight: 500;">Ler mais.</span></div>
+                                  <img src="'. $opor['imagem'].'" alt="" style="width:14vw; height:14vw; object-fit:cover;">
+                                  <div class="overlay" style="color: #0C5D9E; width:14vw; height:14vw;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? ' Ler mais...' : '') .'</div>
                               </div>
                               <div class="col" style="margin-top: 10px;">
-                                <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                                <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                                <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                                  <p style="font-weight: 500; font-size: 15px;">'. $opor['titulo'] .'</p>
+                                  <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                                  <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
                               </div>
                               <div class="col">
-                              <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                                  <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary col-12" style="padding: 2px 0; font-weight: 500; font-size: 15px; margin-top: 10px;">Saiba mais</a>
                               </div>
-                            </div>
-                          </div>';
-                    }
+                          </div>
+                      </div>';
+                  }
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($estagios->num_rows > 0) {
+                      echo '
+                      <div class="col-1" style="position: absolute; right:0;">
+                          <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                              <a href="categoria.php?categoria=estagios" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 40px; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
+                          </div>
+                      </div>';
+                  }else{
+                    echo 'Nenhuma oportunidade encontrada.';
+                  }
                   ?>
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
-                  </div>
-                </div>
+              </div>
+
               </div>
 
               <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
@@ -315,37 +316,41 @@ if (empty($_SESSION['personalidade'])) {
                       Crescimento Acadêmico</p>
                   </span>
                 </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; position: relative; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw;">
-                <?php
-            while ($opor = $aprendizado->fetch_assoc()) {
-          
-              echo '
-              <div>
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="'. $opor['imagem'].'" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
-                      </div>
-                      <div class="col">
-                        <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                      </div>
-                    </div>
-                  </div>';
-          }
-
-          ?>
-                
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                  <?php
+                  while ($opor = $aprendizado->fetch_assoc()) {
+                      echo '
+                      <div>
+                          <div class="row-cols-1 justify-content-center align-items-center g-2">
+                            <div class="col image-container">
+                                <img src="'. $opor['imagem'].'" alt="" style="width:14vw; height:14vw; object-fit:cover;">
+                                <div class="overlay" style="color: #0C5D9E; width:14vw; height:14vw;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? ' Ler mais...' : '') .'</div>
+                            </div>
+                            <div class="col" style="margin-top: 10px;">
+                                <p style="font-weight: 500; font-size: 15px;">'. $opor['titulo'] .'</p>
+                                <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                                <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                            </div>
+                            <div class="col">
+                                <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary col-12" style="padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                            </div>
+                          </div>
+                      </div>';
+                  }
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($aprendizado->num_rows > 0) {
+                      echo '
+                      <div class="col-1" style="position: absolute; right:0;">
+                      <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="categoria.php?categoria=aprendizado" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 40px; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                   </div>
+                      </div>';
+                  }else{
+                    echo 'Nenhuma oportunidade encontrada.';
+                  }
+                  ?>
                 </div>
+
               </div>
 
               <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
@@ -360,35 +365,41 @@ if (empty($_SESSION['personalidade'])) {
                       Crescimento Acadêmico</p>
                   </span>
                 </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; position: relative; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw;">
-                <?php
-            while ($opor = $bolsas_estudo->fetch_assoc()) {
-          
-              echo '
-              <div>
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="'. $opor['imagem'].'" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
-                      </div>
-                      <div class="col">
-                      <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                      </div>
-                    </div>
-                  </div>';
-          }
-          ?>
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                  <?php
+                  while ($opor = $bolsas_estudo->fetch_assoc()) {
+                      echo '
+                      <div>
+                          <div class="row-cols-1 justify-content-center align-items-center g-2">
+                          <div class="col image-container">
+                              <img src="'. $opor['imagem'].'" alt="" style="width:14vw; height:14vw; object-fit:cover;">
+                              <div class="overlay" style="color: #0C5D9E; width:14vw; height:14vw;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? ' Ler mais...' : '') .'</div>
+                          </div>
+                          <div class="col" style="margin-top: 10px;">
+                              <p style="font-weight: 500; font-size: 15px;">'. $opor['titulo'] .'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                          </div>
+                          <div class="col">
+                              <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary col-12" style="padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                          </div>
+                          </div>
+                      </div>';
+                  }
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($bolsas_estudo->num_rows > 0) {
+                      echo '
+                      <div class="col-1" style="position: absolute; right:0;">
+                      <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="categoria.php?categoria=bolsas_estudo" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 40px; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                   </div>
-                </div>
+                      </div>';
+                  }else{
+                    echo 'Nenhuma oportunidade encontrada.';
+                  }
+                  ?>
+              </div>
+
               </div>
 
               <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
@@ -403,35 +414,41 @@ if (empty($_SESSION['personalidade'])) {
                       Crescimento Acadêmico</p>
                   </span>
                 </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; position: relative; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw;">
-                <?php
-            while ($opor = $concursos_competicoes->fetch_assoc()) {
-          
-              echo '
-              <div>
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="'. $opor['imagem'].'" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
-                      </div>
-                      <div class="col">
-                      <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                      </div>
-                    </div>
-                  </div>';
-          }
-          ?>
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                  <?php
+                  while ($opor = $concursos_competicoes->fetch_assoc()) {
+                      echo '
+                      <div>
+                          <div class="row-cols-1 justify-content-center align-items-center g-2">
+                          <div class="col image-container">
+                              <img src="'. $opor['imagem'].'" alt="" style="width:14vw; height:14vw; object-fit:cover;">
+                              <div class="overlay" style="color: #0C5D9E; width:14vw; height:14vw;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? ' Ler mais...' : '') .'</div>
+                          </div>
+                          <div class="col" style="margin-top: 10px;">
+                              <p style="font-weight: 500; font-size: 15px;">'. $opor['titulo'] .'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                          </div>
+                          <div class="col">
+                              <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary col-12" style="padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                          </div>
+                          </div>
+                      </div>';
+                  }
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($concursos_competicoes->num_rows > 0) {
+                      echo '
+                      <div class="col-1" style="position: absolute; right:0;">
+                      <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="categoria.php?categoria=conc_comp" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 40px; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                   </div>
-                </div>
+                      </div>';
+                  }else{
+                    echo 'Nenhuma oportunidade encontrada.';
+                  }
+                  ?>
+              </div>
+
               </div>
 
               <div class="col row-cols-1 justify-content-center align-items-center g-2 op-lista"
@@ -446,35 +463,41 @@ if (empty($_SESSION['personalidade'])) {
                       Crescimento Acadêmico</p>
                   </span>
                 </div>
-                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; position: relative; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw;">
-                <?php
-            while ($opor = $voluntariado->fetch_assoc()) {
-          
-              echo '
-                  <div>
-                    <div class="row-cols-1 justify-content-center align-items-center g-2">
-                      <div class="col image-container">
-                        <img src="'. $opor['imagem'].'" alt="">
-                        <div class="overlay" style="color: #0C5D9E;">'.$opor['descricao'].' <span style="font-weight: 500;">Ler mais.</span></div>
-                      </div>
-                      <div class="col" style="margin-top: 10px;">
-                        <p style="font-weight: 500; font-size: 18px;">'. $opor['titulo'] .'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
-                        <p><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
-                      </div>
-                      <div class="col">
-                      <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary" style="width: 15vw; padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
-                      </div>
-                    </div>
-                  </div>';
-          }
-          ?>
-                  <div class="col-1" style="position: absolute; right:0;">
-                    <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
-                      <a href="" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 4vw; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
-                    </div>
+                <div class="col op-lista-bottom" style="margin-top: 20px; margin-bottom: 40px; display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 3vw; position: relative;">
+                  <?php
+                  while ($opor = $voluntariado->fetch_assoc()) {
+                      echo '
+                      <div>
+                          <div class="row-cols-1 justify-content-center align-items-center g-2">
+                              <div class="col image-container">
+                              <img src="'. $opor['imagem'].'" alt="" style="width:14vw; height:14vw; object-fit:cover;">
+                              <div class="overlay" style="color: #0C5D9E; width:14vw; height:14vw;">'. substr($opor['descricao'], 0, 50) . (strlen($opor['descricao']) > 50 ? ' Ler mais...' : '') .'</div>
+                          </div>
+                          <div class="col" style="margin-top: 10px;">
+                              <p style="font-weight: 500; font-size: 15px;">'. $opor['titulo'] .'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Prazo:</span> '.$opor['tempo_expirar'].'</p>
+                              <p style="font-size:12px"><span style="font-weight: 500; color: #1185E3;">Faixa etária:</span> '.$opor['faixa_etaria'].'</p>
+                          </div>
+                          <div class="col">
+                              <a href="oportunidade.php?id='. $opor['ID_oportunidade'] .'" class="btn btn-primary col-12" style="padding: 2px 0; font-weight: 500; font-size: 18px; margin-top: 10px;">Saiba mais</a>
+                          </div>
+                          </div>
+                      </div>';
+                  }
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($voluntariado->num_rows > 0) {
+                      echo '
+                      <div class="col-1" style="position: absolute; right:0;">
+                      <div class="row-cols-1 justify-content-center align-items-center g-2" style="height: 100%;">
+                      <a href="categoria.php?categoria=voluntariado" style="height: 100%; display: flex; justify-content: center; align-items: center; text-decoration: none; font-size: 40px; color: #1185E3;"><i class="ph ph-caret-right"></i></a>
                   </div>
-                </div>
+                      </div>';
+                  }else{
+                    echo 'Nenhuma oportunidade encontrada.';
+                  }
+                  ?>
+              </div>
+
               </div>
             </div>
           </div>
@@ -621,7 +644,7 @@ if (empty($_SESSION['personalidade'])) {
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>

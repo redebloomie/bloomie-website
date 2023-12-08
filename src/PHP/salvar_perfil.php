@@ -8,6 +8,7 @@ if (isset($_POST['nome']) && isset($_POST['usuario'])) {
     $novoSobrenome = $_POST['sobrenome']; // Obtenha o valor do campo de nome
     $novoUsuario = $_POST['usuario']; // Obtenha o valor do campo de usuário
     $novoSobre = $_POST['sobre']; // Obtenha o valor do campo de usuário
+    $novoInteresse = $_POST['interesses'];
 
     // Inicializa as variáveis para a foto de perfil
     $caminhoDestino = null;
@@ -36,9 +37,9 @@ if (isset($_POST['nome']) && isset($_POST['usuario'])) {
 
     // Atualiza o nome e o usuário no banco de dados
     $ID_usuario = $_SESSION['ID_usuario'];
-    $sqlUpdateDados = "UPDATE usuario SET nome = ?, usuario = ?, sobrenome = ?, sobre = ? WHERE ID_usuario = ?";
+    $sqlUpdateDados = "UPDATE usuario SET nome = ?, usuario = ?, sobrenome = ?, sobre = ?, interesses = ? WHERE ID_usuario = ?";
     $stmtUpdateDados = $conexao->prepare($sqlUpdateDados);
-    $stmtUpdateDados->bind_param("ssssi", $novoNome, $novoUsuario, $novoSobrenome, $novoSobre, $ID_usuario);
+    $stmtUpdateDados->bind_param("sssssi", $novoNome, $novoUsuario, $novoSobrenome, $novoSobre, $novoInteresse, $ID_usuario);
     if (!$stmtUpdateDados->execute()) {
         die('Erro ao atualizar o nome e o usuário: ' . $stmtUpdateDados->error);
     }

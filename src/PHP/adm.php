@@ -75,6 +75,16 @@ $consultaPosts = "SELECT COUNT(*) AS totalPosts FROM post";
 $resultadoPosts = $conexao->query($consultaPosts);
 $totalPosts = $resultadoPosts->fetch_assoc()['totalPosts'];
 
+// Consultar quantidade de curtidas
+$consultaCurtidas = "SELECT COUNT(*) AS totalCurtidas FROM curtidas";
+$resultadoCurtidas = $conexao->query($consultaCurtidas);
+$totalCurtidas = $resultadoCurtidas->fetch_assoc()['totalCurtidas'];
+
+// Consultar quantidade de comentarios
+$consultaComen = "SELECT COUNT(*) AS totalComen FROM comentarios";
+$resultadoComen = $conexao->query($consultaComen);
+$totalComen = $resultadoComen->fetch_assoc()['totalComen'];
+
 // Fechar a conexão com o banco de dados
 $conexao->close();
 ?>
@@ -83,7 +93,7 @@ $conexao->close();
 <html lang="en">
 
 <head>
-<title>Title</title>
+<title>Administração</title>
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -199,11 +209,11 @@ $conexao->close();
           <canvas id="myChart"></canvas>
 
             </div>
-            <div class="p-3 border border-primary rounded-4 col-md-3 d-flex flex-column" style="height: 20rem;">
-              <p class="h4 txtj">Base Filtrada</p>
+            <div class="p-3 rounded-4 col-md-3 d-flex flex-column" style="height: 20rem;">
+
               <!-- Seu conteúdo aqui -->
               <div class="mt-auto text-center"> 
-                  <input type="date" class="rounded-4 form-control border-primary" style="height: 2rem;">
+                  
                   
               </div>
           </div>
@@ -227,22 +237,24 @@ $conexao->close();
           <canvas id="ChartP"></canvas>
             </div>
             <div class="col-md-3">
-              <div class="bg-primary col-md-12 rounded-4 text-white text-center d-flex justify-content-center align-items-center mb-5" style="height: 8rem;" >
-                <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;"  alt=""></div>
-                <div>
-                  <p class="m-0">Usuários</p> 
-                  <span class="h1">100</span>
-                </div>
-                
+            <div class="bg-primary col-md-12 mb-5 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
+              style="height: 18vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <div><i class="ph ph-heart" style="font-size: 5vw;" alt=""></i></div>
+              <div>
+                <p class="m-0">Curtidas</p>
+                <span class="h1"><?php echo $totalCurtidas; ?></span>
               </div>
-              <div class="bg-primary col-md-12 rounded-4 text-white text-center d-flex justify-content-center align-items-center mb-5" style="height: 8rem;" >
-                <div> <img src="../assets/bluBloomie.png" class="img-fluid" style="height: 50px; width: 50px;"  alt=""></div>
-                <div>
-                  <p class="m-0">Usuários</p> 
-                  <span class="h1">100</span>
-                </div>
-                
+          
+            </div>
+            <div class="bg-primary col-md-12 rounded-4 text-white text-center d-flex justify-content-center align-items-center"
+              style="height: 18vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <div><i class="ph ph-chat" style="font-size: 5vw;" alt=""></i></div>
+              <div>
+                <p class="m-0">Comentários</p>
+                <span class="h1"><?php echo $totalComen; ?></span>
               </div>
+          
+            </div>
             </div>
             
               

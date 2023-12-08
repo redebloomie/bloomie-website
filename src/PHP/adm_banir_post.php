@@ -41,6 +41,7 @@ mysqli_close($conexao);
     <title>Banir post</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -218,7 +219,7 @@ mysqli_close($conexao);
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>

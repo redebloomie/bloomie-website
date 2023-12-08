@@ -61,7 +61,7 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Perfil</title>
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -172,7 +172,7 @@
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
@@ -248,7 +248,7 @@
                 <h2>Bloomigos</h2>
                 <p
                   style="color: #fff; background-color: #5AB5FF; font-weight: 500; padding: 0px 40px; border-radius: 15px;">
-                  3</p>
+                  </p>
                 <i class="ph ph-lock-open"></i>
               </span>
               <p style="margin-top: 0px;">Suas conexões estão aqui. Clique em <span
@@ -264,14 +264,22 @@
                       </div>
                       ';
                   }
-                  ?>
-                  <div class="bloomigo-perfil">
+
+                  // Verifica se há pelo menos uma oportunidade para exibir a seta
+                  if ($resultUltimosAmigos->num_rows > 0) {
+                    echo '
+                    <div class="bloomigo-perfil">
                       <a href="bloomigos.php">
                       <p style="color: #0B528C; height: 100%; display: flex; justify-content: center; align-items: center">
                           <i class="ph ph-caret-right" style="font-size: 3vw;"></i>
                       </p>
                       </a>
-                  </div>
+                  </div>';
+                }else{
+                  echo 'Você não possui nenhuma bloomizade';
+                }
+                  ?>
+                  
                 </span>
             </div>
           </div>
@@ -282,7 +290,7 @@
                 <h2>Interesses</h2>
                 <!-- <i class="ph ph-pencil-simple"></i> -->
               </span>
-              <input type="text" name="sobre" id="sobre" class="editavel col-12" contenteditable="false" value="<?php echo $interesses; ?>" placeholder="Ainda não há nada por aqui." style="color: #5AB5FF; background:none;">
+              <input type="text" name="interesses" id="interesses" class="editavel col-12" contenteditable="false" value="<?php echo $interesses; ?>" placeholder="Ainda não há nada por aqui." style="color: #5AB5FF; background:none;">
             </div>
             <div class="perfil-left-item" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
               <span style="display: flex; flex-direction: row; justify-content: start; align-items: center; gap: 10px;">

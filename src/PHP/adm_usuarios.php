@@ -70,7 +70,7 @@ mysqli_close($conexao);
 
 <head>
 
-  <title>Excluir erro</title>
+  <title>Usuários</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -140,15 +140,15 @@ mysqli_close($conexao);
                   <a href="adm.php" class="text-decoration-none text-white">Dasboard</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-user"></i>
+                  <i class="ph ph-plant"></i>
                   <a href="adm_oportunidade.php" class="text-decoration-none text-white">Oportunidades</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-bell-ringing"></i>
+                  <i class="ph ph-article"></i>
                   <a href="adm_postagens.php" class="text-decoration-none text-white">Postagens</a>
                 </div>
                 <div class="col text-white sidebar-op">
-                  <i class="ph ph-gear"></i>
+                  <i class="ph ph-user"></i>
                   <a href="adm_usuarios.php" class="text-decoration-none text-white">Usuários</a>
                 </div>
               </div>

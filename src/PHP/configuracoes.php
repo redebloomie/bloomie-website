@@ -6,6 +6,7 @@
 
   <title>Configurações</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -119,7 +120,7 @@
 
                   <i class="ph ph-gear"></i>
 
-                  <a href="configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
 
                 </div>
 
@@ -150,22 +151,21 @@
 
       <section class="container col-12 col-md-10 col-lg-10 justify-content-center " style="padding-top: 5rem;">
         <p class="h3 txtT mb-3 ">Conta</p>
-        <div class="border border-primary rounded-4 p-4 txtT col-12 col-md-9 col-lg-9 mb-5" >
+        <div class="border border-primary rounded-4 p-4 txtT col-12 col-md-9 col-lg-9 mb-5">
           <h5>Alterar e-mail</h5>
-          <div class="col-12 col-sm-6 col-md-12 col-lg-6 mb-3 " >
-              <input type="email" class="form-control rounded-4" id="" placeholder="Novo e-mail" style="border-color: #1185e3;" >
-          </div>
-          <h5>Alterar e-mail</h5>
-          <div class="col-12 col-sm-6 col-md-12 col-lg-6">
-              <input type="password" class="form-control rounded-4 mb-3" id="" placeholder="Nova senha" style="border-color: #1185e3;">
-          </div>
-          <div class="col-12 col-sm-6 col-md-12  col-lg-6">
-            <input type="password " class="form-control rounded-4 mb-3" id="" placeholder="Digite novamente" style="border-color: #1185e3;">
-          </div>
-          <div class="col-12 col-md-12  btn-lg  text-end">
-            <button type="submit" class="btn btn-primary col-4 col-md-2 ">Salvar</button>
-          </div>
-
+          <form action="alterar_email.php" method="post" onsubmit="return validarForm()">
+              <div class="col-12 col-sm-6 col-md-12 col-lg-6">
+                  <input type="email" class="form-control rounded-4 mb-3" name="novo_email" id="novo_email" placeholder="Novo email" style="border-color: #1185e3;" required>
+              </div>
+              <div class="col-12 col-sm-6 col-md-12 col-lg-6">
+                  <input type="email" class="form-control rounded-4 mb-3" name="confirmar_email" id="confirmar_email" placeholder="Digite novamente" style="border-color: #1185e3;" required>
+              </div>
+              <div class="col-12 text-danger mb-3" id="erroEmail">
+              </div>
+              <div class="col-12 col-md-12 btn-lg text-end">
+                  <button type="submit" class="btn btn-primary col-4 col-md-2">Salvar</button>
+              </div>
+          </form>
         </div>
         <p class="h3 txtT mb-3 ">Notificações</p>
         <div class="border border-primary rounded-4 p-4 txtT col-12 col-md-9 col-lg-9  mb-5" >
@@ -233,8 +233,10 @@
         <p class="h3 txtT mb-3 text-decoration-underline ">Controle de Conta</p>
         <div class="border border-primary rounded-4 p-4 txtT col-12 col-md-9 col-lg-9"   >
           <div class="d-flex justify-content-between  col-8 col-sm-8 col-md-8  ">
-            <p class="h4  col-12 " >Excluir minha conta</p>
-            <div><img src="../assets/filo-icon1.png" class="" alt="..." style="width: 20px; height: 20px;"></div>
+            <a href="../pages/excluirConta.html" class="d-flex justify-content-between  col-12 col-sm-12 col-md-12  ">
+              <p class="h4  col-12 " >Excluir minha conta</p>
+              <div><img src="../assets/filo-icon1.png" class="" alt="..." style="width: 20px; height: 20px;"></div>
+            </a>
           </div>
           
         </div>
@@ -262,7 +264,7 @@
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>
@@ -289,6 +291,22 @@
 
   </footer>
   <script src="bottom_tab.js"></script>
+
+  <script>
+    function validarForm() {
+        // Validar se os e-mails coincidem
+        var novoEmail = document.getElementById('novo_email').value;
+        var confirmarEmail = document.getElementById('confirmar_email').value;
+
+        if (novoEmail !== confirmarEmail) {
+            document.getElementById('erroEmail').innerHTML = "Os e-mails não coincidem.";
+            alert("Os e-mails não coincidem.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
   <!-- Bootstrap JavaScript Libraries -->
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

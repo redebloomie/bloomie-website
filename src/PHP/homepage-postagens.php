@@ -176,7 +176,7 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>Homepage - Postagens</title>
   <meta charset="UTF-8">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -239,7 +239,7 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-gear"></i>
-                  <a href="../pages/configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                  <a href="configuracoes.php" class="text-decoration-none text-white">Configurações</a>
                 </div>
                 <div class="col text-white sidebar-op">
                   <i class="ph ph-question"></i>
@@ -686,7 +686,7 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
             <i class="ph ph-bell"></i>
           </a>
 
-          <a href="../pages/configuracoes.html" class="text-decoration-none">
+          <a href="configuracoes.php" class="text-decoration-none">
             <i class="ph ph-gear"></i>
           </a>
         </nav>

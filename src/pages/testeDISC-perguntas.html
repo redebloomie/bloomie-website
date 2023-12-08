@@ -109,7 +109,7 @@
                             </div>
                             <div class="col text-white sidebar-op">
                                 <i class="ph ph-gear"></i>
-                                <a href="configuracoes.html" class="text-decoration-none text-white">Configurações</a>
+                                <a href="../PHP/configuracoes.php" class="text-decoration-none text-white">Configurações</a>
                             </div>
                             <div class="col text-white sidebar-op">
                                 <i class="ph ph-question"></i>
@@ -149,7 +149,7 @@
                         id="l-resposta-a" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
-                    <input type="radio" name="resposta" id="resposta-b" value="influencia"> <label for="resposta"
+                    <input type="radio" name="resposta" id="resposta-b" value="influente"> <label for="resposta"
                         id="l-resposta-b" style="font-size: 18px;"></label>
                 </span>
                 <span style="display: flex; flex-direction: row;">
@@ -409,7 +409,7 @@
               <i class="ph ph-bell"></i>
             </a>
   
-            <a href="configuracoes.html" class="text-decoration-none">
+            <a href="../PHP/configuracoes.php" class="text-decoration-none">
               <i class="ph ph-gear"></i>
             </a>
           </nav>
@@ -670,10 +670,10 @@
                     perguntaAtual++;
 
                     // // Limpar todas as opções de resposta (desmarcar os inputs de rádio)
-                    // const inputsResposta = document.querySelectorAll('input[name="resposta"]');
-                    // inputsResposta.forEach(input => {
-                    //     input.checked = false;
-                    // });
+                    const inputsResposta = document.querySelectorAll('input[name="resposta"]');
+                    inputsResposta.forEach(input => {
+                        input.checked = false;
+                    });
 
                     exibirPergunta();
 
