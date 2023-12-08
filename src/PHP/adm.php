@@ -1,6 +1,22 @@
 <?php
 include('connect.php');
 
+session_start();
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['ID_usuario'])) {
+    // Redireciona para a página de login se não estiver logado
+    header('Location: ../../public/index.html');
+    exit();
+}
+
+// Verifica se o usuário é o administrador
+if ($_SESSION['ID_usuario'] !== '33') {
+    // Se não for o administrador, redireciona para uma página de erro ou outra página adequada
+    header('Location: ../../public/index.html');
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['start_date']) && isset($_GET['end_date'])) {
   $start_date = date('Y-m-d', strtotime($_GET['start_date']));
   $end_date = date('Y-m-d', strtotime($_GET['end_date']));
