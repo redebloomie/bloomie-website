@@ -22,6 +22,7 @@
           $interesses = $row['interesses'];
           $sobre = $row['sobre'];
           $personalidade = $row['personalidade'];
+          
       }
 
       $stmt->close();

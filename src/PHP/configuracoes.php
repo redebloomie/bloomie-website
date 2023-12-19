@@ -88,7 +88,7 @@
 
                   <i class="ph ph-house"></i>
 
-                  <a href="../PHP/homepage-postagens.php" class="text-decoration-none text-white">Home</a>
+                  <a href="homepage-postagens.php" class="text-decoration-none text-white">Home</a>
 
                 </div>
 
@@ -96,7 +96,7 @@
 
                   <i class="ph ph-user"></i>
 
-                  <a href="../PHP/perfil.php" class="text-decoration-none text-white">Perfil</a>
+                  <a href="perfil.php" class="text-decoration-none text-white">Perfil</a>
 
                 </div>
 
@@ -104,7 +104,7 @@
 
                   <i class="ph ph-bell-ringing"></i>
 
-                  <a href="../PHP/notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
+                  <a href="notificacoesGeral.php" class="text-decoration-none text-white">Notificações</a>
 
                 </div>
 
@@ -112,7 +112,7 @@
 
                   <i class="ph ph-plant"></i>
 
-                  <a href="enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
+                  <a href="../pages/enviarOportunidade.html" class="text-decoration-none text-white">Enviar<br>oportunidades</a>
 
                 </div>
 
@@ -128,7 +128,7 @@
 
                   <i class="ph ph-question"></i>
 
-                  <a href="Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
+                  <a href="../pages/Ajuda_e_Suporte.html" class="text-decoration-none text-white">Ajuda & suporte</a>
 
                 </div>
 

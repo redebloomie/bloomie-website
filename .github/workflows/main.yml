@@ -25,7 +25,8 @@ jobs:
       - name: FTP Deploy Locaweb
         uses: locaweb/ftp-deploy@1.0.0
         with:
-          host: ${{ secrets.HOST }} 
-          user: ${{ secrets.USER }}
+          host: ftp.redebloomie.com.br
+          user: redebloomie2
           password: ${{ secrets.PASS }}
+          remoteDir: "/home/redebloomie2/public_html"
           localDir: "dist"  # ajuste conforme o diretório do seu projeto a ser enviado
