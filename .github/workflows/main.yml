@@ -28,5 +28,5 @@ jobs:
           host: ftp.redebloomie.com.br
           user: redebloomie2
           password: ${{ secrets.PASS }}
-          remoteDir: "/home/redebloomie2/public_html"
+          remoteDir: "https://github.com/redebloomie/bloomie-website"
           localDir: "dist"  # ajuste conforme o diretório do seu projeto a ser enviado
