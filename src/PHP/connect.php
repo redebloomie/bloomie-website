@@ -1,5 +1,5 @@
 <?php
-    $conexao = new mysqli('localhost', 'root', '', 'bloomie_db');
+    $conexao = new mysqli('bloomie_db.mysql.dbaas.com.br', 'bloomie_db', 'SomosBloomie0@', 'bloomie_db');
     date_default_timezone_set("America/Sao_Paulo");
     $data = date('Y-m-d H:i:s');
 
