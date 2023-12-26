@@ -6,13 +6,13 @@
     // Configurando o conjunto de caracteres para UTF-8
     mysqli_set_charset($conexao, 'utf8');
 
-    // if($conexao->connect_errno)
-    // {
-    //     echo "Erro";
-    // }
-    // else
-    // {
-    //     echo "Conexão efetuada com sucesso";
-    // }
+    if($conexao->connect_errno)
+    {
+        echo "Erro";
+    }
+    else
+    {
+        echo "Conexão efetuada com sucesso";
+    }
 
 ?>
