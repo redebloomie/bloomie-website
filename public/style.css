@@ -1696,10 +1696,8 @@ input[type="file"] {
 .oportunidades-parecidas span {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
-  gap: 5vw;
-  width: 60vw;
   margin-top: 20px;
 }
 

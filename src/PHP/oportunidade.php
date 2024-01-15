@@ -5,7 +5,7 @@
 ?>
 
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <title>Oportunidade</title>
@@ -99,12 +99,12 @@
 
         while ($oportunidade = $oportunidades->fetch_assoc()) {
           echo '
-          <div class="oportunidade-container-expand">
-            <div class="oportunidade-expand-foto">
+          <div class="oportunidade-container-expand col-10">
+            <div class="oportunidade-expand-foto col-3">
               <p class="tipo-oportunidade">' . $oportunidade['categoria'] . '</p>
               <img src="' . $oportunidade['imagem'] . '" alt="">
             </div>
-            <div class="oportunidade-expand-info">
+            <div class="oportunidade-expand-info col-7">
               <h2>' . $oportunidade['titulo'] . '</h2>
               <span class="oportunidade-datas span-row">
                 <p><span style="color: #1289EA; font-size: 17px;">Início:</span> ' . $oportunidade['inicio'] . '</p>
@@ -133,9 +133,9 @@
           $oportunidadesSemelhantes = $conexao->query("SELECT * FROM oportunidade WHERE categoria = '" . $oportunidade['categoria'] . "' AND tipo_personalidade = '" . $oportunidade['tipo_personalidade'] . "' LIMIT $limit");
 
           echo '
-          <div class="oportunidades-parecidas">
+          <div class="oportunidades-parecidas col-10">
             <h2>Se você gostou disso, também pode gostar de...</h2>
-            <span>';
+            <span class="col-12">';
           while ($oportunidadeSemelhante = $oportunidadesSemelhantes->fetch_assoc()) {
             echo '
             <a href="oportunidade.php?id=' . $oportunidadeSemelhante['ID_oportunidade'] . '" class="text-decoration-none">
