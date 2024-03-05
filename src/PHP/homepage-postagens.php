@@ -405,6 +405,17 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
               $id_post = $post['ID_post'];
               $saber_curtidas = mysqli_query($conexao, "SELECT * FROM curtidas WHERE ID_post = $id_post");
               $curtidas = $saber_curtidas->num_rows;
+              $saber_comentarios = mysqli_query($conexao, "SELECT * FROM comentarios WHERE ID_post = $id_post");
+              $comentarios = $saber_comentarios->num_rows;
+
+              // Verifica se a consulta foi bem-sucedida
+if ($saber_comentarios) {
+  $comentarios = $saber_comentarios->num_rows;
+} else {
+  // Trate o erro ou registre informações de erro, conforme necessário
+  echo "Erro na consulta: " . mysqli_error($conexao);
+  $comentarios = 0;  // Defina um valor padrão ou tratamento adequado em caso de erro
+}
           
               echo '
               <div class="col-12 d-flex justify-content-center post-container mb-3" id="feed" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;">
@@ -471,21 +482,30 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
                             echo $curtidas . '</p>
                                 </div>
                             </span>
-                                  <span>
-                                      <i class="ph ph-chat-circle"></i>
-                                      <p></p>
-                                  </span>
-                                  <span>
-                                      <i class="ph ph-link-simple-horizontal"></i>
-                                  </span>
-                              </div>
-                              <div class="leftside-op-post">
-                                  <i class="ph ph-warning"></i>
-                              </div>
+                            <span class="comment-btn" onclick="toggleCommentBox(\'commentBox-' . $post['ID_post'] . '\')">
+                            <i class="ph ph-chat-circle"></i>
+                            <p>'; echo $comentarios;
+                            echo '</p>
+                        </span>
+                  
+                              <span>
+                                  <i class="ph ph-link-simple-horizontal"></i>
+                              </span>
+                          </div>
+                          <div class="leftside-op-post">
+                              <i class="ph ph-warning"></i>
                           </div>
                       </div>
                   </div>
-              </div>';
+                  <div id="commentBox-' . $post['ID_post'] . '" style="display: none;">
+                        <!-- Caixa de texto para comentários -->
+                        <textarea class="form-control" rows="3" placeholder="Digite seu comentário"></textarea>
+                        <button class="btn btn-primary mt-2" onclick="postComment(' . $post['ID_post'] . ')">
+                            Comentar
+                        </button>
+                  </div>
+              </div>
+          </div>';
           }
         }
             if (isset($_GET['like'])) {
@@ -697,6 +717,15 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
   </footer>
 
   <script>
+    function toggleCommentBox(commentBoxId) {
+        var commentBox = document.getElementById(commentBoxId);
+        if (commentBox.style.display === 'none') {
+            commentBox.style.display = 'block';
+        } else {
+            commentBox.style.display = 'none';
+        }
+    }
+    
     const uploadImagem = document.getElementById('uploadImagem');
     const previewImage = document.getElementById('previewImage');
     const removeImageButton = document.getElementById('removeImageButton');
@@ -740,14 +769,7 @@ if (count($amigosIDs) >= $numAmigosDeAmigosExibidos) {
     removeImageButton.style.display = 'none';
 });
 
-    function toggleCommentBox(commentBoxId) {
-        var commentBox = document.getElementById(commentBoxId);
-        if (commentBox.style.display === 'none') {
-            commentBox.style.display = 'block';
-        } else {
-            commentBox.style.display = 'none';
-        }
-    }
+    
 
     function postComment(postId) {
       var commentBox = document.getElementById('commentBox-' + postId);

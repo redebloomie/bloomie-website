@@ -14,7 +14,7 @@ $postId = intval($postId);
 $commentText = mysqli_real_escape_string($conexao, $commentText);
 
 // Inserir o comentário no banco de dados
-$insertCommentQuery = "INSERT INTO comentarios (ID_post, ID_usuario, texto, data_comentario) VALUES ($postId, $ID_usuario, '$commentText', NOW())";
+$insertCommentQuery = "INSERT INTO comentarios (ID_post, ID_usuario, comentario, data_comentario) VALUES ($postId, $ID_usuario, '$commentText', NOW())";
 $insertCommentResult = mysqli_query($conexao, $insertCommentQuery);
 
 if ($insertCommentResult) {
